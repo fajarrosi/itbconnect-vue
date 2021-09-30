@@ -48,7 +48,6 @@
                         <template v-slot:append>
                         <q-icon :name="visibility ? 'visibility' : 'visibility_off' " @click="visibility = !visibility"/>
                         </template>
-
                     </q-input>
                         <q-btn label="Daftar" type="submit" color="primary" style="width: 100%;" :loading="load" :disabled="btndisabled">
                             <template v-slot:loading>

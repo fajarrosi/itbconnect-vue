@@ -14,66 +14,71 @@
         >
           <q-step :name="1" :done="step > 1">
             <div class="text-h5 text-bold text-primary">ISI BIODATA</div>
-            <div class="text-subtitle2 q-mt-none q-mb-lg text-justify">
+            <div class="text-subtitle2 q-mb-sm text-justify">
               Mohon isikan biodata Anda dengan benar
             </div>
             <q-input
               outlined
-              v-model="user.email"
+              v-model="user.domisili"
               label="Alamat Domisili"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
+                (val) => (val && val.length > 0) || 'Alamat Domisili tidak boleh kosong',
               ]"
               class="q-mb-sm"
               bg-color="white"
+              hide-bottom-space
             />
 
             <q-input
               outlined
-              v-model="user.email"
+              v-model="user.kota"
               label="Kota"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
+                (val) => (val && val.length > 0) || 'Kota tidak boleh kosong',
               ]"
               class="q-mb-sm"
               bg-color="white"
+              hide-bottom-space
             />
             <q-input
               outlined
-              v-model="user.email"
+              v-model="user.provinsi"
               label="Provinsi"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
+                (val) => (val && val.length > 0) || 'Provinsi tidak boleh kosong',
               ]"
               class="q-mb-sm"
               bg-color="white"
+              hide-bottom-space
             >
             </q-input>
             <p class="text-subtitle2 text-bold">Pekerjaan Terakhir</p>
             <q-input
               outlined
-              v-model="user.email"
+              v-model="user.profesi"
               label="Profesi"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
+                (val) => (val && val.length > 0) || 'Profesi tidak boleh kosong',
               ]"
               class="q-mb-sm"
               bg-color="white"
+              hide-bottom-space
             />
             <q-input
               outlined
-              v-model="user.email"
+              v-model="user.jabatan"
               label="Jabatan"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
+                (val) => (val && val.length > 0) || 'Jabatan tidak boleh kosong',
               ]"
               class="q-mb-sm"
               bg-color="white"
+              hide-bottom-space
             />
           </q-step>
 
@@ -82,11 +87,12 @@
             <div class="text-subtitle2 q-mb-sm text-justify">
               Mohon isikan biodata Anda dengan benar
             </div>
+            <input type="file" @change="onFileSelected" style="display:none;" ref="iupload"/>
             <div class="row justify-center q-mt-lg text-grey-5">
                 <q-icon name="account_circle" size="150px"/>
             </div>
             <div class="row justify-center q-mt-sm">
-                <q-btn color="primary" label="Unggah" style="border-radius: 8px;" />
+                <q-btn color="primary" label="Unggah" style="border-radius: 8px;" @click="$refs.iupload.click()"/>
             </div>
           </q-step>
           <q-step :name="3" :done="step > 3">
@@ -176,19 +182,37 @@ export default {
   },
   data() {
     return {
-      data: null,
       user: {
-        email: "",
-        password: "",
+        domisili:'',
+        kota: '',
+        provinsi:'',
+        profesi:'',
+        jabatan:''
+
       },
-      visibility: true,
       load: false,
       btndisabled: false,
       errors: {},
-      date: "",
       icecream:'',
+      selectedFile:null
     };
   },
+  methods:{
+    onFileSelected(event){
+      this.selectedFile = event.target.files[0]
+      console.log(event.target.files[0].name)
+      this.onUpload()
+    },
+    onUpload(){
+      const fd = new FormData()
+      const fe = new FormData()
+      // fd.append('name',value,filename)
+      fe.append('image',this.selectedFile,this.selectedFile.name)
+      console.log("fd",fd,"fe",fe)
+      console.log("testing")
+      // $axios.post('/')
+    }
+  }
 };
 </script>
 <style lang="scss">

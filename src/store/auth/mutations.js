@@ -1,3 +1,6 @@
+export function alumniRegis(state,data){
+    state.alumnireg= data
+}
 export function setUser(state, user){
     state.users.push(user)
 }
@@ -11,7 +14,4 @@ export function actUsers(state,user){
 }
 export function Logout(state){
     state.useractive = {}
-}
-export function uRegis(state,data){
-    state.userReg = data
 }

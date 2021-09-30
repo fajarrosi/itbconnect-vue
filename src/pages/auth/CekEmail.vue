@@ -58,10 +58,9 @@
 export default {
     data(){
         return{
-            email:'',
+            email:'fajarilhamrosi@gmail.com',
             load:false,
             btndisabled: false,
-            errors:{},
         }
     },
     methods:{
@@ -69,10 +68,19 @@ export default {
             this.load = true
             this.btndisabled = true
             setTimeout(() => {
-                this.load = false
-                this.btndisabled = false
-                this.$router.push('/register')
-            }, 5000);
+                this.$store.dispatch('auth/cekEmail',this.email)
+                .then(() => {
+                    this.$router.push('/register')
+                    this.load = false
+                    this.btndisabled = false
+                })
+                .catch(() => {
+                    this.$router.push('/register')
+                    // console.log("error",error)
+                    this.load = false
+                    this.btndisabled = false
+                })
+            }, 1000);
         }
     }
 };

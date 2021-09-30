@@ -16,6 +16,6 @@ export default function () {
     ],
     useractive:{},
     token: localStorage.getItem('token') || '',
-    userReg:{}
+    alumnireg:{}
   }
 }

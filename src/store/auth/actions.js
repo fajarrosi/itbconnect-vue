@@ -1,5 +1,21 @@
 import { api } from 'boot/axios'
 // import router from '../../router'
+
+export function cekEmail(context,email){
+    return new Promise((resolve,reject)=>{
+        api.post('auth/check',{
+            email : email
+        })
+        .then((response)=>{
+            context.commit('alumniRegis',response.data.data)
+            resolve(response.data.data)
+        })
+        .catch((error)=>{
+            reject(error.response.data.errors)
+        })
+    })
+}
+
 export function register (context, credentials) {
     return new Promise((resolve, reject)=>{
         api.post('auth/register',credentials)
@@ -63,26 +79,8 @@ export function login(context,credentials){
     })
 }
 
-export function userReg(context,email){
-    return new Promise((resolve,reject)=>{
-        api.post('auth/check',{
-            email : email
-        })
-        .then((response)=>{
-            context.commit('uRegis',response.data.data)
-            resolve(response.data.message)
-        })
-        .catch((error)=>{
-            reject(error.response.data)
-        })
-        // if (email){
-        //     context.commit('uRegis',email)
-        //     resolve({response : "OK"})
-        // }else{
-        //     reject({error : "error"})
-        // }
-    })
-}
+
+
 
 export function otp(context,data){
     return new Promise((resolve,reject)=>{

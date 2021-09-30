@@ -20,7 +20,7 @@
                 <q-input outlined bg-color="orange-2"  v-model="otp4" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 34px; color:#F37128; font-weight:700;" class="testing col q-mr-sm "/>
         </div>
         <div class="row">
-                <span class="col-12 q-mt-sm text-center">Tidak menerima kode? <q-btn color="orange-7" label="Kirim Ulang" flat no-caps style="text-decoration: underline;"/></span>
+                <span class="col-12 q-mt-sm text-center">Tidak menerima kode? <q-btn color="orange-7" label="Kirim Ulang" flat no-caps style="text-decoration: underline;" @click="showNotif()"/></span>
         </div>
         </q-card-section>
         <q-card-actions align="center" class="q-pb-lg q-mt-lg">
@@ -35,7 +35,21 @@
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            showNotif () {
+                $q.notify({
+                message: 'OTP Berhasil Dikirim',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            }
+        }
+    },
     data(){
         return{
             data:null,
