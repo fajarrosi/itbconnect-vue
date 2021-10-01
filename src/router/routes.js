@@ -55,8 +55,9 @@ const routes = [
     children: [
       {path:'/login',name:'login', component: () => import('pages/auth/Login.vue')},
       {path:'/cekemail', component: () => import('pages/auth/CekEmail.vue')},
-      {path:'/register', component: () => import('pages/auth/Register.vue')},
       {path:'/otp', component: () => import('pages/auth/Otp.vue')},
+      {path:'/register', component: () => import('pages/auth/Register.vue')},
+      {path:'/regissuccess', component: () => import('pages/auth/RegisSucc.vue')},
       {path:'/registered', component: () => import('pages/auth/Register2.vue')},
     ]
   },

@@ -35,6 +35,3 @@ export default {
     props: ['search']
 }
 </script>
-<style lang="">
-    
-</style>

@@ -1,10 +1,10 @@
 <template>
-  <q-page padding>
+  <q-page >
     <q-card flat>
         <q-card-section class="q-pb-none">
             <div class="row justify-center">
                 <q-img
-                    src="~assets/question.png"
+                    src="~assets/otp-icon.png"
                     spinner-color="primary"
                     style="width: 118px; height: 112px;"
                     spinner-size="82px"
@@ -13,11 +13,11 @@
         <div class="text-subtitle2 q-my-md text-center">
             Masukan kode OTP yang dikirim melalui loremipsum@email.com
         </div>
-        <div class="row" >
-                <q-input outlined bg-color="orange-2"  v-model="otp1" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 34px; color:#F37128; font-weight:700;" class="testing col q-mr-sm "/>
-                <q-input outlined bg-color="orange-2"  v-model="otp2" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 34px; color:#F37128; font-weight:700;" class="testing col q-mr-sm "/>
-                <q-input outlined bg-color="orange-2"  v-model="otp3" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 34px; color:#F37128; font-weight:700;" class="testing col q-mr-sm "/>
-                <q-input outlined bg-color="orange-2"  v-model="otp4" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 34px; color:#F37128; font-weight:700;" class="testing col q-mr-sm "/>
+        <div class="row justify-center" >
+                <q-input outlined bg-color="orange-2"  v-model="otp1" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
+                <q-input outlined bg-color="orange-2"  v-model="otp2" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
+                <q-input outlined bg-color="orange-2"  v-model="otp3" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
+                <q-input outlined bg-color="orange-2"  v-model="otp4" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
         </div>
         <div class="row">
                 <span class="col-12 q-mt-sm text-center">Tidak menerima kode? <q-btn color="orange-7" label="Kirim Ulang" flat no-caps style="text-decoration: underline;" @click="showNotif()"/></span>
@@ -52,12 +52,11 @@ export default {
     },
     data(){
         return{
-            data:null,
-            user:{
-                email:'',
-                password:'',
-            },
-            visibility: true,
+            otp1:'',
+            otp2:'',
+            otp3:'',
+            otp4:'',
+            otp:'',
             load:false,
             btndisabled: false,
             errors:{}
@@ -88,8 +87,10 @@ export default {
     }
 };
 </script>
-<style lang="scss">
-.q-field--outlined .q-field__control{
+<style scoped>
+.q-field--outlined :deep() .q-field__control{
     border-radius: 8px;
+    width:72px;
+    height:82px;
 }
 </style>

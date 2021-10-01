@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page >
     <q-card flat>
       <q-card-section class="q-pb-none">
         <div class="text-h5 text-bold text-primary">SIGN IN</div>
@@ -115,7 +115,7 @@ export default {
     },
 };
 </script>
-<style lang="scss">
+<style>
 .q-field--outlined .q-field__control{
     border-radius: 8px;
 }

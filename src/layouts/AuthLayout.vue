@@ -1,9 +1,8 @@
 <template>
-  <div class="row bg-grey-2 justify-center">
-    <div class="base-container shadow-2 flex items-center">
-      <q-layout view="hHh Lpr fFf" container>
-
-        <q-page-container>
+  <!-- <div class="row bg-grey-2 justify-center"> -->
+    <!-- <div class="base-container shadow-2 flex items-center"> -->
+      <q-layout view="hHh lpR lfr" >
+        <q-header  >
             <div class="row justify-center logo">
               <q-img
                 src="~assets/logo_header.png"
@@ -13,10 +12,15 @@
                 alt="ia-itb-logo"
               />
             </div>
+        </q-header>
+        <q-page-container>
+          <div class="row bg-grey-2 justify-center">
+            <div class="base-container ">
+              <router-view></router-view>
+            </div>
+          </div>
 
-          <router-view></router-view>
-
-           <div class="row justify-center items-center">
+          <!-- <div class="row justify-center items-center">
             <p class="q-mb-none q-mr-md copyright">ITBCONNECT @2021 by</p>
             <q-img
               src="~assets/ia-itb.png"
@@ -25,7 +29,7 @@
               spinner-size="30px"
               alt="ia-itb-logo"
             />
-          </div>
+          </div> -->
 
         </q-page-container>
         <!-- <q-footer>
@@ -41,19 +45,32 @@
           </div>
 
         </q-footer> -->
+        <q-footer >
+          <div class="row bg-grey-2 justify-center">
+            <div class="base-container flex items-center justify-center">
+              <p class="q-mb-none q-mr-md copyright">ITBCONNECT @2021 by</p>
+              <q-img
+                src="~assets/ia-itb.png"
+                spinner-color="white"
+                style="width: 77px; height: 51px"
+                spinner-size="30px"
+                alt="ia-itb-logo"
+              />
+            </div>
+          </div>
+        </q-footer>
       </q-layout>
-    </div>
-  </div>
+    <!-- </div> -->
+  <!-- </div> -->
 </template>
 
 <script>
 export default {};
 </script>
 <style lang="scss">
-// .q-header{
-//   background-color: transparent;
-//   padding-top: 40px;
-// }
+.q-header{
+  background-color: $secondary;
+}
 
 .q-page-container {
   .logo{
@@ -63,17 +80,12 @@ export default {};
     border-radius: 15px;
     background-color: #EBEDED;
   }
+}
 
+.q-footer{
   .copyright {
       color: #05386b;
     }
 }
-
-// .q-footer{
-//   background-color: transparent;
-//   .copyright {
-//       color: #05386b;
-//     }
-// }
 
 </style>

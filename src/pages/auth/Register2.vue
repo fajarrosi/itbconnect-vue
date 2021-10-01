@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page>
     <q-card flat>
       <q-card-section>
         <q-stepper
@@ -96,13 +96,13 @@
             </div>
           </q-step>
           <q-step :name="3" :done="step > 3">
-            <div class="text-h5 text-bold text-primary">Hobi & Minat</div>
+            <div class="text-h5 text-bold text-primary">Minat & Organisasi</div>
             <div class="text-subtitle2 q-my-none text-justify">
               Mohon Isi minimal 3 tag
             </div>
             
             <q-select
-                label="Masukkan Hobi & Minat Anda"
+                label="Masukkan Minat & Organisasi Anda"
                 outlined
                 bg-color="white"
                 v-model="modelAdd"
@@ -168,6 +168,69 @@
         </q-stepper>
       </q-card-section>
     </q-card>
+    <q-dialog v-model="intro" persistent transition-show="scale" transition-hide="scale" full-height>
+            <q-carousel
+                v-model="slide"
+                transition-prev="jump-right"
+                transition-next="jump-left"
+                swipeable
+                animated
+                control-color="primary"
+                navigation
+                padding
+                class=" text-black shadow-1 rounded-borders"
+            >
+            <template v-slot:navigation-icon="{ active, btnProps, onClick }">
+              <q-btn v-if="active" size="md" :icon="btnProps.icon" color="primary" flat round dense @click="onClick" />
+              <q-btn v-else size="sm" :icon="btnProps.icon" color="grey" flat round dense @click="onClick" />
+            </template>
+                <q-carousel-slide :name="1" class="bg-white text-black column no-wrap items-center justify-center">
+                  <div class="text-h5 text-bold text-primary q-my-lg text-center">Apa itu ITBconnect?</div>
+                  <q-img
+                    src="~assets/question.png"
+                    spinner-color="primary"
+                    style="width: 118px; height: 112px;"
+                    spinner-size="82px"
+                  />
+                <div class="q-mt-md text-center text-h6">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit aliquid quisquam dignissimos iure exercitationem natus explicabo corrupti tempora sunt odit.
+                </div>
+                </q-carousel-slide>
+                <q-carousel-slide :name="2" class="bg-white column no-wrap flex-center">
+                <div class="text-h5 text-bold text-primary q-my-lg text-center">Apa itu ITBconnect2?</div>
+                  <q-img
+                    src="~assets/question.png"
+                    spinner-color="primary"
+                    style="width: 118px; height: 112px;"
+                    spinner-size="82px"
+                  />
+                <div class="q-mt-md text-center text-h6">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit aliquid quisquam dignissimos iure exercitationem natus explicabo corrupti tempora sunt odit.
+                </div>
+                </q-carousel-slide>
+                <q-carousel-slide :name="3" class="bg-white column no-wrap flex-center">
+              <div class="text-h5 text-bold text-primary q-my-lg text-center">Apa itu ITBconnect3?</div>
+                  <q-img
+                    src="~assets/question.png"
+                    spinner-color="primary"
+                    style="width: 118px; height: 112px;"
+                    spinner-size="82px"
+                  />
+                <div class="q-mt-md text-center text-h6">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit aliquid quisquam dignissimos iure exercitationem natus explicabo corrupti tempora sunt odit.
+                </div>
+                </q-carousel-slide>
+                <template v-slot:control>
+                    <q-carousel-control
+                    position="top-right"
+                    :offset="[18, 18]"
+                    class="q-gutter-xs"
+                    >
+                        <q-btn color="white" text-color="black" flat dense v-close-popup no-caps icon="close"/>
+                    </q-carousel-control>
+                </template>
+            </q-carousel>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -194,8 +257,14 @@ export default {
       btndisabled: false,
       errors: {},
       icecream:'',
-      selectedFile:null
+      selectedFile:null,
+      intro:false,
+      slide:1,
+      lorem:'testing'
     };
+  },
+  mounted(){
+    this.intro = true
   },
   methods:{
     onFileSelected(event){
@@ -215,25 +284,29 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-.q-card {
-  margin-top: 100px;
+<style scoped>
+.q-card{
+  margin-top:100px;
 }
-.q-field--outlined .q-field__control {
+.q-field--outlined :deep() .q-field__control {
   border-radius: 8px;
 }
-.q-stepper {
+.q-stepper{
   background-color: transparent;
-  .q-stepper__header {
-    margin-top: -130px;
+}
+.q-stepper :deep() .q-stepper__header{
+    margin-top:-130px;
     margin-bottom: 50px;
   }
-}
-.q-markup-table {
-  background: transparent;
-}
+
 .q-stepper__nav{
     display:flex;
     justify-content: space-between;
+}
+.q-carousel{
+  width:480px;
+}
+div :deep() .q-dialog :deep() .q-dialog__inner{
+  padding:0px;
 }
 </style>

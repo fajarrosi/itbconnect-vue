@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page >
     <q-card flat>
      
       <q-card-section>
@@ -76,6 +76,7 @@
                 class="q-mb-sm "
                 bg-color="white"
                 hide-bottom-space
+                hide-hint
                 placeholder="contoh (2001/20/08)"
                 >
                   <template v-slot:append>
@@ -89,7 +90,12 @@
                       </q-popup-proxy>
                     </q-icon>
                   </template>
+                  <template v-slot:hint>
+                  *) Pilih tanggal dengan mengklik icon disebelah kanan
+                  </template>
                 </q-input>
+                
+                <q-checkbox v-model="cek" label="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur, veritatis." />
             </q-step>
 
             <q-step
@@ -146,14 +152,14 @@
                             <q-icon :name="visibility ? 'visibility' : 'visibility_off' " @click="visibility = !visibility" class="cursor-pointer"/>
                         </template>
                 </q-input>
-                <q-input outlined bottom-slots v-model="user.konfirmasi" :type="visibility ? 'password' : 'text' " label="Konfirmasi Password" 
+                <q-input outlined bottom-slots v-model="user.konfirmasi" :type="visibility2 ? 'password' : 'text' " label="Konfirmasi Password" 
                 lazy-rules
                 :rules="[ val => val && val.length >= 6 || 'konfirmasi password minimal 6 karakter', val => konfirmasi(val)]"
                 bg-color="white"
                 hide-bottom-space
                 >
                     <template v-slot:append>
-                    <q-icon :name="visibility ? 'visibility' : 'visibility_off' " @click="visibility = !visibility"/>
+                    <q-icon :name="visibility2 ? 'visibility' : 'visibility_off' " @click="visibility2 = !visibility2"/>
                     </template>
                 </q-input>
             </q-step>
@@ -232,12 +238,21 @@
                 />
                 <q-btn
                     v-if="step === 4"
-                    @click="$router.push('/otp')"
+                    @click="onSubmit"
                     color="primary"
                     label="rekam data"
                     style="border-radius: 8px;"
                     size="12px"
-                />
+                    :loading="load"
+                    :disabled="btndisabled"
+                >
+                <template v-slot:loading>
+                    <div class="row items-center">
+                        <p class="text-bold q-mb-none q-mr-sm">Loading...</p>
+                        <q-spinner-facebook />  
+                    </div>
+                </template>
+                </q-btn>
                 <q-btn
                     v-else
                     @click="$refs.stepper.next()"
@@ -252,6 +267,27 @@
             </q-stepper>
       </q-card-section>
     </q-card>
+    <q-dialog v-model="alumnus" persistent transition-show="scale" transition-hide="scale">
+            <q-card>
+                <q-card-section>
+                  <div class="text-h5 text-bold text-primary text-center">Anda Sudah Pernah Terdaftar</div>
+                  <div class="row justify-center">
+                  <q-img
+                    src="~assets/question.png"
+                    spinner-color="primary"
+                    style="width: 118px; height: 112px;"
+                    spinner-size="82px"
+                  />
+                  </div>
+                  <p class="text-center q-mt-md">
+                    Database Anda sudah terdaftar. Silahkan klik lanjutkan untuk proses selanjutnya.
+                  </p>
+                </q-card-section>
+                <q-card-actions align="center">
+                  <q-btn label="Lanjutkan" color="primary" style="border-radius: 8px;" v-close-popup no-caps/>
+                </q-card-actions>
+            </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -273,6 +309,7 @@ export default {
         konfirmasi:''
       },
       visibility: true,
+      visibility2: true,
       load: false,
       btndisabled: false,
       errors: {},
@@ -288,7 +325,9 @@ export default {
         'FTI'
       ],
       selectedjenjang:'',
-      selectedprodi:''
+      selectedprodi:'',
+      cek:false,
+      alumnus:false
     };
   },
   computed: {
@@ -298,6 +337,7 @@ export default {
   },
   mounted(){
     if (this.alumni.id) {
+      this.alumnus = true
       this.user.name = this.alumni.complete_name
       this.user.email = this.alumni.email
       this.user.tgllahir = this.alumni.dob
@@ -306,6 +346,8 @@ export default {
       this.selectedjenjang = 'Sarjana (S1)'
       this.selectedprodi = 'FTE'
       this.user.tahunmasuk = '2003'
+      this.user.nowa = '082339946868'
+      this.user.tempatlahir = 'Jakarta'
     }else{
       this.step = 1
     }
@@ -321,24 +363,52 @@ export default {
     formattgl(){
       let tgl = date.formatDate(this.user.tgllahir,'DD MMMM YYYY')
       return tgl
+    },
+    onSubmit(){
+            this.load = true
+            this.btndisabled = true
+            setTimeout(() => {
+                // this.$store.dispatch('auth/cekEmail',this.email)
+                // .then(() => {
+                //     this.$router.push('/register')
+                //     this.load = false
+                //     this.btndisabled = false
+                // })
+                // .catch(() => {
+                //     this.$router.push('/register')
+                //     // console.log("error",error)
+                //     this.load = false
+                //     this.btndisabled = false
+                // })
+                if (this.alumni.id) {
+                  // dispatch api untuk alumni
+                  this.$store.dispatch('auth/cekEmail')
+                }else{
+                  // dispatch api untuk user baru
+                  this.$store.dispatch('auth/cekEmail')
+                }
+                this.$router.push('/regissuccess') 
+                this.load = false
+                this.btndisabled = false
+            }, 5000);
     }
   }
 };
 </script>
-<style lang="scss">
+<style scoped>
 .q-card{
   margin-top:100px;
 }
-.q-field--outlined .q-field__control {
+.q-field--outlined :deep() .q-field__control {
   border-radius: 8px;
 }
 .q-stepper{
   background-color: transparent;
-  .q-stepper__header{
+}
+.q-stepper :deep() .q-stepper__header{
     margin-top:-130px;
     margin-bottom: 50px;
   }
-}
 .q-markup-table{
   background: transparent;
 }

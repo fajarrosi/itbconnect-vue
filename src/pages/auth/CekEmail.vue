@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page >
     <q-card flat>
       <q-card-section class="q-pb-none">
         <div class="text-h5 text-bold text-primary">E-mail Anda</div>
@@ -30,7 +30,10 @@
                 @click="cekemail"
                 >
                 <template v-slot:loading>
-                    <q-spinner-facebook />
+                    <div class="row items-center">
+                        <p class="text-subtitle2 text-bold q-mb-none q-mr-sm">Loading...</p>
+                        <q-spinner-facebook />  
+                    </div>
                 </template>
                 </q-btn>
         </q-card-section>
@@ -85,7 +88,7 @@ export default {
     }
 };
 </script>
-<style lang="scss">
+<style>
 .q-field--outlined .q-field__control{
     border-radius: 8px;
 }
