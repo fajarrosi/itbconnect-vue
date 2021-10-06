@@ -3,41 +3,42 @@
     <q-card flat>
       <q-card-section class="q-pb-none">
         <div class="text-h5 text-bold text-primary">E-mail Anda</div>
-        <div class="text-subtitle2 q-my-md text-justify">
+        <div class="text-subtitle2 q-mt-md text-justify">
             Masukan alamat e-mail Anda
         </div>
+        <hr class="line-cards q-my-md">
             <q-input
                 outlined
+                dense
                 v-model="email"
                 label="Alamat E-mail"
                 lazy-rules
                 :rules="[
                 (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
                 ]"
-                class="q-mb-sm"
+                class="q-mb-md"
                 bg-color="white"
+                hide-bottom-space
             />
         </q-card-section>
-        <q-card-section class="q-py-none">
+        <q-card-section class="q-py-none text-right">
                 <q-btn
                 label="Submit"
                 color="primary"
                 :loading="load"
                 :disabled="btndisabled"
                 no-caps
-                style="width: 100%; border-radius: 8px;" 
-                padding="sm"
+                style="border-radius: 8px;padding-left:24px;padding-right:24px;" 
                 @click="cekemail"
                 >
                 <template v-slot:loading>
                     <div class="row items-center">
-                        <p class="text-subtitle2 text-bold q-mb-none q-mr-sm">Loading...</p>
                         <q-spinner-facebook />  
                     </div>
                 </template>
                 </q-btn>
         </q-card-section>
-        <q-card-actions align="center" class="q-pt-none">
+        <q-card-actions align="center" class=" q-pb-md q-pt-none" style="margin-top:11px;">
             <span>Sudah memiliki akun? </span>
             <q-btn flat no-caps class="text-primary text-bold" @click="$router.push('/auth')">
                 Login Sekarang
@@ -71,6 +72,7 @@ export default {
             this.load = true
             this.btndisabled = true
             setTimeout(() => {
+                this.$router.push('/register')
                 this.$store.dispatch('auth/cekEmail',this.email)
                 .then(() => {
                     this.$router.push('/register')

@@ -11,7 +11,7 @@
                 />
             </div>
         <div class="text-subtitle2 q-my-md text-center">
-            Masukan kode OTP yang dikirim melalui loremipsum@email.com
+            Masukan kode OTP yang dikirim
         </div>
         <div class="row justify-center" >
                 <q-input outlined bg-color="orange-2"  v-model="otp1" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
@@ -23,8 +23,8 @@
                 <span class="col-12 q-mt-sm text-center">Tidak menerima kode? <q-btn color="orange-7" label="Kirim Ulang" flat no-caps style="text-decoration: underline;" @click="showNotif()"/></span>
         </div>
         </q-card-section>
-        <q-card-actions align="center" class="q-pb-lg q-mt-lg">
-            <q-btn no-caps label="Verifikasi dan Lanjutkan" style="border-radius: 8px; margin-top:50px;" color="primary" :loading="load" :disabled="btndisabled" @click="$router.push('/registered')">
+        <q-card-actions align="center" class="q-pb-lg">
+            <q-btn no-caps label="Verifikasi & Lanjutkan" class="col" style="border-radius: 8px;" color="primary" :loading="load" :disabled="btndisabled" @click="$router.push('/registered')">
                 <template v-slot:loading>
                     <q-spinner-facebook />
                 </template>

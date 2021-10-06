@@ -11,12 +11,12 @@
                     spinner-size="82px"
                 />
             </div>
-        <div class="text-subtitle2 text-center">
+        <div class="text-subtitle2 q-my-md text-center">
             Anda berhasil melakukan pendaftaran. Silahkan lanjutkan dengan proses verifikasi. Anda akan mendapatkan kode verifikasi melalui e-mail terdaftar.
         </div>
         </q-card-section>
         <q-card-actions align="center" class="q-pb-lg">
-            <q-btn no-caps label="Lanjut Verifikasi" style="border-radius: 8px; " color="primary" :loading="load" :disabled="btndisabled" @click="$router.push('/otp')">
+            <q-btn no-caps label="Lanjut Verifikasi" style="border-radius: 8px; " class="col " color="primary" :loading="load" :disabled="btndisabled" @click="$router.push('/otp')">
                 <template v-slot:loading>
                     <q-spinner-facebook />
                 </template>
