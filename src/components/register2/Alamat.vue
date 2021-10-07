@@ -73,12 +73,42 @@
             bg-color="white"
             hide-bottom-space
         />
+        <q-btn
+        @click="next"
+        color="primary"
+        label="Berikutnya"
+        style="border-radius: 8px"
+        size="12px"
+        no-caps
+        class="col"
+        />
     </div>
 </template>
 
 <script>
 export default {
-
+    data(){
+        return{
+        user: {
+        domisili: "",
+        kota: "",
+        provinsi: "",
+        profesi: "",
+        jabatan: "",
+      },
+        }
+    },
+    methods:{
+        onSubmit(){
+            console.log("user",this.user);
+        },
+        next(){
+            console.log("user",this.user);
+            this.$emit('update:step',2)
+            // pertama dia ngubah step ditambah 1 biar step selanjutnya
+            // submit form / simpan data ke vuex
+        }
+    }
 }
 </script>
 

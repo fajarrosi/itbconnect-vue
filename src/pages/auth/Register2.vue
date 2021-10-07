@@ -14,99 +14,80 @@
           active-icon="primary"
         >
           <q-step :name="1" :done="step > 1">
-            <div class="text-h5 text-bold text-primary">ISI BIODATA</div>
+            <div class="text-h5 text-bold text-primary">Isi BIODATA</div>
             <div class="text-subtitle2 q-mt-md text-justify">
               Mohon isikan biodata Anda dengan benar
             </div>
             <hr class="line-cards q-my-md">
-            <q-input
-              outlined
-              dense
-              v-model="user.domisili"
-              label="Alamat Domisili"
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || 'Alamat Domisili tidak boleh kosong',
-              ]"
-              class="q-mb-sm"
-              bg-color="white"
-              hide-bottom-space
-            />
+            <p class="text-caption text-bold">Alamat Domisili</p>
+            <q-select  outlined dense v-model="selecteddomisili" :options="optdomisili" label="Dalam Negeri / Luar Negeri" bg-color="white" class="q-mb-sm"/>
+            <div class="dlm" v-if="selecteddomisili.value === '1'">
+              <q-select  outlined dense v-model="selecteddomisili" :options="optdomisili" label="Provinsi" bg-color="white" class="q-mb-sm"/>
+              <q-select  outlined dense v-model="selecteddomisili" :options="optdomisili" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm"/>
+              <q-select  outlined dense v-model="selecteddomisili" :options="optdomisili" label="Kecamatan" bg-color="white" class="q-mb-sm"/>
+              <q-select  outlined dense v-model="selecteddomisili" :options="optdomisili" label="Kelurahan" bg-color="white" class="q-mb-sm"/>
+              <q-input
+                outlined
+                dense
+                v-model="user.domisili"
+                label="Alamat Domisili"
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Alamat Domisili tidak boleh kosong',
+                ]"
+                class="q-mb-sm"
+                bg-color="white"
+                hide-bottom-space
+              />
+            </div>
+            <div class="luar" v-if="selecteddomisili.value === '2'">
+              <q-select  outlined dense v-model="selecteddomisili" :options="optdomisili" label="Negara" bg-color="white" class="q-mb-sm"/>
+              <q-input
+                outlined
+                dense
+                v-model="user.domisili"
+                label="Alamat Domisili"
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Alamat Domisili tidak boleh kosong',
+                ]"
+                class="q-mb-sm"
+                bg-color="white"
+                hide-bottom-space
+              />
 
-            <q-input
-              outlined
-              dense
-              v-model="user.kota"
-              label="Kota"
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || 'Kota tidak boleh kosong',
-              ]"
-              class="q-mb-sm"
-              bg-color="white"
-              hide-bottom-space
-            />
-            <q-input
-              outlined
-              dense
-              v-model="user.provinsi"
-              label="Provinsi"
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || 'Provinsi tidak boleh kosong',
-              ]"
-              class="q-mb-sm"
-              bg-color="white"
-              hide-bottom-space
-            >
-            </q-input>
-            <p class="text-subtitle2 text-bold">Pekerjaan Terakhir</p>
-            <q-input
-              outlined
-              dense
-              v-model="user.profesi"
-              label="Profesi"
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || 'Profesi tidak boleh kosong',
-              ]"
-              class="q-mb-sm"
-              bg-color="white"
-              hide-bottom-space
-            />
-            <q-input
-              outlined
-              dense
-              v-model="user.jabatan"
-              label="Jabatan"
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || 'Jabatan tidak boleh kosong',
-              ]"
-              class="q-mb-sm"
-              bg-color="white"
-              hide-bottom-space
-            />
+            </div>
+
           </q-step>
 
           <q-step :name="2" :done="step > 2">
-            <div class="text-h5 text-bold text-primary">FOTO PROFIL</div>
+            <div class="text-h5 text-bold text-primary">Isi BIODATA</div>
+            <div class="text-subtitle2 q-mt-md text-justify">
+              Mohon isikan biodata Anda dengan benar
+            </div>
+            <hr class="line-cards q-my-md">
+            <p class="text-caption text-bold">Pekerjaan Terakhir</p>
+            <q-select  outlined dense v-model="selecteddomisili" :options="optdomisili" label="Profesi" bg-color="white" class="q-mb-sm"/>
+            <q-select  outlined dense v-model="selecteddomisili" :options="optdomisili" label="Jabatan" bg-color="white" class="q-mb-sm"/>
+          </q-step>
+          <q-step :name="3" :done="step > 3">
+            <div class="text-h5 text-bold text-primary">Foto Profil</div>
             <div class="text-subtitle2 q-mt-md text-justify">
               Mohon isikan biodata Anda dengan benar
             </div>
             <hr class="line-cards q-my-md">
             <input type="file" @change="onFileSelected" style="display:none;" ref="iupload"/>
-            <div class="row justify-center q-mt-lg text-grey-5">
+            <div class="row justify-center q-mt-lg " style="color:#bfbfbf">
                 <q-icon name="account_circle" size="150px"/>
             </div>
-            <div class="row justify-center q-mt-sm">
+            <div class="row justify-center q-mt-sm q-mb-lg">
                 <q-btn color="primary" label="Unggah" style="border-radius: 8px;" @click="$refs.iupload.click()"/>
             </div>
           </q-step>
-          <q-step :name="3" :done="step > 3">
+          <q-step :name="4" :done="step > 4">
             <div class="text-h5 text-bold text-primary">Minat & Organisasi</div>
             <div class="text-subtitle2 q-mt-md text-justify">
-              Mohon Isi minimal 3 tag
+              Silahkan isi minat dan organisasi anda
             </div>
             <hr class="line-cards q-my-md">
             <q-select
@@ -146,29 +127,29 @@
               <q-btn
                 v-if="step > 1"
                 outline
-                color="grey-8"
+                
                 @click="$refs.stepper.previous()"
                 label="Sebelumnya"
                 class="q-mr-sm col"
-                style="border-radius: 8px"
+                style="border-radius: 8px; color:#bfc0c0;"
                 size="12px"
                 no-caps
               />
 
               <q-btn
-                v-if="step === 2"
+                v-if="step === 3"
                 flat
                 color="grey-8"
                 label="Lewati"
                 class="q-mr-sm col"
                 size="12px"
-                style="padding-left:0;margin-right:-30px;"
+                style="padding-left:0;margin-right:-20px;"
                 dense
                 no-caps
               />
 
               <q-btn
-                v-if="step === 2"
+                v-if="step === 3"
                 @click="$refs.stepper.next()"
                 color="primary"
                 label="Simpan"
@@ -191,7 +172,7 @@
                 v-else
                 @click="$refs.stepper.next()"
                 color="primary"
-                :label="step === 3 ? 'Lanjutkan' : 'Berikutnya'"
+                :label="step === 4 ? 'Lanjutkan' : 'Berikutnya'"
                 style="border-radius: 8px"
                 size="12px"
                 no-caps
@@ -293,8 +274,20 @@ export default {
       icecream:'',
       selectedFile:null,
       intro:false,
+      selecteddomisili:'',
       slide:1,
-      lorem:'testing'
+      lorem:'testing',
+      optdomisili:[
+        {
+          label: 'Dalam Negeri',
+          value: '1'
+        },
+        {
+          label: 'Luar Negeri',
+          value: '2'
+        }
+      ]
+          
     };
   },
   mounted(){
@@ -382,5 +375,8 @@ div :deep() .q-dialog :deep() .q-dialog__inner{
   min-width:21px;
   width:21px;
   height:21px;
+}
+.q-btn--outline::before{
+  border: 2px solid currentColor;
 }
 </style>
