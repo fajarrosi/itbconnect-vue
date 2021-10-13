@@ -12,7 +12,9 @@
             <q-btn flat round dense icon="search" class="q-mr-xs" />
           </div>
           <div class="row" v-else>
-            <p class="text-h6 q-mb-none">{{titlePage}}</p>
+            <p class="text-h6 q-mb-none">
+              {{titlePage}}
+            </p>
           </div>
         </div>
       </div>
@@ -215,7 +217,6 @@
 <script>
 
 import { ref } from 'vue'
-
 export default {
   setup () {
     const drawer = ref(false)
