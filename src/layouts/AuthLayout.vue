@@ -40,7 +40,7 @@
           </div>
 
         </q-page-container>
-        <!-- <q-footer >
+        <!-- <q-footer elevated>
           <div class="row bg-grey-2 justify-center">
             <div class="base-container flex items-center justify-center">
               <p class="q-mb-none q-mr-md copyright">ITBCONNECT @2021 by</p>

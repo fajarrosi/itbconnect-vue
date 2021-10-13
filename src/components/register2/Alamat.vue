@@ -5,10 +5,18 @@
             Mohon isikan biodata Anda dengan benar
         </div>
         <hr class="line-cards q-my-md">
-        <q-input
+        <p class="text-caption text-bold">Alamat Domisili</p>
+        <q-select  outlined dense :modelValue="dalam" @update:modelValue="event => $emit('update:dalam',event)" :options="optdomisili" label="Dalam Negeri / Luar Negeri" bg-color="white" class="q-mb-sm"/>
+        <div v-if="dalam.value === '1'">
+            <q-select  outlined dense :modelValue="prov" @update:modelValue="event => $emit('update:prov',event)" :options="optprov" label="Provinsi" bg-color="white" class="q-mb-sm"/>
+            <q-select  outlined dense :modelValue="kota" @update:modelValue="event => $emit('update:kota',event)" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm"/>
+            <q-select  outlined dense :modelValue="kec" @update:modelValue="event => $emit('update:kec',event)" :options="optkec" label="Kecamatan" bg-color="white" class="q-mb-sm"/>
+            <q-select  outlined dense :modelValue="kel" @update:modelValue="event => $emit('update:kel',event)" :options="optkel" label="Kelurahan" bg-color="white" class="q-mb-sm"/>
+            <q-input
             outlined
             dense
-            v-model="user.domisili"
+            :modelValue="alamat"
+            @update:modelValue="event => $emit('update:alamat', event)"
             label="Alamat Domisili"
             lazy-rules
             :rules="[
@@ -17,71 +25,25 @@
             class="q-mb-sm"
             bg-color="white"
             hide-bottom-space
-        />
-
-        <q-input
+            />
+            </div>
+        <div class="luar" v-if="dalam.value === '2'">
+            <q-select  outlined dense :modelValue="negara" @update:modelValue="event => $emit('update:negara',event)" :options="optnegara" label="Negara" bg-color="white" class="q-mb-sm"/>
+            <q-input
             outlined
             dense
-            v-model="user.kota"
-            label="Kota"
+            :modelValue="alamat"
+            @update:modelValue="event => $emit('update:alamat', event)"
+            label="Alamat Domisili"
             lazy-rules
             :rules="[
-            (val) => (val && val.length > 0) || 'Kota tidak boleh kosong',
+            (val) => (val && val.length > 0) || 'Alamat Domisili tidak boleh kosong',
             ]"
             class="q-mb-sm"
             bg-color="white"
             hide-bottom-space
-        />
-        <q-input
-            outlined
-            dense
-            v-model="user.provinsi"
-            label="Provinsi"
-            lazy-rules
-            :rules="[
-            (val) => (val && val.length > 0) || 'Provinsi tidak boleh kosong',
-            ]"
-            class="q-mb-sm"
-            bg-color="white"
-            hide-bottom-space
-        >
-        </q-input>
-        <p class="text-subtitle2 text-bold">Pekerjaan Terakhir</p>
-        <q-input
-            outlined
-            dense
-            v-model="user.profesi"
-            label="Profesi"
-            lazy-rules
-            :rules="[
-            (val) => (val && val.length > 0) || 'Profesi tidak boleh kosong',
-            ]"
-            class="q-mb-sm"
-            bg-color="white"
-            hide-bottom-space
-        />
-        <q-input
-            outlined
-            dense
-            v-model="user.jabatan"
-            label="Jabatan"
-            lazy-rules
-            :rules="[
-            (val) => (val && val.length > 0) || 'Jabatan tidak boleh kosong',
-            ]"
-            class="q-mb-sm"
-            bg-color="white"
-            hide-bottom-space
-        />
-        <q-btn
-        @click="next"
-        color="primary"
-        label="Berikutnya"
-        style="border-radius: 8px"
-        size="12px"
-        no-caps
-        class="col"
-        />
+            />
+        </div>
     </div>
 </template>
 
@@ -89,26 +51,78 @@
 export default {
     data(){
         return{
-        user: {
-        domisili: "",
-        kota: "",
-        provinsi: "",
-        profesi: "",
-        jabatan: "",
-      },
+        optdomisili:[
+            {
+                label:'Dalam Negeri',
+                value:'1'
+            },
+            {
+                label:'Luar Negeri',
+                value:'2'
+            }
+        ],
+        optprov:[
+            {
+                label:'Jambi',
+                value:'1'
+            },
+            {
+                label:'Palembang',
+                value:'2'
+            },
+        ],
+        optkota:[
+            {
+                label:'Kota1',
+                value:'1'
+            },
+            {
+                label:'Kota2',
+                value:'2'
+            },
+        ],
+        optkec:[
+            {
+                label:'Kec1',
+                value:'1'
+            },
+            {
+                label:'Kec2',
+                value:'2'
+            },
+        ],
+        optkel:[
+            {
+                label:'Kel1',
+                value:'1'
+            },
+            {
+                label:'Kel2',
+                value:'2'
+            },
+        ],
+        optnegara:[
+            {
+                label:'Neg1',
+                value:'1'
+            },
+            {
+                label:'Neg2',
+                value:'2'
+            },
+        ]
+
         }
     },
-    methods:{
-        onSubmit(){
-            console.log("user",this.user);
-        },
-        next(){
-            console.log("user",this.user);
-            this.$emit('update:step',2)
-            // pertama dia ngubah step ditambah 1 biar step selanjutnya
-            // submit form / simpan data ke vuex
-        }
-    }
+    props:[
+        'dalam',
+        'prov',
+        'kota',
+        'kec',
+        'kel',
+        'negara',
+        'alamat'
+    ],
 }
 </script>
 

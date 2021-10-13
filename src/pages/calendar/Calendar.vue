@@ -1,13 +1,17 @@
 <template>
-    <div class="home">
     <q-page padding>
-        <h1>Account Page</h1>
+        <div>
+            Calendar Page
+        </div>
     </q-page>
-    </div>
 </template>
 
 <script>
 export default {
-  // name: 'PageName',
+
 }
 </script>
+
+<style>
+
+</style>

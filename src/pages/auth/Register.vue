@@ -10,250 +10,26 @@
                 :name="1"
                 :done="step > 1"
             >
-                <div class="text-h5 text-bold text-primary">ISI BIODATA</div>
-                <div class="text-subtitle2 q-mt-md text-justify">
-                Mohon isikan biodata Anda dengan benar
-                </div>
-                <hr class="line-cards q-my-md">
-                <q-input
-                dense
-                outlined
-                v-model="user.name"
-                label="Nama Lengkap"
-                lazy-rules
-                :rules="[
-                (val) => (val && val.length > 0) || 'Nama tidak boleh kosong',
-                ]"
-                class="q-mb-sm"
-                bg-color="white"
-                hide-bottom-space
-                />
-                <q-input
-                outlined
-                dense
-                v-model="user.email"
-                label="Alamat Email Aktif"
-                lazy-rules
-                :rules="[
-                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
-                ]"
-                class="q-mb-sm"
-                bg-color="white"
-                hide-bottom-space
-                />
-                <q-input
-                outlined
-                dense
-                v-model="user.nowa"
-                mask="############"
-                label="No. Whatsapp Aktif"
-                lazy-rules
-                :rules="[
-                (val) => (val && val.length > 0) || 'Nomor Whatsapp tidak boleh kosong',
-                ]"
-                class="q-mb-sm"
-                bg-color="white"
-                hide-bottom-space
-                >
-                <template v-slot:hint>
-                  *) Isi untuk dihubungi lebih lanjut
-                </template>
-                </q-input>
-
-                <q-input
-                outlined
-                dense
-                v-model="user.tempatlahir"
-                label="Tempat Lahir"
-                lazy-rules
-                :rules="[
-                (val) => (val && val.length > 0) || 'Tempat Lahir tidak boleh kosong',
-                ]"
-                class="q-mb-sm"
-                bg-color="white"
-                hide-bottom-space
-                />
-                <div class="text-subtitle2">
-                Tanggal Lahir
-                </div>
-                <div class="row q-my-sm justify-between">
-                  <q-select emit-value map-options outlined dense v-model="selectedtgl" :options="opttgl" label="Tgl" bg-color="white" class="col-3"/>
-                  <q-select emit-value map-options outlined dense v-model="selectedbln" :options="optbln" label="Bulan" bg-color="white" class="col-4"/>
-                  <q-select emit-value map-options outlined dense v-model="selectedthn" :options="optthn" label="Tahun" bg-color="white" class="col-4"/>
-                </div>
-                <!-- <q-input
-                outlined
-                dense
-                label="Tanggal Lahir"
-                lazy-rules
-                v-model="user.tgllahir" mask="date" :rules="[(val) => (val && val.length > 0) || 'Tanggal Lahir tidak boleh kosong']"
-                class="q-mb-sm "
-                bg-color="white"
-                hide-bottom-space
-                hide-hint
-                placeholder="contoh (2001/20/08)"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                        <q-date v-model="user.tgllahir">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="primary" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                  <template v-slot:hint>
-                  *) Pilih tanggal dengan mengklik icon disebelah kanan
-                  </template>
-                </q-input> -->
-                
-                <q-checkbox v-model="cek" label="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur, veritatis." />
+              <Bio v-model:name="user.name" v-model:email="user.email" v-model:nowa="user.nowa" v-model:tempat="user.tempat" v-model:tgl="user.tgl" v-model:thn="user.thn" v-model:bln="user.bln" v-model:cek="user.cek"/>
             </q-step>
 
             <q-step
                 :name="2"
                 :done="step > 2"
             >
-            <div class="text-h5 text-bold text-primary">JENJANG PENDIDIKAN</div>
-                <div class="text-subtitle2 q-mt-md text-justify">
-                Mohon isikan jenjang pendidikan Anda di ITB
-                </div>
-                <hr class="line-cards q-my-md">
-                  <q-select  outlined dense v-model="user.selectedjenjang" :options="optjenjang" label="Jenjang Pendidikan Terakhir di ITB" bg-color="white" />
-                  <q-select  outlined dense v-model="user.selectedprodi" :options="optprodi" label="Program Studi" bg-color="white" class="q-my-sm" />
-                  <!-- <q-select  outlined dense v-model="user.selectedprodi" :options="options" label="Program Studi" bg-color="white" class="q-my-sm"  @filter="filterProdi" use-input
-        input-debounce="0" /> -->
-                  <div class="row items-center">
-                    <q-input
-                    outlined
-                    dense
-                    v-model="user.tahunmasuk"
-                    label="Tahun Masuk"
-                    lazy-rules
-                    :rules="[
-                    (val) => (val && val.length > 0) || 'Tahun masuk tidak boleh kosong',
-                    ]"
-                    bg-color="white"
-                    class="col-4"
-                    hide-bottom-space
-                    />
-                    <p class="q-mb-none text-bold q-mx-md" style="font-size:20px;">-</p>
-                    <q-input
-                    outlined
-                    dense
-                    v-model="user.tahunkeluar"
-                    label="Tahun Keluar"
-                    lazy-rules
-                    :rules="[
-                    (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',
-                    ]"
-                    bg-color="white"
-                    class="col-4"
-                    hide-bottom-space
-                    />
-                  </div>
+            <Pend v-model:jenjang="user.jenjang" v-model:prodi="user.prodi" v-model:thnmasuk="user.tahunmasuk" v-model:thnkeluar="user.tahunkeluar" :optjenjang="optjenjang" :optprodi="optprodi"/>
             </q-step>
 
             <q-step
                 :name="3"
                 :done="step > 3"
             >
-            <div class="text-h5 text-bold text-primary">USER LOGIN</div>
-                <div class="text-subtitle2 q-mt-md text-justify">
-                Buat username dan password Anda
-                </div>
-                <hr class="line-cards q-my-md">
-                <q-input
-                outlined
-                dense
-                v-model="user.username"
-                label="Username"
-                lazy-rules
-                :rules="[
-                validUsername, val => val && val.length > 0 || 'Username tidak boleh kosong'
-                ]"
-                class="q-mb-sm"
-                bg-color="white"
-                hide-bottom-space
-                />
-                <q-input outlined bottom-slots v-model="user.password" :type="visibility ? 'password' : 'text' " label="Password" 
-                lazy-rules
-                dense
-                :rules="[val => val.length >= 6 || 'Password minimal 6 karakter']"
-                class="q-mb-sm"
-                bg-color="white"
-                hide-bottom-space
-                >
-                        <template v-slot:append>
-                            <q-icon :name="visibility ? 'visibility' : 'visibility_off' " @click="visibility = !visibility" class="cursor-pointer"/>
-                        </template>
-                </q-input>
-                <q-input outlined bottom-slots v-model="user.konfirmasi" :type="visibility2 ? 'password' : 'text' " label="Konfirmasi Password" 
-                lazy-rules
-                dense
-                :rules="[ val => val && val.length >= 6 || 'konfirmasi password minimal 6 karakter', val => konfirmasi(val)]"
-                bg-color="white"
-                hide-bottom-space
-                >
-                    <template v-slot:append>
-                    <q-icon :name="visibility2 ? 'visibility' : 'visibility_off' " @click="visibility2 = !visibility2"/>
-                    </template>
-                </q-input>
+            <Akun v-model:username="user.username" v-model:password="user.password" v-model:konfirmasi="user.konfirmasi"/>
             </q-step>
             
 
             <q-step :name="4">
-              <div class="text-h5 text-bold text-primary">RINGKASAN DATA</div>
-                <div class="text-subtitle2 q-mt-md text-justify">
-                  Berikut ringkasan data yang telah Anda Isi
-                </div>
-                <hr class="line-cards q-my-md">
-                <q-markup-table separator="none" flat dense>
-                  <tbody>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">Username</td>
-                      <td class="text-left">: {{user.username}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan" >Password</td>
-                      <td class="text-left">: {{user.password}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">Nama Lengkap</td>
-                      <td class="text-left">: {{user.name}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">Alamat Email Aktif</td>
-                      <td class="text-left">: {{user.email}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">No. WhatsApp Aktif</td>
-                      <td class="text-left">: {{user.nowa}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">Tanggal Lahir</td>
-                      <td class="text-left">: {{user.tempatlahir +', ' + formattgl()}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">Jenjang Pendidikan</td>
-                      <td class="text-left">: {{user.selectedjenjang.label}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">Program Studi</td>
-                      <td class="text-left">: {{user.selectedprodi.label}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">Tahun Masuk</td>
-                      <td class="text-left">: {{user.tahunmasuk}}</td>
-                    </tr>
-                    <tr class="q-tr--no-hover">
-                      <td class="text-left judulringkasan">Tahun Keluar</td>
-                      <td class="text-left">: {{user.tahunkeluar}}</td>
-                    </tr>
-                  </tbody>
-                </q-markup-table>
+              <Ringkasan :name="user.name" :email="user.email" :nowa="user.nowa" :tgl="formattgl" :jenjang="user.jenjang.label" :prodi="user.prodi.label" :thnmasuk="user.tahunmasuk" :thnkeluar="user.tahunkeluar" :username="user.username"/>
             </q-step>
 
             <template v-slot:navigation>
@@ -271,13 +47,24 @@
                     size="12px"
                 />
                 <q-btn
-                    v-else
+                    v-if="step > 1 && step !== 4"
                     outline
                     color="grey-8"
                     @click="$refs.stepper.previous()"
                     label="Sebelumnya"
                     class="q-mr-md col"
                     style="border-radius: 8px;"
+                    size="12px"
+                    no-caps
+                />
+                <q-btn
+                    v-if="step === 1"
+                    outline
+                    color="grey-8"
+                    @click="$router.push('/cekemail')"
+                    label="Sebelumnya"
+                    class="q-mr-md col"
+                    style="border-radius: 8px; color:#bfc0c0;"
                     size="12px"
                     no-caps
                 />
@@ -318,62 +105,27 @@
             </q-stepper>
       </q-card-section>
     </q-card>
-    <q-dialog v-model="alumnus" persistent transition-show="scale" transition-hide="scale">
-            <q-card>
-                <q-card-section>
-                  <div class="text-h5 text-bold text-primary text-center">Anda Sudah Pernah Terdaftar</div>
-                  <div class="row justify-center">
-                  <q-img
-                    src="~assets/question.png"
-                    spinner-color="primary"
-                    style="width: 118px; height: 112px;"
-                    spinner-size="82px"
-                  />
-                  </div>
-                  <p class="text-center q-mt-md">
-                    Database Anda sudah terdaftar. Silahkan klik lanjutkan untuk proses selanjutnya.
-                  </p>
-                </q-card-section>
-                <q-card-actions align="center">
-                  <q-btn label="Lanjutkan" color="primary" style="border-radius: 8px;" v-close-popup no-caps />
-                </q-card-actions>
-            </q-card>
-    </q-dialog>
+    <DialogUser v-model:alumnus="alumnus"/>
   </q-page>
 </template>
 
 <script>
 import { date } from 'quasar'
 import { api } from 'boot/axios'
+import Bio from 'components/register/Bio.vue'
+import Pend from 'components/register/Pend.vue'
+import Akun from 'components/register/Akun.vue'
+import Ringkasan from 'components/register/Ringkasan.vue'
+import DialogUser from 'components/register/DialogUser.vue'
 export default {
-  setup(){
-    const options = []
-   
-    return {
-      options,
-      filterProdi(val, update){
-        if (val === '') {
-          update(() => {
-            api.get('complex/prodi')
-            .then((response)=>{
-              console.log("response",response.data.data)
-              response.data.data.forEach(element => {
-                options.value = element.id
-
-                // options.label = element.name
-              });
-            })
-
-          })
-          return
-        }
-        update(() => {
-          const needle = val.toLowerCase()
-          options.value = options.value.filter(v => v.toLowerCase().indexOf(needle) > -1)
-        })
-      }
-    }
+  components:{
+    Bio,
+    Pend,
+    Akun,
+    Ringkasan,
+    DialogUser
   },
+  
   data() {
     return {
       user: {
@@ -381,10 +133,13 @@ export default {
         email: '',
         password: '',
         nowa:'',
-        tempatlahir:'',
-        tgllahir:'',
-        selectedjenjang:'',
-        selectedprodi:'',
+        tempat:'',
+        tgl:'',
+        bln:'',
+        thn:'',
+        cek:false,
+        jenjang:'',
+        prodi:'',
         tahunmasuk:'',
         tahunkeluar:'',
         username:'',
@@ -400,26 +155,6 @@ export default {
       step:1,
       optjenjang:[],
       optprodi:[],
-      opttgl:[],
-      optthn:[],
-      optbln:[
-        {value:'01',label:'Januari'},
-        {value:'02',label:'Februari'},
-        {value:'03',label:'Maret'},
-        {value:'04',label:'April'},
-        {value:'05',label:'Mei'},
-        {value:'06',label:'Juni'},
-        {value:'07',label:'Juli'},
-        {value:'08',label:'Agustus'},
-        {value:'09',label:'September'},
-        {value:'10',label:'Oktober'},
-        {value:'11',label:'November'},
-        {value:'12',label:'Desember'},
-      ],
-      selectedtgl:'',
-      selectedbln:'',
-      selectedthn:'',
-      cek:false,
       alumnus:false,
       validuser:false
     };
@@ -448,7 +183,16 @@ export default {
       }else{
         return true
       }
-    }
+    },
+      formattgl(){
+        let tgls = this.user.thn +'/' + this.user.bln+'/'+this.user.tgl
+        // console.log("tgls",tgls)
+        let tgl = date.formatDate(tgls,'DD-MMMM-YYYY',{
+          months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November','Desember'] 
+        })
+        let lengkap =  this.user.tempat + ', ' + tgl
+        return lengkap
+      },
   },
   mounted(){
     if (this.alumni.id) {
@@ -458,88 +202,45 @@ export default {
       this.user.tgllahir = this.alumni.dob
       // todo user tempat lahir, jenjang, tahun masuk, no wa,prodi
       this.step = 3
-      this.selectedjenjang = 'Sarjana (S1)'
-      this.selectedprodi = 'FTE'
-      this.user.tahunmasuk = '2003'
-      this.user.nowa = '082339946868'
-      this.user.tempatlahir = 'Jakarta'
+      // this.selectedjenjang = 'Sarjana (S1)'
+      // this.selectedprodi = 'FTE'
+      // this.user.tahunmasuk = '2003'
+      // this.user.nowa = '082339946868'
+      // this.user.tempatlahir = 'Jakarta'
     }else{
       this.step = 1
     }
+    
     this.getJenjang()
     this.getProdi()
-    this.OptTgl()
-    this.OptThn()
-    this.formattgl()
   },
+  
   methods:{
-    // filterProdi(val, update){
-    //     if (val === '') {
-    //       update(() => {
-    //         this.getProdi()
-    //         // options.value = stringOptions
-
-    //         // here you have access to "ref" which
-    //         // is the Vue reference of the QSelect
-    //       })
-    //       return
-    //     }
-    //     update(() => {
-    //       const needle = val.toLowerCase()
-    //       this.optprodi.value = this.optprodi.value.filter(v => v.toLowerCase().indexOf(needle) > -1)
-    //     })
-    // },
-    OptTgl(){
-      for (let index =1; index < 32; index++) {
-        this.opttgl.push(index)
-      }
-    },
-    OptThn(){
-      let now = new Date().getFullYear()
-      console.log(now)
-      for (let index =1930; index <= now; index++) {
-        this.optthn.push(index)
-      }
+    getProdi(){
+        api.get('complex/prodi')
+        .then((response)=>{
+            response.data.data.forEach(element => {
+            let opt ={}
+            opt.label = element.name
+            opt.value = element.id
+            this.optprodi.push(opt)
+            });
+        })
+        .catch((error)=> console.log("error",error))
     },
     getJenjang(){
         api.get('complex/education')
         .then((response)=>{
-          response.data.data.forEach(element => {
+            response.data.data.forEach(element => {
             let opt ={}
             opt.label = element.name
             opt.value = element.id
             this.optjenjang.push(opt)
-          });
+            });
         })
         .catch((error)=> console.log("error",error))
     },
-    getProdi(){
-      api.get('complex/prodi')
-      .then((response)=>{
-        response.data.data.forEach(element => {
-          let opt ={}
-          opt.label = element.name
-          opt.value = element.id
-          this.optprodi.push(opt)
-        });
-      })
-      .catch((error)=> console.log("error",error))
-    },
-    konfirmasi(val){
-            if(val === this.user.password){
-                return true;
-            }else{
-                return 'Password tidak sama';
-            }
-    },
-    formattgl(){
-      let tgls = this.selectedthn +'/' + this.selectedbln+'/'+this.selectedtgl
-      // console.log("tgls",tgls)
-      let tgl = date.formatDate(tgls,'DD MMMM YYYY',{
-        months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November','Desember'] 
-      })
-      return tgl
-    },
+    
     onSubmit(){
             this.load = true
             this.btndisabled = true
@@ -557,10 +258,10 @@ export default {
                 //     this.btndisabled = false
                 // })
                 if (this.alumni.id) {
-                  // dispatch api untuk alumni
+                  // dispatch api untuk register utk alumni
                   this.$store.dispatch('auth/cekEmail')
                 }else{
-                  // dispatch api untuk user baru
+                  // dispatch api untuk register utk user baru
                   this.$store.dispatch('auth/cekEmail')
                 }
                 this.$router.push('/regissuccess') 
@@ -568,23 +269,6 @@ export default {
                 this.btndisabled = false
             }, 5000);
     },
-    validUsername(val){
-      return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            api.post('auth/check-username',{
-              username:val
-            })
-            .then(() => {
-              resolve('username sudah ada')
-              this.validuser = false
-            })
-            .catch(() => {
-              resolve(true)
-              this.validuser = true
-            })
-          }, 1000)
-      })
-    }
   }
 };
 </script>
@@ -604,9 +288,7 @@ export default {
     margin-top:-100px;
     /* margin-bottom: 50px; */
   }
-.q-markup-table{
-  background: transparent;
-}
+
 .q-stepper__nav{
     display:flex;
     justify-content: space-between;
@@ -647,8 +329,8 @@ export default {
   width:21px;
   height:21px;
 }
-.judulringkasan{
-  width:30px;
+.q-btn--outline::before{
+  border: 2px solid currentColor;
 }
 </style>
 

@@ -24,9 +24,12 @@
         </div>
         </q-card-section>
         <q-card-actions align="center" class="q-pb-lg">
-            <q-btn no-caps label="Verifikasi & Lanjutkan" class="col" style="border-radius: 8px;" color="primary" :loading="load" :disabled="btndisabled" @click="$router.push('/registered')">
+            <q-btn no-caps label="Verifikasi & Lanjutkan" class="col" style="border-radius: 8px;" color="primary" :loading="load" :disabled="btndisabled" @click="onSend">
                 <template v-slot:loading>
-                    <q-spinner-facebook />
+                    <div class="row items-center">
+                        <p class="text-bold q-mb-none q-mr-sm">Loading...</p>
+                        <q-spinner-facebook />  
+                    </div>
                 </template>
             </q-btn>
         </q-card-actions>
@@ -83,6 +86,15 @@ export default {
                     }
                 });
             })
+        },
+        onSend(){
+            this.load = true
+            this.btndisabled = true
+            setTimeout(() => {
+                this.load = false
+                this.btndisabled = false
+                this.$router.push('/registered')
+            }, 1000);
         }
     }
 };

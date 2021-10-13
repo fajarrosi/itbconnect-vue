@@ -18,11 +18,7 @@
 // }
 
 const routes = [
-  {
-    path: '/logins',
-    name:'login4',
-    component: () => import('pages/Login.vue')
-  },
+  
   {
     path: '/login2',
     component: () => import('pages/Login2.vue')
@@ -92,14 +88,14 @@ const routes = [
   // },
   {
     path:'/',
-    redirect:'home',
     component: () => import('layouts/MobileLayout.vue'),
     children:[
-      {path:'home',name:'home',component:()=>import('pages/Home.vue')},
-      // {path:'inbox',name:'inbox',component:()=>import('pages/Inbox.vue')},
-      {path:'network',name:'network',component:()=>import('pages/Network.vue')},
-      {path:'news',name:'news',component:()=>import('pages/News.vue')},
-      {path:'account',name:'account',component:()=>import('pages/Account.vue')},
+      {path:'',name:'beranda',component:()=>import('pages/beranda/Beranda.vue')},
+      {path:'koneksi',name:'koneksi',component:()=>import('pages/Network.vue')},
+      {path:'berita',name:'berita',component:()=>import('pages/berita/Berita.vue')},
+      {path:'berita/detail',name:'berita-detail',component:()=>import('pages/berita/Detail.vue')},
+      {path:'profil',name:'profil',component:()=>import('pages/profil/Profil.vue')},
+      {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue')}
 
     ]
   },

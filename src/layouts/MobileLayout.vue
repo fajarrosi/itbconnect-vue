@@ -1,118 +1,242 @@
 <template>
-  <q-layout view="hHh lpr lFr">
+  <q-layout view="hHh lpr LFR">
 
-    <q-header elevated class="bg-primary text-white q-pa-sm" height-hint="98">
-      <q-toolbar>
-        <q-space class="gt-sm" />
-            <q-img
-              src="~assets/logo_header.png"
-              spinner-color="white"
-              fit="fill"
-              @click="$router.push({name:'home'})"
-              class="logo-itb q-mr-md"
-            v-if="$route.fullPath.includes('/home')"
-            />
-        <q-btn color="white" icon-right="search" label="Search" class="text-black q-mr-xs" no-caps align="between" style="width:400px" v-if="$route.fullPath.includes('/home')" @click="searchs = true"/>
-        <q-btn icon="notifications" flat v-if="$route.fullPath.includes('/home')">
-          <q-badge floating color="red" rounded>99</q-badge>
-          <q-menu class="q-mt-md ">
-          <q-list>
-              <q-item clickable  v-ripple>
-                <q-item-section avatar>
-                  <q-avatar rounded>
-                      <img src="icons/favicon-32x32.png">
-                  </q-avatar>
-
-                </q-item-section>
+    <q-header bordered class="bg-primary text-white q-pa-sm" height-hint="98">
+      <div class="row justify-center">
+        <div class="mobile">
+          <div class="row justify-between" v-if="$route.name.includes('beranda')">
+            <q-btn flat round dense icon="menu" class="q-mr-sm" @click="drawer = !drawer"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="65" height="38" viewBox="0 0 56 38">
+              <text id="CTD" transform="translate(0 30)" fill="#fff" font-size="29" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="0" y="0">CTD</tspan></text>
+            </svg>
+            <q-btn flat round dense icon="search" class="q-mr-xs" />
+          </div>
+          <div class="row" v-else>
+            <p class="text-h6 q-mb-none">{{titlePage}}</p>
+          </div>
+        </div>
+      </div>
+    </q-header>
+        <q-drawer
+          v-model="drawer"
+          :width="250"
+          behavior="mobile"
+        >
+          <q-scroll-area style="height: calc(100% - 170px); margin-top: 170px; border-right: 1px solid #ddd">
+            <q-list padding>
+              <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>Single line item</q-item-label>
-                  <q-item-label caption lines="2">Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit elit.</q-item-label>
-                </q-item-section>
-
-                <q-item-section side top>
-                  <q-item-label caption>5 min ago</q-item-label>
+                  <div class="row items-center">
+                    <img src="~assets/notifikasi.png" alt="notifikasi">
+                    <div class="text-black q-ml-sm">Notifikasi</div>
+                  </div>
                 </q-item-section>
               </q-item>
-          </q-list>
-          </q-menu>
-        </q-btn>
-          <q-toolbar-title v-else >
-            {{$route.name}}
-          </q-toolbar-title>
-        <q-space />
+              <q-item clickable v-ripple @click="$router.push({name:'calendar'})">
+                <q-item-section>
+                  <div class="row items-center">
+                    <img src="~assets/calendar.png" alt="calendar">
+                    <div class="text-black q-ml-sm">Calendar</div>
+                  </div>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-ripple>
+                <q-item-section>
+                  <div class="row items-center">
+                    <img src="~assets/pesan.png" alt="pesan">
+                    <div class="text-black q-ml-sm">Pesan</div>
+                  </div>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-ripple>
+                <q-item-section>
+                  <div class="row items-center">
+                    <img src="~assets/privasi.png" alt="privasi">
+                    <div class="text-black q-ml-sm">Pengaturan & Privasi</div>
+                  </div>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-ripple>
+                <q-item-section>
+                  <div class="row items-center">
+                    <img src="~assets/support.png" alt="support">
+                    <div class="text-black q-ml-sm">Bantuan & Feedback</div>
+                  </div>
+                </q-item-section>
+              </q-item>
+            </q-list>
+             
 
-      </q-toolbar>
-    
-    </q-header>
+          </q-scroll-area>
+          <div class="bg-primary absolute-top" style="height:170px;">
+            <div class="row justify-center">
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered   :breakpoint="1000" class="bg-grey-2">
-      <!-- drawer content -->
-    </q-drawer>
+              <q-avatar size="70px" class="q-mb-sm q-mt-md">
+                <img src="~assets/akun.png">
+              </q-avatar>
+              <div class="text-weight-bold col-12 text-white text-center">Gembong Primadjaya</div>
+              <div class="col-12 text-white text-center">@gembongpri</div>
+              <div class="col-5 text-white text-center row items-center justify-center">
+                    <img src="~assets/link.png" alt="place" style="display:inline-block;filter: brightness(0) invert(1);">
+                    <p class="q-my-none q-ml-sm">225</p>
+              </div>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered   :breakpoint="1000" class="bg-grey-2">
-      <!-- drawer content -->
-    </q-drawer>
+            </div>
+          </div>
+          <div class="absolute-bottom">
+            <q-separator spaced />
+            <q-list padding>
+              <q-item clickable v-ripple>
+                 <q-item-section>
+                  <div class="row items-center">
+                      <img src="~assets/logout.png" alt="Logout">
+                    <div class="text-black q-ml-sm">Logout</div>
+                  </div>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </div>
+        </q-drawer>
 
-    <q-page-container>
-        <router-view />
+<!-- <div class="row justify-center container-drawer">
+  <div class="mobile text-black">
+    <div  class="content-drawer">
+        <q-list padding>
+              <q-item clickable v-ripple>
+                <q-item-section avatar>
+                  <q-icon name="inbox" />
+                </q-item-section>
+
+                <q-item-section>
+                  Notifikasi
+                </q-item-section>
+              </q-item>
+
+              <q-item active clickable v-ripple>
+                <q-item-section avatar>
+                  <q-icon name="star" />
+                </q-item-section>
+
+                <q-item-section>
+                  Calendar
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-ripple>
+                <q-item-section avatar>
+                  <q-icon name="send" />
+                </q-item-section>
+
+                <q-item-section>
+                  Pesan
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-ripple>
+                <q-item-section avatar>
+                  <q-icon name="drafts" />
+                </q-item-section>
+
+                <q-item-section>
+                  Pengaturan & Privasi
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-ripple>
+                <q-item-section avatar>
+                  <q-icon name="drafts" />
+                </q-item-section>
+
+                <q-item-section>
+                  Bantuan & Feedback
+                </q-item-section>
+              </q-item>
+            </q-list>
+    </div>
+  </div>
+</div> -->
+
+    <q-page-container >
+      <div class="row justify-center bg-grey-2">
+        <div class="mobile bg-secondary">
+          <router-view></router-view>
+        </div>
+      </div>
+      <!-- <div class="row justify-center bg-grey-3">
+        <div class="mobile2 bg-white">
+          <q-tabs class="text-black foot" no-caps  
+              indicator-color="white"
+              >
+                  <q-route-tab 
+                  v-for="t in tabs" :key="t"
+                  :to="t.route"
+                  :icon="t.icon"
+                  :label="t.label"
+                  
+                  exact
+                  active-class="custom-active"
+                  @click="drawerLeft = !drawerLeft"
+                  />
+              </q-tabs>
+        </div>
+      </div> -->
     </q-page-container>
-        <search v-model:search="searchs"></search>
-
-    <q-footer elevated class="bg-white">
-        <q-tabs class="text-black" no-caps  
-        indicator-color="white"
-        >
-            <q-route-tab 
-            v-for="t in tabs" :key="t"
-            :to="t.route"
-            :icon="t.icon"
-            
-            exact
-            active-class="custom-active"
-            @click="drawerLeft = !drawerLeft"
-            />
-        </q-tabs>
+    <q-footer >
+      <div class="row justify-center bg-grey-2">
+        <div class="mobile bg-white row text-center text-black">
+            <div class="col q-py-sm footer-menu relative-position" v-ripple @click="$router.push({name:'beranda'})">
+              
+                <img src="~assets/beranda-on.png" alt="beranda-on" v-if="$route.name.includes('beranda')">
+                <img src="~assets/beranda-off.png" alt="beranda-off" v-else>
+                <div class="text-caption" :class="$route.name.includes('beranda') ? 'text-primary' : 'text-black'">Beranda</div>
+            </div>
+            <div class="col q-py-sm footer-menu relative-position"  v-ripple @click="$router.push({name:'koneksi'})">
+                <img src="~assets/koneksi-on.png" alt="koneksi-on" v-if="$route.fullPath.includes('/koneksi')">
+              <img src="~assets/koneksi-off.png" alt="koneksi-off" v-else>
+                <div class="text-caption" :class="$route.fullPath.includes('/koneksi') ? 'text-primary' : 'text-black'">Koneksi</div>
+            </div>
+            <div class="col q-py-sm footer-menu relative-position"  v-ripple @click="$router.push({name:'berita'})">
+              <img src="~assets/berita-on.png" alt="berita-on" v-if="$route.fullPath.includes('/berita')">
+              <img src="~assets/berita-off.png" alt="berita-off" v-else>
+              <div class="text-caption" :class="$route.fullPath.includes('/berita') ? 'text-primary' : 'text-black'">Berita</div>
+            </div>
+            <div class="col q-py-sm footer-menu relative-position" v-ripple @click="$router.push({name:'profil'})">
+              <img src="~assets/profil-on.png" alt="profil-on" v-if="$route.fullPath.includes('/profil')">
+              <img src="~assets/profil-off.png" alt="profil-off" v-else>
+              <div class="text-caption" :class="$route.fullPath.includes('/profil') ? 'text-primary' : 'text-black'">Profil</div>
+            </div>
+        </div>
+      </div>
     </q-footer>
-
+    
+        <search v-model:search="searchs"></search>
   </q-layout>
 </template>
 
 <script>
-const tabs = [
-    {
-        route : { name: 'home' },
-        icon :'home'
-    },
-    {
-        route : { name: 'network' },
-        icon :'groups'
-    },
-    {
-        route : { name: 'news' },
-        icon :'feed'
-    },
-    {
-        route : { name: 'account' },
-        icon :'account_circle'
-    },
-]
+
 import { ref } from 'vue'
 
 export default {
   setup () {
-    const leftDrawerOpen = ref(false)
-    const rightDrawerOpen = ref(false)
+    const drawer = ref(false)
     // const search = ref(false)
 
     return {
-      leftDrawerOpen,
-      rightDrawerOpen,
+      drawer,
       // search
     }
   },
+  computed:{
+      titlePage(){
+        let val = this.$route.name
+        if (!val) {
+          return ''
+        }
+        return val.replace(/^./, val[0].toUpperCase())
+      }
+  },
   data(){
     return{
-      tabs,
       searchs: false
     }
   },
@@ -122,16 +246,31 @@ export default {
 }
 </script>
 <style lang="scss">
+.footer-menu:hover{
+  cursor:pointer;
+}
 .custom-active{
   color: $primary;
 }
-.logo-itb{
-  height: 50px;
-  max-width: 200px;
-  background-color:white; 
-  border-radius:4px;
-  &:hover{
-    cursor:pointer;
+
+.mobile{
+  width:428px;
+}
+.q-tab__label{
+  font-size:10px;
+}
+.container-drawer{
+  background-color:rgba(0, 0, 0, 0.4);
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:9999;
+  .content-drawer{
+    background-color:white;
+    width:250px;
+    height:100vh;
   }
 }
 </style>
