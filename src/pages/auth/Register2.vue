@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <q-card flat>
+    <q-card flat class="auth-card">
       <q-card-section>
         <q-stepper
           v-model="step"
@@ -42,7 +42,7 @@
                 @click="$refs.stepper.previous()"
                 label="Sebelumnya"
                 class="q-mr-sm col"
-                style="border-radius: 8px; color:#bfc0c0;"
+                style="border-radius: 8px; color:#707070;;"
                 size="12px"
                 no-caps
               />

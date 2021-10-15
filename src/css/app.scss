@@ -16,7 +16,6 @@
 .title-section{
 	white-space: nowrap;
 	text-align: left;
-	font-family: Roboto;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 15px;
@@ -68,4 +67,16 @@
 }
 .text-17{
 	font-size: 17px;
+}
+
+.auth-card{
+	border-radius: 15px;
+    background-color: #EBEDED;
+}
+
+.btn-radius{
+	border-radius: 8px;
+}
+.profil-color{
+	color:#7b7a7a;
 }

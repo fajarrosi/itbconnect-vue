@@ -38,24 +38,64 @@
                     </div>
                     <div class="col-4 text-edit">Tahun Masuk </div>
                     <q-input
-                    dense
-                    outlined
-                    v-model="pend.tahunmasuk"
-                    placeholder="Tahun Masuk"
-                    class="q-mb-sm col-8"
-                    bg-color="white"
-                    hide-bottom-space
-                    />
+                        outlined
+                        dense
+                        lazy-rules
+                        v-model="pend.tahunmasuk" mask="####" 
+                        class="q-mb-sm col-8"
+                        bg-color="white"
+                        hide-bottom-space
+                        hide-hint
+                        placeholder="Tahun Masuk"
+                        bottom-slots
+                        >
+                        <template v-slot:after>
+                            <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy ref="tahunmasuk" transition-show="scale" transition-hide="scale">
+                                <q-date v-model="pend.tahunmasuk" minimal default-view="Years" emit-immediately mask="YYYY"
+                                @update:model-value="checkValue"
+                                >
+                                <!-- <div class="row items-center justify-end">
+                                    <q-btn v-close-popup label="OK" color="primary" flat />
+                                </div> -->
+                                </q-date>
+                            </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                        <template v-slot:hint>
+                        *) Pilih tanggal dengan mengklik icon disebelah kanan
+                        </template>
+                        </q-input>
                     <div class="col-4 text-edit">Tahun Keluar </div>
                     <q-input
-                    dense
-                    outlined
-                    v-model="pend.tahunkeluar"
-                    placeholder="Tahun Keluar"
-                    class="q-mb-sm col-8"
-                    bg-color="white"
-                    hide-bottom-space
-                    />
+                        outlined
+                        dense
+                        lazy-rules
+                        v-model="pend.tahunkeluar" mask="####" 
+                        class="q-mb-sm col-8"
+                        bg-color="white"
+                        hide-bottom-space
+                        hide-hint
+                        placeholder="Tahun Masuk"
+                        bottom-slots
+                        >
+                        <template v-slot:after>
+                            <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy ref="tahunkeluar" transition-show="scale" transition-hide="scale">
+                                <q-date v-model="pend.tahunkeluar" minimal default-view="Years" emit-immediately mask="YYYY"
+                                @update:model-value="checkValue2"
+                                >
+                                <!-- <div class="row items-center justify-end">
+                                    <q-btn v-close-popup label="OK" color="primary" flat />
+                                </div> -->
+                                </q-date>
+                            </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                        <template v-slot:hint>
+                        *) Pilih tanggal dengan mengklik icon disebelah kanan
+                        </template>
+                        </q-input>
                     <q-btn class="col-12" color="primary" icon="close" label="Hapus Pendidikan" flat dense @click="remove(k)" no-caps  v-if="k >0" style="font-style:italic;"/>
                 </div>
                 
@@ -148,6 +188,16 @@ export default {
                 this.$emit('update:dpend', false)
             }   
 
+        },
+        checkValue (val, reason, details) {
+            if (reason === 'year') {
+                this.$refs.tahunmasuk.hide()
+            }
+        },
+        checkValue2 (val, reason, details) {
+            if (reason === 'year') {
+                this.$refs.tahunkeluar.hide()
+            }
         }
     }
 }

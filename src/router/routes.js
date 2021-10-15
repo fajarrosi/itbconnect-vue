@@ -91,11 +91,14 @@ const routes = [
     component: () => import('layouts/MobileLayout.vue'),
     children:[
       {path:'',name:'beranda',component:()=>import('pages/beranda/Beranda.vue')},
-      {path:'koneksi',name:'koneksi',component:()=>import('pages/Network.vue')},
+      {path:'koneksi',name:'koneksi',component:()=>import('pages/koneksi/Koneksi.vue')},
       {path:'berita',name:'berita',component:()=>import('pages/berita/Berita.vue')},
       {path:'berita/detail',name:'berita-detail',component:()=>import('pages/berita/Detail.vue')},
       {path:'profil',name:'profil',component:()=>import('pages/profil/Profil.vue')},
-      {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue')}
+      {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue'),meta:{setting:true}},
+      {path:'notifikasi',name:'notifikasi',component:()=>import('pages/notifikasi/Notifikasi.vue'),meta:{setting:true}},
+      {path:'pesan',name:'pesan',component:()=>import('pages/pesan/Pesan.vue'),meta:{setting:true}},
+      {path:'pengaturan',name:'setting&Privasi',component:()=>import('pages/pengaturan/Pengaturan.vue'),meta:{setting:true}},
 
     ]
   },

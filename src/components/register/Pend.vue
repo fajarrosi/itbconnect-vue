@@ -6,7 +6,7 @@
         </div>
         <hr class="line-cards q-my-md">
         <q-select  outlined dense  :modelValue="jenjang" 
-        @update:modelValue="event => $emit('update:jenjang', event)"  :options="optjenjang" label="Jenjang Pendidikan Terakhir di ITB" bg-color="white" />
+        @update:modelValue="event => $emit('update:jenjang', event)"  :options="optjenjang" label="Jenjang Pendidikan Pertama di ITB" bg-color="white" />
         <q-select  outlined dense  :modelValue="prodi" 
         @update:modelValue="event => $emit('update:prodi', event)"  :options="optprodi" label="Program Studi" bg-color="white" class="q-my-sm" />
         <!-- <q-select  outlined dense v-model="user.selectedprodi" :options="options" label="Program Studi" bg-color="white" class="q-my-sm"  @filter="filterProdi" use-input

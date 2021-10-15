@@ -1,7 +1,6 @@
 <template>
   <q-page >
-    <q-card flat>
-     
+    <q-card flat class="auth-card">
       <q-card-section>
             <q-stepper v-model="step" ref="stepper" color="primary" animated contracted flat inactive-color="white" 
             active-icon="primary"
@@ -38,33 +37,32 @@
                 <q-btn
                     v-if="step == 4"
                     outline
-                    color="grey-8"
                     @click="step = 1"
                     label="Ubah Data"
                     no-caps
-                    class="q-mr-md col"
-                    style="border-radius: 8px;"
+                    class="q-mr-md col btn-radius"
+                    style=" color:#707070;"
                     size="12px"
                 />
                 <q-btn
                     v-if="step > 1 && step !== 4"
                     outline
-                    color="grey-8"
+                    
                     @click="$refs.stepper.previous()"
                     label="Sebelumnya"
-                    class="q-mr-md col"
-                    style="border-radius: 8px;"
+                    class="q-mr-md col btn-radius"
+                    style=" color:#707070;"
                     size="12px"
                     no-caps
                 />
                 <q-btn
                     v-if="step === 1"
                     outline
-                    color="grey-8"
+                    
                     @click="$router.push('/cekemail')"
                     label="Sebelumnya"
-                    class="q-mr-md col"
-                    style="border-radius: 8px; color:#bfc0c0;"
+                    class="q-mr-md col btn-radius"
+                    style=" color:#707070;"
                     size="12px"
                     no-caps
                 />
@@ -73,8 +71,8 @@
                     @click="onSubmit"
                     color="primary"
                     label="Rekam Data"
-                    class="col"
-                    style="border-radius: 8px;"
+                    class="col btn-radius"
+                    
                     size="12px"
                     :loading="load"
                     no-caps
@@ -93,9 +91,9 @@
                     :color="valid ? 'primary' : 'grey'"
                     :disabled="!valid"
                     label="Berikutnya"
-                    style="border-radius: 8px; "
+                    
                     no-caps
-                    class="col"
+                    class="col btn-radius"
                     size="12px"
                     
                 />

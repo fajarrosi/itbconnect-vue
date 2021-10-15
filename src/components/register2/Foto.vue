@@ -39,7 +39,7 @@
         outline
         label="Sebelumnya"
         class="q-mr-sm col-4"
-        style="border-radius: 8px; color:#bfc0c0;"
+        style="border-radius: 8px; color:#707070;"
         size="12px"
         no-caps
         @click="prev()"

@@ -1,6 +1,4 @@
 <template>
-  <!-- <div class="row bg-grey-2 justify-center"> -->
-    <!-- <div class="base-container shadow-2 flex items-center"> -->
       <q-layout view="hHh lpR lfr" >
         <!-- <q-header  >
             <div class="row justify-center logo">
@@ -55,19 +53,24 @@
           </div>
         </q-footer> -->
       </q-layout>
-    <!-- </div> -->
-  <!-- </div> -->
 </template>
 
 <script>
 export default {};
 </script>
-<style lang="scss">
-// .q-header{
-//   background-color: $secondary;
-// }
+<style scoped>
+/* .q-header{
+   background-color: $secondary;
+ } */
 
-.q-page-container {
+.q-page-container .logo{
+  padding-top: 60px;
+}
+
+.copyright {
+      color: #05386b;
+}
+/* .q-page-container {
   .logo{
     padding-top: 60px;
   }
@@ -78,15 +81,15 @@ export default {};
   .copyright {
       color: #05386b;
     }
-}
+} */
 
-// .q-footer{
-//   .copyright {
-//       color: #05386b;
-//     }
-// }
-.q-card__section, .q-card__actions{
+ /* .q-footer{
+   .copyright {
+       color: #05386b;
+     }
+ } */
+/* .q-card__section, .q-card__actions{
   padding-left: 20px;
   padding-right: 20px;
-}
+} */
 </style>

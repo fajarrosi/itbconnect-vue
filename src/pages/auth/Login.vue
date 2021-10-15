@@ -1,6 +1,6 @@
 <template>
   <q-page >
-    <q-card flat>
+    <q-card flat class="auth-card">
       <q-card-section class="q-pb-none">
         <div class="text-h5 text-bold text-primary">SIGN IN</div>
         <div class="text-subtitle2 q-my-md text-justify" style="font-size: 15px;line-height: 20px;">
@@ -55,7 +55,8 @@
                 :loading="load"
                 :disabled="btndisabled"
                 no-caps
-                style="width: 100%; border-radius: 8px;" 
+                style="width: 100%;"
+                class="btn-radius" 
                 padding="sm"
                 
                 >
@@ -120,7 +121,4 @@ export default {
 };
 </script>
 <style>
-.q-field--outlined .q-field__control{
-    border-radius: 8px;
-}
 </style>

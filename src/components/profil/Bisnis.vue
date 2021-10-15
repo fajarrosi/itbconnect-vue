@@ -8,7 +8,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 <q-icon name="edit" size="15px"/>
             </q-btn>
         </div>
-        <div v-for="n in 3" :key="n">
+        <div v-for="n in 3" :key="n" class="profil-color">
             <div class="row">
                 <img src="~assets/blogo.png" alt="bisnislogo" class="col-3" style="width:97px;">
                 <div class="col-8">

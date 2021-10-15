@@ -5,13 +5,13 @@
                 <q-card-section>
                 <div class="row justify-center">
                 <q-img
-                    src="~assets/question.png"
+                    src="~assets/no-data.png"
                     spinner-color="primary"
                     style="width: 118px; height: 112px;"
                     spinner-size="82px"
                 />
-                    <p class="text-center q-mt-md text-primary text-bold col-12">
-                        Anda tidak bisa mengakses halaman lain sebelum terverifikasi oleh admin, pastikan melengkapi data yang dibutuhkan
+                    <p class="text-center q-mt-md text-primary text-bold col-12" style="font-size:18px;">
+                        Lengkapi data-data yang belum diisikan saat registrasi
                     </p>
                     <q-btn label="Edit Profil" color="primary" style="border-radius: 8px;" no-caps @click="edit" class="col-10"/>
                 </div>

@@ -1,6 +1,6 @@
 <template>
   <q-page >
-    <q-card flat>
+    <q-card flat class="auth-card">
         <q-card-section class="q-pb-none">
             <div class="text-h5 text-bold text-primary text-center">BERHASIL</div>
             <div class="row justify-center">
@@ -15,7 +15,7 @@
             Anda berhasil melakukan pendaftaran. Silahkan lanjutkan dengan proses verifikasi. Anda akan mendapatkan kode verifikasi melalui e-mail terdaftar.
         </div>
         </q-card-section>
-        <q-card-actions align="center" class="q-pb-lg">
+        <q-card-actions align="center" class="q-pb-lg q-px-lg">
             <q-btn no-caps label="Lanjut Verifikasi" style="border-radius: 8px; " class="col " color="primary" :loading="load" :disabled="btndisabled" @click="$router.push('/otp')">
                 <template v-slot:loading>
                     <q-spinner-facebook />

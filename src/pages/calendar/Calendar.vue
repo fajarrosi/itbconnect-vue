@@ -9,7 +9,7 @@
         </div>
         <q-card class="q-mt-lg" flat>
             <q-card-section class="q-pa-none bg-secondary" >
-                <q-scroll-area style="height: 90vh;">
+                <q-scroll-area style="height: 65vh;">
                 <div class="row" v-if="Object.keys(onShow).length == 0">
                     <div class="col text-center text-primary q-pa-sm left-even" style="font-size:20px;">Belum Ada Agenda</div>
                 </div>

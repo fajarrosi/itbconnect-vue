@@ -8,7 +8,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 <q-icon name="edit" size="15px"/>
             </q-btn>
         </div>
-            <ul style="padding-left:0; color:#7b7a7a;list-style:none;" class="q-my-none">
+            <ul style="padding-left:0;list-style:none;" class="q-my-none profil-color">
                 <li>
                     Unit Kebudayaan Betawi (UKB)
                 </li>

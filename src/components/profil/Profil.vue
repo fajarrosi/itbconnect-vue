@@ -8,35 +8,35 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 <q-icon name="edit" size="15px"/>
             </q-btn>
         </div>
-        <div class="row profil-table">
+        <div class="row profil-color">
             <div class="col-4">Nama Lengkap</div>
             <div class="col-6">: Testing</div>
         </div>
-        <div class="row profil-table">
+        <div class="row profil-color">
             <div class="col-4">Jenis Kelamin</div>
             <div class="col-3">: Laki-laki</div>
             <div class="col-3">Gol. Darah</div>
             <div class="col-2">: O</div>
         </div>
-        <div class="row profil-table">
+        <div class="row profil-color">
             <div class="col-4">Status</div>
             <div class="col-3">: Menikah</div>
             <div class="col-3">Agama</div>
             <div class="col-2">: Islam</div>
         </div>
-        <div class="row profil-table">
+        <div class="row profil-color">
             <div class="col-4">Kewarganegaraan</div>
             <div class="col-6">: Indonesia</div>
         </div>
-        <div class="row profil-table">
+        <div class="row profil-color">
             <div class="col-4">Alamat Dalam Negeri</div>
             <div class="col-8 text-justify">: Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea suscipit totam incidunt laudantium atque saepe quisquam, voluptas error consequatur ducimus!</div>
         </div>
-        <div class="row profil-table">
+        <div class="row profil-color">
             <div class="col-4">Email</div>
             <div class="col-6">: alamaemeial@gmail.com</div>
         </div>
-        <div class="row profil-table">
+        <div class="row profil-color">
             <div class="col-4">No. Telepon</div>
             <div class="col-6">: 0822-2333-3444</div>
         </div>
@@ -70,10 +70,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-
-.profil-table{
-    color:#7b7a7a;
-}
-
-</style>

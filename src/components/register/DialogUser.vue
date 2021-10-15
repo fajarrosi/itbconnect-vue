@@ -1,6 +1,6 @@
 <template>
     <div> 
-        <q-dialog :model-value="alumnus" @click="$emit('update:alumnus', $event.target.value)" persistent transition-show="scale" transition-hide="scale">
+        <q-dialog :model-value="alumnus" @click="$emit('update:alumnus', $event.target.value)" persistent>
             <q-card>
                 <q-card-section>
                 <div class="text-h5 text-bold text-primary text-center">Anda Sudah Pernah Terdaftar</div>
@@ -15,10 +15,11 @@
                 <p class="text-center q-mt-md">
                     Database Anda sudah terdaftar. Silahkan klik lanjutkan untuk proses selanjutnya.
                 </p>
+                <div class="row justify-center">
+                    <q-btn label="Lanjutkan" color="primary" style="border-radius: 8px;" no-caps @click="$emit('update:alumnus', false)" />
+                </div>
                 </q-card-section>
-                <q-card-actions align="center">
-                <q-btn label="Lanjutkan" color="primary" style="border-radius: 8px;" no-caps @click="$emit('update:alumnus', false)" />
-                </q-card-actions>
+               
             </q-card>
     </q-dialog>
     </div>
@@ -32,6 +33,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.q-card{
+    width:418px;
+    border-radius: 20px;
+}
 </style>

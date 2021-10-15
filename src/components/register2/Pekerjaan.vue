@@ -6,8 +6,35 @@
         </div>
         <hr class="line-cards q-my-md">
         <p class="text-caption text-bold">Pekerjaan Terakhir</p>
+        <q-input
+            outlined
+            dense
+            :modelValue="perusahaan"
+            @update:modelValue="event => $emit('update:perusahaan', event)"
+            label="Perusahaan"
+            lazy-rules
+            :rules="[
+            (val) => (val && val.length > 0) || 'perusahaan tidak boleh kosong',
+            ]"
+            class="q-mb-sm"
+            bg-color="white"
+            hide-bottom-space
+            />
         <q-select  outlined dense :modelValue="profesi" @update:modelValue="event => $emit('update:profesi',event)" :options="optprofesi" label="Profesi" bg-color="white" class="q-mb-sm"/>
-        <q-select  outlined dense :modelValue="jabatan" @update:modelValue="event => $emit('update:jabatan',event)" :options="optjbtn" label="Jabatan" bg-color="white" class="q-mb-sm"/>
+        <q-input
+            outlined
+            dense
+            :modelValue="jabatan"
+            @update:modelValue="event => $emit('update:jabatan', event)"
+            label="Jabatan"
+            lazy-rules
+            :rules="[
+            (val) => (val && val.length > 0) || 'jabatan tidak boleh kosong',
+            ]"
+            class="q-mb-sm"
+            bg-color="white"
+            hide-bottom-space
+            />
     </div>
 </template>
 
@@ -25,21 +52,12 @@ export default {
                     value:'2'
                 }
             ],
-            optjbtn:[
-                {
-                    label:'Jabatan1',
-                    value:'1'
-                },
-                {
-                    label:'Jabatan2',
-                    value:'2'
-                }
-            ]
         }
     },
     props:[
         'profesi',
-        'jabatan'
+        'jabatan',
+        'perusahaan'
     ]
 }
 </script>

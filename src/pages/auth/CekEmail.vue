@@ -1,6 +1,6 @@
 <template>
   <q-page >
-    <q-card flat>
+    <q-card flat class="auth-card">
       <q-card-section class="q-pb-none">
         <div class="text-h5 text-bold text-primary">E-mail Anda</div>
         <div class="text-subtitle2 q-mt-md text-justify">
@@ -28,7 +28,8 @@
                 :loading="load"
                 :disabled="btndisabled"
                 no-caps
-                style="border-radius: 8px;padding-left:24px;padding-right:24px;" 
+                style="padding-left:24px;padding-right:24px;" 
+                class="btn-radius"
                 @click="cekemail"
                 >
                 <template v-slot:loading>
@@ -90,8 +91,3 @@ export default {
     }
 };
 </script>
-<style>
-.q-field--outlined .q-field__control{
-    border-radius: 8px;
-}
-</style>

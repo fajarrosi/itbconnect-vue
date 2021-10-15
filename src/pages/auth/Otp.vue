@@ -1,6 +1,6 @@
 <template>
   <q-page >
-    <q-card flat>
+    <q-card flat class="auth-card">
         <q-card-section class="q-pb-none">
             <div class="row justify-center">
                 <q-img
@@ -14,13 +14,13 @@
             Masukan kode OTP yang dikirim
         </div>
         <div class="row justify-center" >
-                <q-input outlined bg-color="orange-2"  v-model="otp1" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
-                <q-input outlined bg-color="orange-2"  v-model="otp2" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
-                <q-input outlined bg-color="orange-2"  v-model="otp3" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
-                <q-input outlined bg-color="orange-2"  v-model="otp4" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs"/>
+                <q-input outlined bg-color="custom"  v-model="otp1" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs "/>
+                <q-input outlined bg-color="custom"  v-model="otp2" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs "/>
+                <q-input outlined bg-color="custom"  v-model="otp3" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs "/>
+                <q-input outlined bg-color="custom"  v-model="otp4" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs "/>
         </div>
         <div class="row">
-                <span class="col-12 q-mt-sm text-center">Tidak menerima kode? <q-btn color="orange-7" label="Kirim Ulang" flat no-caps style="text-decoration: underline;" @click="showNotif()"/></span>
+                <span class="col-12 q-mt-sm text-center">Tidak menerima kode? <q-btn label="Kirim Ulang" flat no-caps style="text-decoration: underline;color:#F37128;" @click="showNotif()"/></span>
         </div>
         </q-card-section>
         <q-card-actions align="center" class="q-pb-lg">
@@ -100,9 +100,18 @@ export default {
 };
 </script>
 <style scoped>
+.bg-custom{
+    background:#F5E1D3 !important;
+}
+
 .q-field--outlined :deep() .q-field__control{
     border-radius: 8px;
     width:72px;
+    background:#F5E1D3 !important;
     height:82px;
+}
+
+.q-field--outlined :deep() .q-field__control::before{
+    border:1px solid #EFBFA4;
 }
 </style>

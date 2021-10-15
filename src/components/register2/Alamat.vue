@@ -10,8 +10,6 @@
         <div v-if="dalam.value === '1'">
             <q-select  outlined dense :modelValue="prov" @update:modelValue="event => $emit('update:prov',event)" :options="optprov" label="Provinsi" bg-color="white" class="q-mb-sm"/>
             <q-select  outlined dense :modelValue="kota" @update:modelValue="event => $emit('update:kota',event)" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm"/>
-            <q-select  outlined dense :modelValue="kec" @update:modelValue="event => $emit('update:kec',event)" :options="optkec" label="Kecamatan" bg-color="white" class="q-mb-sm"/>
-            <q-select  outlined dense :modelValue="kel" @update:modelValue="event => $emit('update:kel',event)" :options="optkel" label="Kelurahan" bg-color="white" class="q-mb-sm"/>
             <q-input
             outlined
             dense
@@ -81,26 +79,6 @@ export default {
                 value:'2'
             },
         ],
-        optkec:[
-            {
-                label:'Kec1',
-                value:'1'
-            },
-            {
-                label:'Kec2',
-                value:'2'
-            },
-        ],
-        optkel:[
-            {
-                label:'Kel1',
-                value:'1'
-            },
-            {
-                label:'Kel2',
-                value:'2'
-            },
-        ],
         optnegara:[
             {
                 label:'Neg1',
@@ -118,8 +96,6 @@ export default {
         'dalam',
         'prov',
         'kota',
-        'kec',
-        'kel',
         'negara',
         'alamat'
     ],

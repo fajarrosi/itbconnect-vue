@@ -11,6 +11,12 @@
             </svg>
             <q-btn flat round dense icon="search" class="q-mr-xs" />
           </div>
+          <div class="row" v-else-if="$route.meta.setting">
+            <q-btn flat icon="arrow_back" class="text-white" no-caps dense @click="$router.push('/')"/>
+            <p class="text-h6 q-mb-none">
+              {{titlePage}}
+            </p>
+          </div>
           <div class="row" v-else>
             <p class="text-h6 q-mb-none">
               {{titlePage}}
@@ -26,7 +32,7 @@
         >
           <q-scroll-area style="height: calc(100% - 170px); margin-top: 170px; border-right: 1px solid #ddd">
             <q-list padding>
-              <q-item clickable v-ripple>
+              <q-item clickable v-ripple @click="$router.push({name:'notifikasi'})">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/notifikasi.png" alt="notifikasi">
@@ -42,7 +48,7 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-ripple>
+              <q-item clickable v-ripple @click="$router.push({name:'pesan'})">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/pesan.png" alt="pesan">
@@ -50,7 +56,7 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-ripple>
+              <q-item clickable v-ripple @click="$router.push({name:'setting&Privasi'})">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/privasi.png" alt="privasi">
@@ -182,7 +188,7 @@
         </div>
       </div> -->
     </q-page-container>
-    <q-footer >
+    <q-footer v-if="!$route.meta.setting">
       <div class="row justify-center bg-grey-2">
         <div class="mobile bg-white row text-center text-black">
             <div class="col q-py-sm footer-menu relative-position" v-ripple @click="$router.push({name:'beranda'})">
