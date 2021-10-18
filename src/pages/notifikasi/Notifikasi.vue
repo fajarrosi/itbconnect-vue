@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-3 text-right">
                         <q-btn class="bg-white btnclose q-mr-sm" icon="close" round size="sm"/>
-                        <q-btn color="primary" icon="done" round size="sm"/>
+                        <q-btn color="primary" icon="done" round size="sm" class="btncek"/>
                     </div>
                 </div>
                 <div class="row">
@@ -56,5 +56,8 @@ export default {
     box-shadow: none;
     border:1px solid rgba(122,114,114,1);
     color:rgba(122,114,114,1);
+}
+.btncek.q-btn::before{
+    box-shadow: none;
 }
 </style>
