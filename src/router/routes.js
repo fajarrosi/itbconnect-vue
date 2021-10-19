@@ -86,19 +86,58 @@ const routes = [
      
   //   ]
   // },
+  {path:'/cari',name:'cari',component:()=>import('pages/search/Search.vue')},
   {
     path:'/',
     component: () => import('layouts/MobileLayout.vue'),
     children:[
       {path:'',name:'beranda',component:()=>import('pages/beranda/Beranda.vue')},
       {path:'koneksi',name:'koneksi',component:()=>import('pages/koneksi/Koneksi.vue')},
+      {path:'cari-alumni',name:'Cari Alumni',component:()=>import('pages/koneksi/Search.vue'),
+        meta:{
+          nofooter:true,
+          headerback:true
+        }
+      },
+      {path:'hasil-pencarian-alumni',name:'Hasil Pencarian',component:()=>import('pages/koneksi/ResultSearch.vue'),
+        meta:{
+          nofooter:true,
+          headerback:true
+        }
+      },
       {path:'berita',name:'berita',component:()=>import('pages/berita/Berita.vue')},
       {path:'berita/detail',name:'berita-detail',component:()=>import('pages/berita/Detail.vue')},
       {path:'profil',name:'profil',component:()=>import('pages/profil/Profil.vue')},
-      {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue'),meta:{setting:true}},
-      {path:'notifikasi',name:'notifikasi',component:()=>import('pages/notifikasi/Notifikasi.vue'),meta:{setting:true}},
-      {path:'pesan',name:'pesan',component:()=>import('pages/pesan/Pesan.vue'),meta:{setting:true}},
-      {path:'pengaturan',name:'setting&Privasi',component:()=>import('pages/pengaturan/Pengaturan.vue'),meta:{setting:true}},
+      {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue'),
+        meta:{
+          nofooter:true,
+          headerback:true
+        }
+      },
+      {path:'notifikasi',name:'notifikasi',component:()=>import('pages/notifikasi/Notifikasi.vue'),
+        meta:{
+          nofooter:true,
+          headerback:true
+        }
+      },
+      {path:'pesan',name:'pesan',component:()=>import('pages/pesan/Pesan.vue'),
+        meta:{
+          nofooter:true,
+          headerback:true
+        }
+      },
+      {path:'detail',name:'detail-pesan',component:()=>import('pages/pesan/Detail.vue'),
+        meta:{
+          nofooter:true,
+          headerback:true
+        }
+      },
+      {path:'pengaturan',name:'setting&Privasi',component:()=>import('pages/pengaturan/Pengaturan.vue'),
+        meta:{
+          nofooter:true,
+          headerback:true
+        }
+      },
 
     ]
   },

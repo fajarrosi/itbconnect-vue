@@ -9,10 +9,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="65" height="38" viewBox="0 0 56 38">
               <text id="CTD" transform="translate(0 30)" fill="#fff" font-size="29" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="0" y="0">CTD</tspan></text>
             </svg>
-            <q-btn flat round dense icon="search" class="q-mr-xs" />
+            <q-btn flat round dense icon="search" class="q-mr-xs" @click="$router.push({name:'cari'})"/>
           </div>
-          <div class="row" v-else-if="$route.meta.setting">
-            <q-btn flat icon="arrow_back" class="text-white" no-caps dense @click="$router.push('/')"/>
+          <div class="row" v-else-if="$route.meta.headerback">
+            <q-btn flat icon="arrow_back" class="text-white" no-caps dense @click="$router.back()"/>
             <p class="text-h6 q-mb-none">
               {{titlePage}}
             </p>
@@ -64,7 +64,7 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-ripple>
+              <q-item v-ripple tag="a" href="https://wa.me/6287888000015" target="_blank">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/support.png" alt="support">
@@ -73,8 +73,6 @@
                 </q-item-section>
               </q-item>
             </q-list>
-             
-
           </q-scroll-area>
           <div class="bg-primary absolute-top" style="height:170px;">
             <div class="row justify-center">
@@ -188,9 +186,9 @@
         </div>
       </div> -->
     </q-page-container>
-    <q-footer v-if="!$route.meta.setting">
+    <q-footer v-if="!$route.meta.nofooter">
       <div class="row justify-center bg-grey-2">
-        <div class="mobile bg-white row text-center text-black">
+        <div class="mobile bg-white row text-center text-black" style="box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.25);">
             <div class="col q-py-sm footer-menu relative-position" v-ripple @click="$router.push({name:'beranda'})">
               
                 <img src="~assets/beranda-on.png" alt="beranda-on" v-if="$route.name.includes('beranda')">
@@ -244,7 +242,8 @@ export default {
   },
   data(){
     return{
-      searchs: false
+      searchs: false,
+      keyword:''
     }
   },
   components:{
@@ -260,9 +259,6 @@ export default {
   color: $primary;
 }
 
-.mobile{
-  width:428px;
-}
 .q-tab__label{
   font-size:10px;
 }

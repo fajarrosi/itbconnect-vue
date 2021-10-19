@@ -42,7 +42,7 @@
                 @click="$refs.stepper.previous()"
                 label="Sebelumnya"
                 class="q-mr-sm col"
-                style="border-radius: 8px; color:#707070;;"
+                style="border-radius: 8px; color:#707070;"
                 size="12px"
                 no-caps
               />

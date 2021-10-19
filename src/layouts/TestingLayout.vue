@@ -65,7 +65,8 @@
                     <q-page class="bg-white">
                             <q-tab-panels v-model="tab" animated>
                                 <q-tab-panel name="Beranda">
-                                    <beranda />
+                                    <div class="text-h6">Network</div>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                 </q-tab-panel>
 
                                 <q-tab-panel name="Network">
@@ -81,7 +82,11 @@
                                     </p>
                                 </q-tab-panel>
                                 <q-tab-panel name="Akun" class="q-pa-none">
-                                    <akun/>
+                                    <div class="text-h6">News</div>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                    <p v-for="n in 50" :key="n">
+                                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, consectetur architecto omnis sed natus tenetur vitae dolorem facilis voluptate inventore!
+                                    </p>
                                 </q-tab-panel>
                             </q-tab-panels>
                     </q-page>
@@ -121,10 +126,7 @@ export default {
             search:false
         }
     },
-    components:{
-        'beranda' : require('components/Beranda.vue').default,
-        'akun' : require('components/Akun.vue').default
-    }
+   
 }
 
 </script>
