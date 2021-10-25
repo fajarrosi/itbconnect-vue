@@ -8,8 +8,8 @@
         <p class="text-caption text-bold">Alamat Domisili</p>
         <q-select  outlined dense :modelValue="dalam" @update:modelValue="event => $emit('update:dalam',event)" :options="optdomisili" label="Dalam Negeri / Luar Negeri" bg-color="white" class="q-mb-sm"/>
         <div v-if="dalam.value === '1'">
-            <q-select  outlined dense :modelValue="prov" @update:modelValue="event => $emit('update:prov',event)" :options="optprov" label="Provinsi" bg-color="white" class="q-mb-sm"/>
-            <q-select  outlined dense :modelValue="kota" @update:modelValue="event => $emit('update:kota',event)" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm"/>
+            <q-select  outlined dense :modelValue="prov" @update:modelValue="event => $emit('update:prov',event)" :options="optprovinsi" label="Provinsi" bg-color="white" class="q-mb-sm"/>
+            <q-select  outlined dense :modelValue="kota" @update:modelValue="event => $emit('update:kota',event)" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm" v-if="kotashow"/>
             <q-input
             outlined
             dense
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+// import { api } from 'boot/axios'
 export default {
     data(){
         return{
@@ -59,26 +60,7 @@ export default {
                 value:'2'
             }
         ],
-        optprov:[
-            {
-                label:'Jambi',
-                value:'1'
-            },
-            {
-                label:'Palembang',
-                value:'2'
-            },
-        ],
-        optkota:[
-            {
-                label:'Kota1',
-                value:'1'
-            },
-            {
-                label:'Kota2',
-                value:'2'
-            },
-        ],
+        // optkota:[],
         optnegara:[
             {
                 label:'Neg1',
@@ -88,7 +70,8 @@ export default {
                 label:'Neg2',
                 value:'2'
             },
-        ]
+        ],
+        // kotashow:false
 
         }
     },
@@ -97,8 +80,29 @@ export default {
         'prov',
         'kota',
         'negara',
-        'alamat'
+        'alamat',
+        'optprovinsi',
+        'optkota',
+        'kotashow'
     ],
+    // watch:{
+    //     prov: function(val){
+    //         this.optkota = []
+    //         this.kotashow = false
+    //         api.get(`complex/city/${val.value}`)
+    //         .then((response)=>{
+    //         response.data.data.forEach(element => {
+    //         let opt ={}
+    //         opt.label = element.name
+    //         opt.value = element.id
+    //         this.optkota.push(opt)
+    //         this.kotashow = true
+    //         });
+    //     })
+    //     .catch((error)=> console.log("error",error))
+    //         console.log("val",val.value)
+    //     }
+    // }
 }
 </script>
 

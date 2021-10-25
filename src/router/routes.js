@@ -53,7 +53,7 @@ const routes = [
       {path:'/cekemail', component: () => import('pages/auth/CekEmail.vue')},
       {path:'/otp', component: () => import('pages/auth/Otp.vue')},
       {path:'/register', component: () => import('pages/auth/Register.vue')},
-      {path:'/regissuccess', component: () => import('pages/auth/RegisSucc.vue')},
+      {path:'/regissuccess',name:'registerberhasil', component: () => import('pages/auth/RegisSucc.vue')},
       {path:'/registered', component: () => import('pages/auth/Register2.vue')},
     ]
   },

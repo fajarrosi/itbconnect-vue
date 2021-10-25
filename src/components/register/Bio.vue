@@ -18,6 +18,7 @@
         class="q-mb-sm"
         bg-color="white"
         hide-bottom-space
+        input-class="qname"
         />
 
         <q-input
@@ -68,6 +69,7 @@
         class="q-mb-sm"
         bg-color="white"
         hide-bottom-space
+        input-class="qname"
         />
         <div class="text-subtitle2">
         Tanggal Lahir
@@ -123,9 +125,9 @@ export default {
         'tgl',
         'bln',
         'thn',
-        'cek'
+        'cek',
     ],
-    emits: ['update:tgl'],
+    emits: ['update:tgl','update:bln','update:thn','update:cek','update:name','update:email','update:nowa','update:tempat'],
     data(){
         return{
             opttgl:[],
@@ -149,21 +151,24 @@ export default {
             sthn:'',
         }
     },
-    // computed:{
-    //     nTgl(){
-    //             let tgls = this.stgl + '/'+ this.sbln + '/'+ this.sthn
-    //             this.$emit('update:tgl',tgls)
-    //             return tgls
-    //     }
-    // },
     mounted(){
         this.OptTgl()
         this.OptThn()
+        this.letterCapitalize()
+    },
+    computed:{
+        // nicks(){
+        //     let x = this.name.match(/(\w+\S*)/)
+        //     let random = ''
+        //     random += x[1]
+        //     for (let index = 0; index < 4; index++) {
+        //         random += Math.floor(Math.random() * (9-0 +1))
+        //     }
+        //     // this.$emit('update:nick',random)
+        //     return random
+        // }
     },
     methods:{
-        // formtgl(){
-        //     return this.selectedthn + '/'+ this.selectedbln + '/'+ this.selectedtgl 
-        // },
         OptTgl(){
             for (let index =1; index < 32; index++) {
                 if(index < 10){
@@ -175,11 +180,22 @@ export default {
         },
         OptThn(){
             let now = new Date().getFullYear()
-            console.log(now)
             for (let index =1930; index <= now; index++) {
                 this.optthn.push(index)
             }
         },
+        letterCapitalize(){
+            let qname = document.getElementsByClassName('qname')
+            Array.from(qname).forEach(function(x){
+                x.addEventListener("keyup",function(e){
+
+                e.target.value = e.target.value.replace(/\w\S*/g,
+                    function(txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    })
+            })
+            })
+        }
     }
 }
 </script>

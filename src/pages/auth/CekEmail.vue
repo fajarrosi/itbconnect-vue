@@ -16,7 +16,7 @@
                 :rules="[
                 (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
                 ]"
-                class="q-mb-md"
+                class="q-mb-sm"
                 bg-color="white"
                 hide-bottom-space
             />
@@ -63,7 +63,7 @@
 export default {
     data(){
         return{
-            email:'fajarilhamrosi@gmail.com',
+            email:'',
             load:false,
             btndisabled: false,
         }
@@ -72,21 +72,17 @@ export default {
         cekemail(){
             this.load = true
             this.btndisabled = true
-            setTimeout(() => {
+            this.$store.dispatch('auth/cekEmail',this.email)
+            .then(() => {
+                this.load = false
+                this.btndisabled = false
                 this.$router.push('/register')
-                this.$store.dispatch('auth/cekEmail',this.email)
-                .then(() => {
-                    this.$router.push('/register')
-                    this.load = false
-                    this.btndisabled = false
-                })
-                .catch(() => {
-                    this.$router.push('/register')
-                    // console.log("error",error)
-                    this.load = false
-                    this.btndisabled = false
-                })
-            }, 1000);
+            })
+            .catch(() => {
+                this.load = false
+                this.btndisabled = false
+                this.$router.push('/register')
+            })
         }
     }
 };

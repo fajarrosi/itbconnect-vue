@@ -18,7 +18,7 @@ export default boot(({ app,redirect }) => {
   //       so you won't necessarily have to import axios in each vue file
 
   app.config.globalProperties.$api = api
-
+  
   api.interceptors.response.use(response =>{
     return response
   },error =>{

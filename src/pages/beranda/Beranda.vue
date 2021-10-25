@@ -81,6 +81,7 @@
           </div>
         </q-carousel-slide>
       </q-carousel>
+      
       <div class="row justify-between q-mx-md q-mt-md">
           <div class="text-17 text-bold" style="color:#505050;">Rekomendasi</div>
       </div>

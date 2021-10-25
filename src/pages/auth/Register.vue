@@ -10,7 +10,7 @@
                 :done="step > 1"
             >
               <Bio v-model:name="user.name" v-model:email="user.email" v-model:nowa="user.nowa" v-model:tempat="user.tempat" v-model:tgl="user.tgl" v-model:thn="user.thn" v-model:bln="user.bln" v-model:cek="user.cek"/>
-            </q-step>
+            </q-step>z
 
             <q-step
                 :name="2"
@@ -28,7 +28,7 @@
             
 
             <q-step :name="4">
-              <Ringkasan :name="user.name" :email="user.email" :nowa="user.nowa" :tgl="formattgl" :jenjang="user.jenjang.label" :prodi="user.prodi.label" :thnmasuk="user.tahunmasuk" :thnkeluar="user.tahunkeluar" :username="user.username"/>
+              <Ringkasan :name="user.name" :email="user.email" :nowa="user.nowa" :tgl="formattgl" :jenjang="getNameJenjang" :prodi="user.prodi" :thnmasuk="user.tahunmasuk" :thnkeluar="user.tahunkeluar" :username="user.username"/>
             </q-step>
 
             <template v-slot:navigation>
@@ -72,7 +72,6 @@
                     color="primary"
                     label="Rekam Data"
                     class="col btn-radius"
-                    
                     size="12px"
                     :loading="load"
                     no-caps
@@ -142,39 +141,43 @@ export default {
         tahunkeluar:'',
         username:'',
         password:'',
-        konfirmasi:''
-        
+        konfirmasi:'',
       },
-      visibility: true,
-      visibility2: true,
       load: false,
       btndisabled: false,
-      errors: {},
       step:1,
       optjenjang:[],
       optprodi:[],
       alumnus:false,
-      validuser:false
     };
   },
   computed: {
+    nick(){
+            let x = this.user.name.match(/(\w+\S*)/)
+            let random = ''
+            random += x[1]
+            for (let index = 0; index < 4; index++) {
+                random += Math.floor(Math.random() * (9-0 +1))
+            }
+            return random
+    },
     alumni(){
-      return this.$store.state.auth.alumnireg
+      return this.$store.state.auth.alumni
     },
     valid(){
-      if(this.step === 5){
+      if(this.step === 1){
         // jika valid maka primary tidak maka grey
-        if(this.user.name && this.user.email && this.user.nowa && this.user.tempatlahir && this.user.tgllahir){
+        if(this.user.name && this.user.email && this.user.nowa && this.user.tempat && this.user.tgl && this.user.bln && this.user.thn){
           return true
         }
           return false
-      }else if(this.step === 6){
-        if(this.user.selectedjenjang && this.user.selectedprodi && this.user.tahunmasuk){
+      }else if(this.step === 2){
+        if(this.user.jenjang && this.user.prodi && this.user.tahunmasuk && this.user.tahunkeluar){
           return true
         }
         return false
-      }else if(this.step === 7){
-        if(this.validuser && this.user.password && this.user.konfirmasi){
+      }else if(this.step === 3){
+        if(this.user.username && this.user.password && this.user.konfirmasi){
           return true
         }
         return false
@@ -182,29 +185,43 @@ export default {
         return true
       }
     },
-      formattgl(){
-        let tgls = this.user.thn +'/' + this.user.bln+'/'+this.user.tgl
-        // console.log("tgls",tgls)
-        let tgl = date.formatDate(tgls,'DD-MMMM-YYYY',{
-          months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November','Desember'] 
-        })
-        let lengkap =  this.user.tempat + ', ' + tgl
-        return lengkap
-      },
+    formattgl(){
+      let tgls = this.user.thn +'/' + this.user.bln+'/'+this.user.tgl
+      // console.log("tgls",tgls)
+      let tgl = date.formatDate(tgls,'DD-MMMM-YYYY',{
+        months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November','Desember'] 
+      })
+      let lengkap =  this.user.tempat + ', ' + tgl
+      return lengkap
+    },
+    getNameJenjang(){
+      let jenjangname = ''
+      if(this.alumni){
+        jenjangname = this.optjenjang.find(x =>  x.value === this.alumni.univercity[0].education_id)
+      }else{
+        jenjangname = this.optjenjang.find(x =>  x.value === this.user.jenjang)
+      }
+          return jenjangname.label
+      
+      
+    },
   },
   mounted(){
-    if (this.alumni.id) {
+    if (this.alumni) {
       this.alumnus = true
       this.user.name = this.alumni.complete_name
       this.user.email = this.alumni.email
-      this.user.tgllahir = this.alumni.dob
-      // todo user tempat lahir, jenjang, tahun masuk, no wa,prodi
+      this.user.nowa = this.alumni.telephone
+      this.user.tahunmasuk = this.alumni.univercity[0].entry_year
+      this.user.tahunkeluar = this.alumni.univercity[0].graduated_year
+      this.user.jenjang = this.alumni.univercity[0].education_id
+      this.user.prodi = this.alumni.univercity[0].program_study
+      let tgllahir = this.alumni.dob.match(/(\d{4})-(\d{2})-(\d{2})/)
+      this.user.tgl = tgllahir[3]
+      this.user.bln = tgllahir[2]
+      this.user.thn = tgllahir[1]
+      this.user.tempat = this.alumni.pob
       this.step = 3
-      // this.selectedjenjang = 'Sarjana (S1)'
-      // this.selectedprodi = 'FTE'
-      // this.user.tahunmasuk = '2003'
-      // this.user.nowa = '082339946868'
-      // this.user.tempatlahir = 'Jakarta'
     }else{
       this.step = 1
     }
@@ -214,14 +231,12 @@ export default {
   },
   
   methods:{
+    
     getProdi(){
         api.get('complex/prodi')
         .then((response)=>{
             response.data.data.forEach(element => {
-            let opt ={}
-            opt.label = element.name
-            opt.value = element.id
-            this.optprodi.push(opt)
+            this.optprodi.push(element.name)
             });
         })
         .catch((error)=> console.log("error",error))
@@ -242,30 +257,33 @@ export default {
     onSubmit(){
             this.load = true
             this.btndisabled = true
-            setTimeout(() => {
-                // this.$store.dispatch('auth/cekEmail',this.email)
-                // .then(() => {
-                //     this.$router.push('/register')
-                //     this.load = false
-                //     this.btndisabled = false
-                // })
-                // .catch(() => {
-                //     this.$router.push('/register')
-                //     // console.log("error",error)
-                //     this.load = false
-                //     this.btndisabled = false
-                // })
-                if (this.alumni.id) {
+            if (this.alumni.id) {
                   // dispatch api untuk register utk alumni
-                  this.$store.dispatch('auth/cekEmail')
-                }else{
-                  // dispatch api untuk register utk user baru
-                  this.$store.dispatch('auth/cekEmail')
-                }
-                this.$router.push('/regissuccess') 
+              this.$store.dispatch('auth/registerAl',this.user)
+              .then(()=>{
+                this.$router.push({name:'registerberhasil'})
                 this.load = false
                 this.btndisabled = false
-            }, 5000);
+              })
+              .catch((error)=>{
+                console.log("error",error)
+              })
+            }else{
+              // dispatch api untuk register utk user baru
+              this.$store.dispatch('auth/register',{
+                user: this.user,
+                nick: this.nick
+              })
+              .then((response)=>{
+                this.$router.push({name:'registerberhasil'})
+                this.load = false
+                this.btndisabled = false
+              })
+              .catch((error)=>{
+                console.log("error",error)
+              })
+            }
+          
     },
   }
 };

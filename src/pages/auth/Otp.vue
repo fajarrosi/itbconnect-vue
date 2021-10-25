@@ -20,11 +20,11 @@
                 <q-input outlined bg-color="custom"  v-model="otp4" maxlength="1" mask="#" input-class="otp" input-style="text-align: center; font-size: 60px; color:#F37128; font-weight:700;" class="q-pr-xs "/>
         </div>
         <div class="row">
-                <span class="col-12 q-mt-sm text-center">Tidak menerima kode? <q-btn label="Kirim Ulang" flat no-caps style="text-decoration: underline;color:#F37128;" @click="showNotif()"/></span>
+                <span class="col-12 q-mt-sm text-center">Tidak menerima kode? <q-btn label="Kirim Ulang" flat no-caps style="text-decoration: underline;color:#F37128;" @click="reSend()"/></span>
         </div>
         </q-card-section>
         <q-card-actions align="center" class="q-pb-lg">
-            <q-btn no-caps label="Verifikasi & Lanjutkan" class="col" style="border-radius: 8px;" color="primary" :loading="load" :disabled="btndisabled" @click="onSend">
+            <q-btn no-caps label="Verifikasi & Lanjutkan" class="col q-mx-md" style="border-radius: 8px;" :color="valid ? 'primary' : 'grey'" :loading="load" :disabled="disabled" @click="onSend">
                 <template v-slot:loading>
                     <div class="row items-center">
                         <p class="text-bold q-mb-none q-mr-sm">Loading...</p>
@@ -50,6 +50,14 @@ export default {
                 position: 'top',
                 progress: true
                 })
+            },
+            failNotif(){
+                $q.notify({
+                message: 'OTP yang Anda Masukkan Salah. Silahkan Coba Lagi. ',
+                type: 'negative',
+                position: 'top',
+                progress: true
+                })
             }
         }
     },
@@ -59,10 +67,33 @@ export default {
             otp2:'',
             otp3:'',
             otp4:'',
-            otp:'',
+            // otp:'',
             load:false,
             btndisabled: false,
             errors:{}
+        }
+    },
+    computed:{
+        email(){
+            return this.$store.state.auth.email
+        },
+        otp(){
+            return this.otp1 + this.otp2 + this.otp3 + this.otp4
+        },
+        valid(){
+            if(this.otp1 && this.otp2 && this.otp3 && this.otp4){
+                return true
+            }
+            return false
+        },
+        disabled(){
+            if(this.valid){
+                if (this.btndisabled){
+                    return true
+                }
+                return false
+            }
+            return true
         }
     },
     mounted(){
@@ -87,14 +118,32 @@ export default {
                 });
             })
         },
+        reSend(){
+            this.$store.dispatch('auth/resend',{
+                email: this.email
+            })
+            .then(()=>{
+                this.showNotif()
+            })
+        },
         onSend(){
             this.load = true
             this.btndisabled = true
-            setTimeout(() => {
+            this.$store.dispatch('auth/otp',{
+                email : this.email,
+                otp : this.otp
+            })
+            .then(()=>{
                 this.load = false
                 this.btndisabled = false
                 this.$router.push('/registered')
-            }, 1000);
+            })
+            .catch((error) =>{
+                this.load = false
+                this.btndisabled = false
+                this.failNotif()
+                console.log("error",error)
+            })
         }
     }
 };

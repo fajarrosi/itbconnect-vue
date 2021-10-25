@@ -42,22 +42,23 @@
 export default {
     data(){
         return{
-            optprofesi:[
-                {
-                    label:'Profesi1',
-                    value:'1'
-                },
-                {
-                    label:'Profesi2',
-                    value:'2'
-                }
-            ],
+            // optprofesi:[
+            //     {
+            //         label:'Profesi1',
+            //         value:'1'
+            //     },
+            //     {
+            //         label:'Profesi2',
+            //         value:'2'
+            //     }
+            // ],
         }
     },
     props:[
         'profesi',
         'jabatan',
-        'perusahaan'
+        'perusahaan',
+        'optprofesi'
     ]
 }
 </script>

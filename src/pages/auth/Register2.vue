@@ -14,18 +14,18 @@
           active-icon="primary"
         >
           <q-step :name="1" :done="step > 1">
-            <Alamat v-model:dalam="user.dalam" v-model:alamat="user.alamat" v-model:prov="user.prov" v-model:kota="user.kota" v-model:kec="user.kec" v-model:kel="user.kel" v-model:negara="user.negara"/>
+            <Alamat v-model:dalam="user.dalam" v-model:alamat="user.alamat" v-model:prov="prov" v-model:kota="user.kota" v-model:negara="user.negara" :optprovinsi="optprovinsi" :optkota="optkota" :kotashow="kotashow" />
           </q-step>
 
           <q-step :name="2" :done="step > 2">
-            <Pekerjaan v-model:profesi="user.profesi" v-model:jabatan="user.jabatan"/>
+            <Pekerjaan v-model:profesi="user.profesi" v-model:jabatan="user.jabatan" v-model:perusahaan="user.perusahaan" :optprofesi="optprofesi"/>
           </q-step>
 
           <q-step :name="3" :done="step > 3" class="q-pb-none">
               <Foto v-model:previmg="previmg" v-model:src="user.src" v-model:step="step"/>
           </q-step>
           <q-step :name="4" :done="step > 4">
-            <Organisasi />
+            <Organisasi/>
             <q-select  outlined dense v-for="(inp,k) in inputs" :key="k" v-model="inp.selectedorg" emit-value map-options :options="optorganisasi" label="Minat & Organisasi" bg-color="white" class="q-mb-sm">
                 <template v-slot:after>
                     <q-btn round dense flat icon="close" v-if="k >0" @click="remove(k)"/>
@@ -68,14 +68,23 @@
               />
               <q-btn
                 v-if="step === 4"
-                @click="$router.push('/profil')"
+                @click="onSubmit"
                 color="primary"
                 label="Lanjutkan"
                 style="border-radius: 8px"
+                :loading="load"
+                :disabled="btndisabled"
                 size="12px"
                 no-caps
                 class="col"
-              />
+              >
+              <template v-slot:loading>
+                    <div class="row items-center">
+                        <p class="text-bold q-mb-none q-mr-sm">Loading...</p>
+                        <q-spinner-facebook />  
+                    </div>
+                </template>
+              </q-btn>
             </q-stepper-navigation>
           </template>
         </q-stepper>
@@ -92,6 +101,7 @@ import Pekerjaan from 'components/register2/Pekerjaan.vue'
 import Foto from 'components/register2/Foto.vue'
 import Organisasi from 'components/register2/Organisasi.vue'
 import DialogIntro from 'components/register2/DialogIntro.vue'
+import { api } from 'boot/axios'
 export default {
   setup() {
     return {
@@ -107,18 +117,15 @@ export default {
   },
   data() {
     return {
+      prov:'',
       user: {
         dalam:'',
-        prov:'',
         kota: '',
-        kec:'',
-        kel:'',
         negara:'',
         alamat:'',
-
+        perusahaan:'',
         profesi:'',
         jabatan:'',
-        organisasi:'',
         src:''
       },
       previmg:'',
@@ -127,38 +134,105 @@ export default {
       errors: {},
       selectedFile:null,
       intro:false,
-      optorganisasi:[
-          {
-              label:'Orgn1',
-              value:'1'
-          },
-          {
-              label:'Orgn2',
-              value:'2'
-          },
-          {
-              label:'testing3',
-              value:'3'
-          }
-      ],
       inputs:[
           {selectedorg:''}
       ],
+      optprovinsi:[],
+      optprofesi:[],
+      optkota:[],
+      kotashow:false,
+      optorganisasi:[],
     };
   },
   mounted(){
     this.intro = true
+    this.getProvinsi()
+    this.getProfesi()
+    this.getOrganisasi()
   },
+  watch:{
+        prov: function(val){
+            this.optkota = []
+            this.kotashow = false
+            this.user.kota = ''
+            api.get(`complex/city/${val.value}`)
+            .then((response)=>{
+            response.data.data.forEach(element => {
+            let opt ={}
+            opt.label = element.name
+            opt.value = element.id
+            this.optkota.push(opt)
+            this.kotashow = true
+            });
+        })
+        .catch((error)=> console.log("error",error))
+            console.log("val",val.value)
+        }
+    },
   methods:{
+    async getProvinsi(){
+      return await api.get('complex/province')
+        .then((response)=>{
+            response.data.data.forEach(element => {
+            let opt ={}
+            opt.label = element.name
+            opt.value = element.id
+            this.optprovinsi.push(opt)
+            });
+        })
+        .catch((error)=> console.log("error",error))
+    },
+    async getProfesi(){
+      return await api.get('complex/profession')
+        .then((response)=>{
+            response.data.data.forEach(element => {
+            let opt ={}
+            opt.label = element.name
+            opt.value = element.id
+            this.optprofesi.push(opt)
+            });
+        })
+        .catch((error)=> console.log("error",error))
+    },
+    async getOrganisasi(){
+      return await api.get('complex/organization')
+        .then((response)=>{
+            response.data.data.forEach(element => {
+            let opt ={}
+            opt.label = element.name
+            opt.value = element.id
+            this.optorganisasi.push(opt)
+            });
+        })
+        .catch((error)=> console.log("error",error))
+    },
     add(){
         this.inputs.push({
             selectedorg:''
         })
-        
     },
     remove(val){
         this.inputs.splice(val,1)
     },
+    onSubmit(){
+      this.load = true
+      this.btndisabled = true
+      this.$store.dispatch('auth/register2',{
+        user: this.user,
+        prov: this.prov,
+        org: this.inputs
+      })
+      .then((response)=>{
+        this.load = false
+        this.btndisabled = false
+        this.$route.push({name:'profil'})
+      })
+      .catch((error)=>{
+        this.load = false
+        this.btndisabled = false
+        console.log("error",error)
+      })
+    }
   }
 };
 </script>

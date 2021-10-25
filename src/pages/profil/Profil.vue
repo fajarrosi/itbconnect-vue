@@ -65,6 +65,8 @@ import Dpengalaman from 'components/profil/edit/Dpengalaman.vue'
 import Dminat from 'components/profil/edit/Dminat.vue'
 import Dbisnis from 'components/profil/edit/Dbisnis.vue'
 import Dpend from 'components/profil/edit/Dpend.vue'
+import {  mapState } from "vuex";
+
 export default {
     components:{
         Profil,
@@ -93,15 +95,27 @@ export default {
             userbaru:true,
         }
     },
+    methods:{
+        // ...mapActions("profile", ["getBio","getProfile","getPengalaman","getPendidikan","getOrganisasi","getBisnis"]),
+    },
+    computed:{
+        ...mapState("profile",["bio","bisnis","organisasi","pendidikan","pengalaman","profil"]),
+    },
     mounted(){
-        if(this.userbaru){
-            this.intro = true
+        if(!this.bio){
+            // this.getBio()
+            // this.getProfile()
+            // this.getPengalaman()
+            // this.getPendidikan()
+            // this.getOrganisasi()
+            // this.getBisnis()
         }
     }
 }
 </script>
 
 <style scoped>
+
 .q-page{
     padding-bottom:20px;
 }

@@ -16,7 +16,7 @@
             </tr>
             <tr style="color:#363636; font-size:13px;">
                 <td class="title-table q-pr-sm">No. WhatsApp Aktif</td>
-                <td>: {{nowa}}</td>
+                <td>: {{getNowa()}}</td>
             </tr>
             <tr style="color:#363636; font-size:13px;">
                 <td class="title-table q-pr-sm">Tanggal Lahir</td>
@@ -58,7 +58,14 @@ export default {
         'thnmasuk',
         'thnkeluar',
         'username'
-    ]
+    ],
+    methods:{
+        getNowa(){
+            let test = this.nowa.match(/(\d{0,4})(\d{0,4})(\d{0,4})/)
+            let result = test[1] + '-' + test[2] + '-' + test[3]
+            return result
+        }
+    }
 }
 </script>
 

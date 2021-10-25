@@ -10,23 +10,22 @@
 
 <script>
 export default {
-   
     data(){
         return{
-            optorganisasi:[
-                {
-                    label:'Orgn1',
-                    value:'1'
-                },
-                {
-                    label:'Orgn2',
-                    value:'2'
-                },
-                {
-                    label:'testing3',
-                    value:'3'
-                }
-            ],
+            // optorganisasi:[
+            //     {
+            //         label:'Orgn1',
+            //         value:'1'
+            //     },
+            //     {
+            //         label:'Orgn2',
+            //         value:'2'
+            //     },
+            //     {
+            //         label:'testing3',
+            //         value:'3'
+            //     }
+            // ],
             inputs:[
                 {selectedorg:''}
             ],
