@@ -212,10 +212,10 @@ export default {
       this.user.name = this.alumni.complete_name
       this.user.email = this.alumni.email
       this.user.nowa = this.alumni.telephone
-      this.user.tahunmasuk = this.alumni.univercity[0].entry_year
-      this.user.tahunkeluar = this.alumni.univercity[0].graduated_year
-      this.user.jenjang = this.alumni.univercity[0].education_id
-      this.user.prodi = this.alumni.univercity[0].program_study
+      this.user.tahunmasuk = this.alumni.univercity[this.alumni.univercity.length -1].entry_year
+      this.user.tahunkeluar = this.alumni.univercity[this.alumni.univercity.length -1].graduated_year
+      this.user.jenjang = this.alumni.univercity[this.alumni.univercity.length -1].education_id
+      this.user.prodi = this.alumni.univercity[this.alumni.univercity.length -1].program_study
       let tgllahir = this.alumni.dob.match(/(\d{4})-(\d{2})-(\d{2})/)
       this.user.tgl = tgllahir[3]
       this.user.bln = tgllahir[2]

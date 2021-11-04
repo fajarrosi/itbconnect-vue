@@ -86,12 +86,18 @@ const routes = [
      
   //   ]
   // },
-  {path:'/cari',name:'cari',component:()=>import('pages/search/Search.vue')},
+  {path:'/cari', name:'cari', component:()=>import('pages/search/Search.vue')},
+  
   {
     path:'/',
     component: () => import('layouts/MobileLayout.vue'),
     children:[
       {path:'',name:'beranda',component:()=>import('pages/beranda/Beranda.vue')},
+      {path:'rekomendasi/:id',name:'rekomendasi', component:()=>import('pages/rekomendasi/Detail.vue'),
+        meta:{
+          detail:true
+        }
+      },
       {path:'koneksi',name:'koneksi',component:()=>import('pages/koneksi/Koneksi.vue')},
       {path:'cari-alumni',name:'Cari Alumni',component:()=>import('pages/koneksi/Search.vue'),
         meta:{
@@ -99,14 +105,23 @@ const routes = [
           headerback:true
         }
       },
-      {path:'hasil-pencarian-alumni',name:'Hasil Pencarian',component:()=>import('pages/koneksi/ResultSearch.vue'),
+      {path:'/cari-koneksi', name:'Koneksi Anda', component:()=>import('pages/koneksi/Searchkoneksi.vue'),
         meta:{
-          nofooter:true,
           headerback:true
         }
       },
       {path:'berita',name:'berita',component:()=>import('pages/berita/Berita.vue')},
-      {path:'berita/detail',name:'berita-detail',component:()=>import('pages/berita/Detail.vue')},
+      {path:'berita/detail',name:'beritadetail',component:()=>import('pages/berita/Detail.vue'),
+      meta:{
+          detail:true
+        }
+      },
+      {path:'berita/list',name:'Daftar Berita',component:()=>import('pages/berita/Listberita.vue'),
+      meta:{
+          nofooter:true,
+          detail:true
+        }
+      },
       {path:'profil',name:'profil',component:()=>import('pages/profil/Profil.vue')},
       {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue'),
         meta:{

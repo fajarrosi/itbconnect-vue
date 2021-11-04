@@ -60,18 +60,16 @@ export default {
                 value:'2'
             }
         ],
-        // optkota:[],
-        optnegara:[
-            {
-                label:'Neg1',
-                value:'1'
-            },
-            {
-                label:'Neg2',
-                value:'2'
-            },
-        ],
-        // kotashow:false
+        // optnegara:[
+        //     {
+        //         label:'Neg1',
+        //         value:'1'
+        //     },
+        //     {
+        //         label:'Neg2',
+        //         value:'2'
+        //     },
+        // ],
 
         }
     },
@@ -83,6 +81,7 @@ export default {
         'alamat',
         'optprovinsi',
         'optkota',
+        'optnegara',
         'kotashow'
     ],
     // watch:{

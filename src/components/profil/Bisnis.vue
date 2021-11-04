@@ -3,7 +3,7 @@
         <div class="row justify-between">
             <div class="title-section">BISNIS DAN PEKERJAAN</div>
             <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah">
+font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databisnis.id === 1">
                 <div>Ubah</div>
                 <q-icon name="edit" size="15px"/>
             </q-btn>
@@ -58,7 +58,8 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 <script>
 export default {
     props:[
-        'dbisnis'
+        'dbisnis',
+        'databisnis'
     ],
     emits:['update:dbisnis'],
     methods:{

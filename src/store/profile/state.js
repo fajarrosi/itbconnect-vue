@@ -1,6 +1,11 @@
 export default function () {
   return {
-    bio:'',
+    bio:{
+      name:'Gembong Primadjaya',
+      prodi:'Teknik Mesin',
+      tahunmasuk:'1998',
+      id:1
+    },
     profil:'',
     pengalaman:'',
     pendidikan:'',

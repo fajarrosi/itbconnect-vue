@@ -3,34 +3,16 @@
         <div class="row justify-between">
             <div class="title-section">PENDIDIKAN</div>
             <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah">
+font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="datapendidikan[0].user_id === userid">
                 <div>Ubah</div>
                 <q-icon name="edit" size="15px"/>
             </q-btn>
         </div>
         <ul style="padding-left:15px;" class="q-my-none profil-color">
-                <li>
+                <li v-for="(pendidikan,index) in datapendidikan" :key="index">
                     <div class="row">
-                        <div class="col-4">1998 - 20002</div>
-                        <div class="col-8">: Institut Teknik Bandung, Jurusan Teknik Mesin</div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-4">1998 - 20002</div>
-                        <div class="col-8">: Institut Teknik Bandung, Jurusan Teknik Mesin</div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-4">1998 - 20002</div>
-                        <div class="col-8">: Institut Teknik Bandung, Jurusan Teknik Mesin</div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-4">1998 - 20002</div>
-                        <div class="col-8">: Institut Teknik Bandung, Jurusan Teknik Mesin</div>
+                        <div class="col-3">{{pendidikan.entry_year}} - {{pendidikan.graduated_year}}</div>
+                        <div class="col-9">: <span v-if="pendidikan.campus_name === 'ITB'">Institut Teknik Bandung</span>, Jurusan {{pendidikan.program_study}}</div>
                     </div>
                 </li>
         </ul>
@@ -44,9 +26,15 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 <script>
 export default {
     props:[
-        'dpend'
+        'dpend',
+        'datapendidikan'
     ],
     emits:['update:dpend'],
+    computed:{
+        userid(){
+            return this.$store.state.auth.user.id
+        }
+    },
     methods:{
         ubah(){
             this.$emit('update:dpend',true)

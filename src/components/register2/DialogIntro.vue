@@ -1,6 +1,6 @@
 <template>
     <div>
-        <q-dialog :model-value="intro" @click="$emit('update:intro', $event.target.value)" persistent transition-show="scale" transition-hide="scale" full-height>
+        <q-dialog :model-value="intro" @click="$emit('update:intro', $event.target.value)" transition-show="scale" transition-hide="scale" full-height @hide="$emit('update:intro',false)">
                 <q-carousel
                     v-model="slide"
                     transition-prev="slide-right"

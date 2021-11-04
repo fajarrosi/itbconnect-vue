@@ -35,10 +35,11 @@ export function register (context, payload) {
             entry_year : payload.user.tahunmasuk,
             pob: payload.user.tempat,
             citizenship : "Indonesia",
+            religion_id:1,
             is_itb:true
         })
         .then((response)=>{
-            context.commit('regUser',{token: response.data.token, email: response.data.data.email})
+            context.commit('setUser',{token: response.data.token, user: response.data.user})
             api.defaults.headers.common['Authorization'] = 'Bearer ' +response.data.token
             resolve(response.data)
         })
@@ -66,10 +67,11 @@ export function registerAl (context, payload) {
             entry_year : payload.tahunmasuk,
             pob: payload.tempat,
             citizenship : "Indonesia",
+            religion_id:1,
             is_itb:true
         })
         .then((response)=>{
-            context.commit('regUser',{token: response.data.token, email: response.data.data.email})
+            context.commit('setUser',{token: response.data.token, user: response.data.user})
             api.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
             resolve(response.data)
         })
@@ -84,6 +86,7 @@ export function otp(context,data){
 
         api.post('auth/verify',data)
         .then((response)=>{
+            context.commit('delAlumni')
             resolve(response.data.message)
         })
         .catch((error)=>{
@@ -112,13 +115,21 @@ export function register2(context,data){
         form.append('company_name',data.user.perusahaan)
         form.append('position',data.user.jabatan)
         form.append('profession_id',data.user.profesi.value)
-        form.append('province_id',data.prov.value)
-        form.append('cities_id',data.user.kota.value)
+        if(data.user.dalam.value === '2'){
+            form.append('country_id',data.user.negara.value)
+        }else{
+            form.append('province_id',data.prov.value)
+            form.append('cities_id',data.user.kota.value)
+        }
         form.append('address',data.user.alamat)
-        form.append('organization_id',"1")
+        let org = data.org.map(a=> a.org)
+        for (var i = 0; i < org.length; i++) {
+            form.append(`organization_id[${i}]`, org[i]);
+        }
         let config = {
-            header : {
-            'Content-Type' : 'multipart/form-data'
+            headers : {
+            'Content-Type' : 'multipart/form-data',
+            Authorization : `Bearer ${context.rootState.auth.token}`
             }
         }
 

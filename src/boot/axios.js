@@ -19,16 +19,16 @@ export default boot(({ app,redirect }) => {
 
   app.config.globalProperties.$api = api
   
-  api.interceptors.response.use(response =>{
-    return response
-  },error =>{
-    if(error.response.status === 401){
-      localStorage.removeItem('token')
-      delete api.defaults.headers.common['Authorization']
-      redirect({path:'/login'})  
-    }
-    return Promise.reject(error)
-  })
+  // api.interceptors.response.use(response =>{
+  //   return response
+  // },error =>{
+  //   if(error.response.status === 401){
+  //     localStorage.removeItem('token')
+  //     delete api.defaults.headers.common['Authorization']
+  //     redirect({path:'/login'})  
+  //   }
+  //   return Promise.reject(error)
+  // })
   
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API

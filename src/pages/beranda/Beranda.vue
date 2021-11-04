@@ -95,163 +95,29 @@
             control-color="black"
             style="background-color:transparent;"
             class="text-black"
-            height="360px"
+            height="300px"
         >
-            <q-carousel-slide :name="1" style="overflow-x:hidden;" >
+            <q-carousel-slide :name="1" style="overflow:hidden;" >
               <div class="container" style="width:470px;display:flex;">
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-caption title-berita text-justify ellipsis-2-lines" style="font-weight:600;">John Doe1</div>
-                  <div class="text-caption title-berita ellipsis-2-lines" style="font-weight:600;">- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
+                <div class="q-pr-sm" style="width:150px;height:322px;" v-for="(rekom,i) in getRekomen(1)" :key="i">
+                  <rekomendasi :name="rekom.name" :id="rekom.id" :prodi="rekom.prodi" :tahunmasuk="rekom.tahunmasuk" :jabatan="rekom.jabatan" :perusahaan="rekom.perusahaan" />
                 </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-caption title-berita text-justify ellipsis-2-lines" style="font-weight:600;">John Doe 2</div>
-                  <div class="text-caption title-berita ellipsis-2-lines" style="font-weight:600;">- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-caption title-berita text-justify ellipsis-2-lines" style="font-weight:600;">John Doe 3</div>
-                  <div class="text-caption title-berita ellipsis-2-lines" style="font-weight:600;">- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-               
               </div>
             </q-carousel-slide>
-            <q-carousel-slide :name="2" style="overflow-x:hidden;">
+            <q-carousel-slide :name="2" style="overflow:hidden;">
               <div class="container" style="width:470px;display:flex;">
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines">John Doe 3</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines">- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
+                <div class="q-pr-sm" style="width:150px;height:322px;" v-for="(rekom,i) in getRekomen(2)" :key="i">
+                  <rekomendasi :name="rekom.name" :id="rekom.id" :prodi="rekom.prodi" :tahunmasuk="rekom.tahunmasuk" :jabatan="rekom.jabatan" :perusahaan="rekom.perusahaan"/>
                 </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 4</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 5</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-               
-              </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="3" style="overflow-x:hidden;">
-              <div class="container" style="width:470px;display:flex;">
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines">John Doe 5</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines">- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 6</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 7</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-               
               </div>
             </q-carousel-slide>
         </q-carousel>
-      <div class="row justify-between q-mx-md q-mt-none">
+
+
+      <div class="row justify-between q-mx-md q-mt-sm">
           <div class="text-17 text-bold" style="color:#505050;">Rekomendasi Berdasarkan Lokasi</div>
       </div>
-         <q-carousel
+        <q-carousel
             v-model="slider3"
             swipeable
             animated
@@ -261,160 +127,24 @@
             control-color="black"
             style="background-color:transparent;"
             class="text-black"
-            height="360px"
+            height="300px"
         >
-            <q-carousel-slide :name="1" style="overflow-x:hidden;" >
+            <q-carousel-slide :name="1" style="overflow:hidden;" >
               <div class="container" style="width:470px;display:flex;">
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines">John Doe1</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines">- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
+                <div class="q-pr-sm" style="width:150px;height:322px;" v-for="(rekom,i) in getRekomen(1)" :key="i">
+                  <rekomendasi :name="rekom.name" :id="rekom.id" :prodi="rekom.prodi" :tahunmasuk="rekom.tahunmasuk" :jabatan="rekom.jabatan" :perusahaan="rekom.perusahaan"/>
                 </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 2</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 3</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-               
               </div>
             </q-carousel-slide>
-            <q-carousel-slide :name="2" style="overflow-x:hidden;">
+            <q-carousel-slide :name="2" style="overflow:hidden;">
               <div class="container" style="width:470px;display:flex;">
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines">John Doe 3</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines">- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
+                <div class="q-pr-sm" style="width:150px;height:322px;" v-for="(rekom,i) in getRekomen(2)" :key="i">
+                  <rekomendasi :name="rekom.name" :id="rekom.id" :prodi="rekom.prodi" :tahunmasuk="rekom.tahunmasuk" :jabatan="rekom.jabatan" :perusahaan="rekom.perusahaan"/>
                 </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 4</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 5</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-               
-              </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="3" style="overflow-x:hidden;">
-              <div class="container" style="width:470px;display:flex;">
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines">John Doe 5</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines">- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 6</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="q-pr-sm" style="width:150px;height:322px;">
-                  <q-card style="border-radius:10px;">
-                <img src="~assets/akun23.png" style="height:130px;">
-                <q-card-section class="q-pt-sm q-pb-none" >
-                  <div class="text-13 text-bold title-berita text-justify ellipsis-2-lines" >John Doe 7</div>
-                  <div class="text-13 text-bold title-berita ellipsis-2-lines" >- Teknik Mesin'86</div>
-                </q-card-section>
-                <q-card-section class="q-pb-md q-pt-none row">
-                  <div class="text-13 ellipsis-3-lines text-primary col-12">
-                    Direktur Pelindo Energi Logistik
-                  </div>
-                  <q-btn color="primary" label="Connect" no-caps style="padding-left:24px; padding-right:24px;margin-top:8px;" class="col-12" />
-                </q-card-section>
-              </q-card>
-                </div>
-               
               </div>
             </q-carousel-slide>
         </q-carousel>
-      <div class="row justify-between q-mx-md q-mt-none">
+      <div class="row justify-between q-mx-md q-mt-sm">
           <div class="text-17 text-bold" style="color:#505050;">Kabar Alumni</div>
       </div>
 
@@ -427,106 +157,26 @@
             transition-next="slide-left"
             control-color="black"
             style="background-color:transparent;"
-            class="text-black"
+            class="text-black q-mb-md"
+            height="350px"
         >
-            <q-carousel-slide :name="1" style="overflow-x:hidden;">
+            <q-carousel-slide :name="1" style="overflow:hidden;">
               <div class="container" style="display:flex;width:700px;">
-                <div class="content q-pr-md" style="width:400px;">
-                  <q-card style="border-top-left-radius:10px;border-top-right-radius:10px;">
-                <img src="~assets/berita.png">
-                <q-card-section class="q-py-none">
-                  <div class="text-15 text-bold title-berita" @click="$router.push('/berita-detail')">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, providen 1</div>
-                </q-card-section>
-                <q-card-section class="q-py-sm">
-                  <div class="text-13 ellipsis-3-lines">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.
-                  </div>
-                  <div class="text-13 text-bold q-mt-sm" style="color:#a2a2a2;">19 April 2021</div>
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="content q-pr-md" style="width:400px;">
-                  <q-card style="border-top-left-radius:10px;border-top-right-radius:10px;">
-                <img src="~assets/berita.png">
-                <q-card-section class="q-py-none">
-                  <div class="text-15 text-bold title-berita" @click="$router.push('/berita-detail')">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, providen 1</div>
-                </q-card-section>
-                <q-card-section class="q-py-sm">
-                  <div class="text-13 ellipsis-3-lines">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.
-                  </div>
-                  <div class="text-13 text-bold q-mt-sm" style="color:#a2a2a2;">19 April 2021</div>
-                </q-card-section>
-              </q-card>
-                </div>
+                <cardberita v-for="(berita,i) in getBerita(1)" :key="i" :databerita="berita"/>            
               </div>
             </q-carousel-slide>
-            <q-carousel-slide :name="2" style="overflow-x:hidden;">
+            <q-carousel-slide :name="2" style="overflow:hidden;">
               <div class="container" style="display:flex;width:700px;">
-                <div class="content q-pr-md" style="width:400px;">
-                  <q-card style="border-top-left-radius:10px;border-top-right-radius:10px;">
-                <img src="~assets/berita.png">
-                <q-card-section class="q-py-none">
-                  <div class="text-15 text-bold title-berita" @click="$router.push('/berita-detail')">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, providen 1</div>
-                </q-card-section>
-                <q-card-section class="q-py-sm">
-                  <div class="text-13 ellipsis-3-lines">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.
-                  </div>
-                  <div class="text-13 text-bold q-mt-sm" style="color:#a2a2a2;">19 April 2021</div>
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="content q-pr-md" style="width:400px;">
-                  <q-card style="border-top-left-radius:10px;border-top-right-radius:10px;">
-                <img src="~assets/berita.png">
-                <q-card-section class="q-py-none">
-                  <div class="text-15 text-bold title-berita" @click="$router.push('/berita-detail')">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, providen 1</div>
-                </q-card-section>
-                <q-card-section class="q-py-sm">
-                  <div class="text-13 ellipsis-3-lines">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.
-                  </div>
-                  <div class="text-13 text-bold q-mt-sm" style="color:#a2a2a2;">19 April 2021</div>
-                </q-card-section>
-              </q-card>
-                </div>
+                <cardberita v-for="(berita,i) in getBeritas(2)" :key="i" :databerita="berita"/>            
               </div>
             </q-carousel-slide>
-            <q-carousel-slide :name="3" style="overflow-x:hidden;">
+            <q-carousel-slide :name="3" style="overflow:hidden;">
               <div class="container" style="display:flex;width:700px;">
-                <div class="content q-pr-md" style="width:400px;">
-                  <q-card style="border-top-left-radius:10px;border-top-right-radius:10px;">
-                <img src="~assets/berita.png">
-                <q-card-section class="q-py-none">
-                  <div class="text-15 text-bold title-berita" @click="$router.push('/berita-detail')">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, providen 1</div>
-                </q-card-section>
-                <q-card-section class="q-py-sm">
-                  <div class="text-13 ellipsis-3-lines">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.
-                  </div>
-                  <div class="text-13 text-bold q-mt-sm" style="color:#a2a2a2;">19 April 2021</div>
-                </q-card-section>
-              </q-card>
-                </div>
-                <div class="content q-pr-md" style="width:400px;">
-                  <q-card style="border-top-left-radius:10px;border-top-right-radius:10px;">
-                <img src="~assets/berita.png">
-                <q-card-section class="q-py-none">
-                  <div class="text-15 text-bold title-berita" @click="$router.push('/berita-detail')">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente, providen 1</div>
-                </q-card-section>
-                <q-card-section class="q-py-sm">
-                  <div class="text-13 ellipsis-3-lines">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.
-                  </div>
-                  <div class="text-13 text-bold q-mt-sm" style="color:#a2a2a2;">19 April 2021</div>
-                </q-card-section>
-              </q-card>
-                </div>
+                <cardberita v-for="(berita,i) in getBeritas(3)" :key="i" :databerita="berita"/>            
               </div>
             </q-carousel-slide>
         </q-carousel>
-     
+
     </q-page>
 </template>
 
@@ -539,8 +189,107 @@ export default {
           slider2:1,
           slider3:1,
           slider4:1,
-          slider5:1
+          slider5:1,
+          rekomen:[
+            {
+              id:1,
+              name:'Fajar Ilham Rosi Ilham Rosi1',
+              prodi:'Teknik Mesin',
+              tahunmasuk:'1995',
+              jabatan:'Direktur',
+              perusahaan:'Pelindo Energi Logistik Energi Logistik',
+              pp:'gambar.png'
+            },
+            {
+              id:2,
+              name:'Budi2',
+              prodi:'Teknik Industri',
+              tahunmasuk:'1998',
+              jabatan:'Karyawan',
+              perusahaan:'Pelindo Energi Logistik',
+              pp:'gambar2.png'
+            },
+            {
+              id:3,
+              name:'John Doe3',
+              prodi:'Teknik Mesin',
+              tahunmasuk:'1995',
+              jabatan:'Direktur',
+              perusahaan:'Pelindo Energi Logistik',
+              pp:'gambar.png'
+            },
+            {
+              id:4,
+              name:'Budi4',
+              prodi:'Teknik Industri',
+              tahunmasuk:'1998',
+              jabatan:'Karyawan',
+              perusahaan:'Pelindo Energi Logistik',
+              pp:'gambar2.png'
+            },
+            {
+              id:5,
+              name:'John Doe5',
+              prodi:'Teknik Mesin',
+              tahunmasuk:'1995',
+              jabatan:'Direktur',
+              perusahaan:'Pelindo Energi Logistik',
+              pp:'gambar.png'
+            },
+            {
+              id:6,
+              name:'Budi6',
+              prodi:'Teknik Industri',
+              tahunmasuk:'1998',
+              jabatan:'Karyawan',
+              perusahaan:'Pelindo Energi Logistik',
+              pp:'gambar2.png'
+            },
+          ],
+          berita:[
+            {
+              title:'Kabar ALumni ke-1',
+              desk:'Kabar ALumni ke- ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.',
+              date:'19 April 2021',
+              kabar:true
+            },
+            {
+              title:'Kabar ALumni ke-2',
+              desk:'Kabar ALumni ke- ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.',
+              date:'19 April 2021',
+              kabar:true
+            },
+            {
+              title:'Kabar ALumni ke-3',
+              desk:'Kabar ALumni ke- ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.',
+              date:'19 April 2021',
+              kabar:true
+            },
+            {
+              title:'Kabar ALumni ke-4',
+              desk:'Kabar ALumni ke- ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.',
+              date:'19 April 2021',
+              kabar:true
+            }
+          ],
+          perPage:2,
+          perPages:3
       }
+  },
+  computed:{
+    getRekomen(){
+      return val => this.rekomen.slice((val-1)*this.perPages,(val-1)*this.perPages+this.perPages)
+    },
+    getBerita(){
+      return val => this.berita.slice((val-1)*this.perPage,(val-1)*this.perPage+this.perPage)
+    },
+    getBeritas(){
+      return val => this.berita.slice(val-1,(val-1)*this.perPage+1)
+    }
+  },
+  components:{
+    'rekomendasi' : require('components/rekomendasi/Rekomendasi.vue').default,
+    'cardberita' : require('components/cardberita/Cardberita.vue').default
   }
 }
 

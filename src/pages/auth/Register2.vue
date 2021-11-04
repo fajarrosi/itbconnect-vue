@@ -14,7 +14,7 @@
           active-icon="primary"
         >
           <q-step :name="1" :done="step > 1">
-            <Alamat v-model:dalam="user.dalam" v-model:alamat="user.alamat" v-model:prov="prov" v-model:kota="user.kota" v-model:negara="user.negara" :optprovinsi="optprovinsi" :optkota="optkota" :kotashow="kotashow" />
+            <Alamat v-model:dalam="user.dalam" v-model:alamat="user.alamat" v-model:prov="prov" v-model:kota="user.kota" v-model:negara="user.negara" :optprovinsi="optprovinsi" :optkota="optkota" :kotashow="kotashow" :optnegara="optnegara" />
           </q-step>
 
           <q-step :name="2" :done="step > 2">
@@ -25,8 +25,12 @@
               <Foto v-model:previmg="previmg" v-model:src="user.src" v-model:step="step"/>
           </q-step>
           <q-step :name="4" :done="step > 4">
-            <Organisasi/>
-            <q-select  outlined dense v-for="(inp,k) in inputs" :key="k" v-model="inp.selectedorg" emit-value map-options :options="optorganisasi" label="Minat & Organisasi" bg-color="white" class="q-mb-sm">
+            <div class="text-h5 text-bold text-primary">Minat & Organisasi</div>
+            <div class="text-subtitle2 q-mt-md text-justify">
+                Silahkan isi minat dan organisasi anda
+            </div>
+            <hr class="line-cards q-my-md">
+            <q-select  outlined dense v-for="(inp,k) in inputs" :key="k" v-model="inp.org" emit-value map-options :options="optorganisasi" label="Minat & Organisasi" bg-color="white" class="q-mb-sm">
                 <template v-slot:after>
                     <q-btn round dense flat icon="close" v-if="k >0" @click="remove(k)"/>
                 </template>
@@ -99,7 +103,6 @@ import { ref } from "vue";
 import Alamat from 'components/register2/Alamat.vue'
 import Pekerjaan from 'components/register2/Pekerjaan.vue'
 import Foto from 'components/register2/Foto.vue'
-import Organisasi from 'components/register2/Organisasi.vue'
 import DialogIntro from 'components/register2/DialogIntro.vue'
 import { api } from 'boot/axios'
 export default {
@@ -112,7 +115,6 @@ export default {
       Alamat,
       Pekerjaan,
       Foto,
-      Organisasi,
       DialogIntro
   },
   data() {
@@ -135,20 +137,32 @@ export default {
       selectedFile:null,
       intro:false,
       inputs:[
-          {selectedorg:''}
+          {org:''}
       ],
       optprovinsi:[],
       optprofesi:[],
       optkota:[],
       kotashow:false,
       optorganisasi:[],
+      optnegara:[]
     };
+  },
+  computed:{
+    organization(){
+      // let result = this.inputs.map(a => a.org)
+      let a = {
+        org: this.inputs
+      }
+      let result = a.org.map(a=>a.org)
+      return result
+    }
   },
   mounted(){
     this.intro = true
     this.getProvinsi()
     this.getProfesi()
     this.getOrganisasi()
+    this.getNegara()
   },
   watch:{
         prov: function(val){
@@ -206,9 +220,21 @@ export default {
         })
         .catch((error)=> console.log("error",error))
     },
+    async getNegara(){
+      return await api.get('complex/country')
+        .then((response)=>{
+            response.data.data.forEach(element => {
+            let opt ={}
+            opt.label = element.country_name
+            opt.value = element.id
+            this.optnegara.push(opt)
+            });
+        })
+        .catch((error)=> console.log("error",error))
+    },
     add(){
         this.inputs.push({
-            selectedorg:''
+            org:''
         })
     },
     remove(val){
@@ -217,21 +243,39 @@ export default {
     onSubmit(){
       this.load = true
       this.btndisabled = true
-      this.$store.dispatch('auth/register2',{
-        user: this.user,
-        prov: this.prov,
-        org: this.inputs
-      })
-      .then((response)=>{
-        this.load = false
-        this.btndisabled = false
-        this.$route.push({name:'profil'})
-      })
-      .catch((error)=>{
-        this.load = false
-        this.btndisabled = false
-        console.log("error",error)
-      })
+      if(this.user.dalam.value === '2'){
+          this.$store.dispatch('auth/register2',{
+          user: this.user,
+          org: this.inputs
+          })
+          .then((response)=>{
+            this.load = false
+            this.btndisabled = false
+            this.$router.push({name:'profil'})
+          })
+          .catch((error)=>{
+            this.load = false
+            this.btndisabled = false
+            console.log("error",error)
+          })
+      }else{
+        this.$store.dispatch('auth/register2',{
+          user: this.user,
+          prov: this.prov,
+          org: this.inputs
+        })
+        .then((response)=>{
+          this.load = false
+          this.btndisabled = false
+          this.$router.push({name:'profil'})
+        })
+        .catch((error)=>{
+          this.load = false
+          this.btndisabled = false
+          console.log("error",error)
+        })
+      }
+      
     }
   }
 };

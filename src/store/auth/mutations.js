@@ -16,11 +16,15 @@
 //     state.useractive = {}
 // }
 
-export function regUser(state,data){
+export function setUser(state,data){
     state.token = data.token
-    state.email = data.email
+    state.user = data.user
 }
 
 export function setAlumni(state,data){
     state.alumni = data
+}
+
+export function delAlumni(state){
+    state.alumni = ''
 }

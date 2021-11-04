@@ -75,7 +75,7 @@ export default {
     },
     computed:{
         email(){
-            return this.$store.state.auth.email
+            return this.$store.state.auth.user.email
         },
         otp(){
             return this.otp1 + this.otp2 + this.otp3 + this.otp4
