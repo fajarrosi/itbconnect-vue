@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row justify-between">
+        <div class="row justify-between" >
             <div class="title-section">PENDIDIKAN</div>
             <q-btn flat dense style="color:rgba(25,135,191,1);
 font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="datapendidikan[0].user_id === userid">

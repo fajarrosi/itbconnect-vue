@@ -28,9 +28,24 @@ export default route(function ( { store /*ssrContext*/ } ) {
   
   Router.beforeEach((to,from,next) => {
     if (to.matched.some(record => record.meta.requireAuth) && !store.getters['auth/isAuthenticated']) {
+      // if(to.matched.some(record => record.meta.emailverified) && !store.getters['auth/isVerifiedemail']){}
       next({ name: 'login' })
     } else {
-      next()
+      
+      if(to.meta.userverified){
+        if(store.getters['auth/isVerifieduser']){
+          next()
+        }else if(store.getters['auth/isVerifiedemail']){
+          next({name: 'profil'})
+          // store.dispatch('myprofil/getProfil')
+          // .then(()=>{
+          // })
+        } else{
+          next({name:'registerberhasil'})
+        }
+      }else{
+        next()
+      }
     }
   })
 

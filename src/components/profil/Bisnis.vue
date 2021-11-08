@@ -8,7 +8,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databisnis.id === 1"
                 <q-icon name="edit" size="15px"/>
             </q-btn>
         </div>
-        <div v-for="n in 3" :key="n" class="profil-color">
+        <div  class="profil-color" v-if="Object.keys(databisnis).length > 0">
             <div class="row">
                 <img src="~assets/blogo.png" alt="bisnislogo" class="col-3" style="width:97px;">
                 <div class="col-8">

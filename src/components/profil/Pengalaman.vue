@@ -1,12 +1,13 @@
 <template>
     <div>
-        <div class="row justify-between">
+            <div class="row justify-between">
                 <div class="title-section">PENGALAMAN</div>
-               <q-btn flat dense style="color:rgba(25,135,191,1);
+                <!-- v-if="datapengalaman[0].user_id === userid" -->
+                <q-btn flat dense style="color:rgba(25,135,191,1);
 font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="datapengalaman[0].user_id === userid">
                 <div>Ubah</div>
                 <q-icon name="edit" size="15px"/>
-            </q-btn>
+                </q-btn>
             </div>
             <ul style="padding-left:15px;" class="q-my-none profil-color">
                 <li v-for="(pengalaman,index) in datapengalaman" :key="index">{{pengalaman.company_name}} <span v-if="pengalaman.location">, {{pengalaman.location}}</span> <span v-if="pengalaman.starting_year">, {{pengalaman.starting_year}}-{{pengalaman.end_year}}</span> <br>

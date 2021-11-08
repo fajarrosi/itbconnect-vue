@@ -1,5 +1,4 @@
 import { api } from 'boot/axios'
-// import router from '../../router'
 
 export function cekEmail(context,email){
     return new Promise((resolve,reject)=>{
@@ -87,6 +86,7 @@ export function otp(context,data){
         api.post('auth/verify',data)
         .then((response)=>{
             context.commit('delAlumni')
+            context.commit('updateEmailVerified',response.data.data)
             resolve(response.data.message)
         })
         .catch((error)=>{
@@ -143,41 +143,45 @@ export function register2(context,data){
     })
 }
 
+export function logout(context){
+    context.commit('delUser')
+    delete api.defaults.headers.common['Authorization']
 
-// export function logout(context){
-//     return new Promise((resolve)=>{
-//         // localStorage.setItem('LoggedUser',false)
-//         localStorage.removeItem('token')
-//         console.log("action logout",localStorage.getItem('token'))
-//         delete api.defaults.headers.common['Authorization']
-//         context.commit('Logout')
-//         // router.push({name: 'login'})
-//         resolve("user Logout")
-//     })
-// }
+}
 
-// export function login(context,credentials){
-//     return new Promise((resolve,reject)=>{
-//         api.post('auth/login', credentials)
-//         .then((response)=>{
-//             api.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token
-//             console.log("data user",response.data.user)
-//             let d = new Date();
-//             d.setTime(d.getTime() + 1  * 5 * 1000);
-//             let expires = "expires=" + d.toUTCString();
-//             document.cookie = "Token=" + response.data.access_token + ";" +expires + ";path=/";
-//             // localStorage.setItem('LoggedUser',JSON.stringify(response.data.user))
-//             context.commit('actUser',{token : response.data.access_token, user : response.data.user})
-//             // resolve(response)
-//             localStorage.setItem('token',response.data.access_token)
-//             // axios.defaults.headers.common['Authorization'] = 'Bearer ' +response.data.access_token
-//             resolve(response)
-//         })
-//         .catch((error) => {
-//             reject(error)
-//         })
-//     })
-// }
+export function login(context, credentials){
+    return new Promise((resolve,reject)=>{
+        api.post('auth/login',credentials)
+        .then((response)=>{
+            context.commit('setUser',{token: response.data.access_token, user: response.data.user})
+            api.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token
+            resolve(response.data.data)
+        })
+        .catch((error)=>{
+            reject(error)
+        })
+    })
+}
+
+export function forgot(context,email){
+    return new Promise((resolve,reject)=>{
+        api.post('auth/forgot',email)
+        .then((response)=>{
+            resolve(response.data)
+        })
+        .catch((error)=>{
+            reject(error.response.data)
+        })
+    })
+}
+
+export function setLogin(context,user){
+    context.commit('setUserLogin',user)
+}
+
+export function delLogin(context){
+    context.commit('delUserLogin')
+}
 
 
 

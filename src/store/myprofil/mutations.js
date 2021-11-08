@@ -4,15 +4,28 @@ export function setBio(state,data){
     let result = date.formatDate(data.created_at,'MMMM YYYY',{
         months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November','Desember'] 
     })
+    let doms = ''
+    if (data.address.country_id === 78){
+        doms = data.address.province.name
+    }else{
+        doms = data.address.country.country_name
+    }
     state.databio = {
         name: data.complete_name,
         prodi: data.univercity[data.univercity.length - 1 ].program_study,
         tahunmasuk: data.univercity[data.univercity.length - 1 ].entry_year,
-        domisili: data.address.province.name,
+        domisili: doms,
         jabatan : data.experience[data.experience.length -1].position,
         perusahaan: data.experience[data.experience.length -1].company_name,
         created : result,
-        bio :data.description
+        bio :data.description,
+        photoprofil : data.profile.photo_profile,
+        headerprofil : data.profile.header_profile,
+        fb: data.profile.facebook_url,
+        ig: data.profile.instagram_url,
+        twit: data.profile.twitter_url,
+        linkedin : data.profile.linkedin_url,
+        friend : data.total_connect
     }
 }
 
@@ -27,7 +40,8 @@ export function setProfil(state,data){
         email:data.email,
         telephone: data.telephone,
         negara: data.address.country_id,
-        domisili:data.address.address
+        domisili:data.address.address,
+        nim: data.nim
     }
 }
 
@@ -41,4 +55,8 @@ export function setPendidikan(state,data){
 
 export function setOrganisasi(state,data){
     state.dataorganisasi = data.interest
+}
+
+export function delProfil(state){
+    state.databio = {}
 }

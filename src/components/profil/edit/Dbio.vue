@@ -1,6 +1,6 @@
 <template>
     <div>
-        <q-dialog :model-value="dbio" @click="$emit('update:dbio', $event.target.value)" persistent>
+        <q-dialog :model-value="dbio" @click="$emit('update:dbio', $event.target.value)" @hide="$emit('update:dbio',false)">
             <q-card class="hide-scrollbar">
                 <q-img src="~assets/bg-akun.png">
                     <div class="absolute-full text-subtitle2 flex flex-center" @click="onEditHeader">
@@ -9,7 +9,7 @@
                 </q-img>
                 <div class="row justify-center">
                     <q-avatar size="92px" style="margin-top:-50px;">
-                        <q-img src="~assets/akun.png">
+                        <q-img :src="'http://127.0.0.1:8000/profile/' + databio.photoprofil">
                             <div class="absolute-full text-subtitle2 flex flex-center" @click="onEditHeader">
                                 <img src="~assets/edit.png" alt="edit">
                             </div>
@@ -19,9 +19,9 @@
             
                 <q-card-section class="row ">
                     <div class="col-4 text-edit">Nama Lengkap</div>
-                    <div class="col-8 ">Gembong Primadjaya</div>
+                    <div class="col-8 ">{{databio.name}}</div>
                     <div class="col-4 text-edit">Alumni</div>
-                    <div class="col-8 q-my-sm">Jurusan Teknik Mesi, 1998 <br>
+                    <div class="col-8 q-my-sm">Jurusan {{databio.prodi}}, {{databio.tahunmasuk}} <br>
                         <span class="text-grey-8" style="font-size:11px;">Tidak bisa diubah </span>
 
                     </div>
@@ -66,7 +66,7 @@
                             <div class="text-grey-8">Musik</div>
                         </q-btn>
                     </div>
-                    <div class="col-12 text-grey-7 q-mt-xs" >Untuk edit di Personal Info-Minat&Organisasi</div>
+                    <div class="col-12 text-grey-7 q-mt-xs" >Untuk edit di Organisasi</div>
                     <div class="col-12 text-edit" style="font-size:17px;">TAUTAN</div>
                     <div class="col-4 text-edit">Linkedin</div>
                     <q-input
@@ -124,7 +124,8 @@ export default {
     props:[
         'dbio',
         'dprofil',
-        'userbaru'
+        'userbaru',
+        'databio'
     ],
     data(){
         return{
@@ -135,6 +136,14 @@ export default {
             fb:'',
             tw:''
         }
+    },
+    created(){
+        this.domisili = this.databio.domisili
+        this.bio = this.databio.bio
+        this.linkedin = this.databio.linkedin
+        this.ig = this.databio.ig
+        this.fb = this.databio.fb
+        this.tw = this.databio.twit
     },
     methods:{
         onEditHeader(){

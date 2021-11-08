@@ -1,6 +1,6 @@
 <template>
     <div>
-         <q-dialog :model-value="dpend" @click="$emit('update:dpend', $event.target.value)" persistent>
+         <q-dialog :model-value="dpend" @click="$emit('update:dpend', $event.target.value)" @hide="$emit('update:dpend',false)">
             <q-card class="hide-scrollbar">
                 <q-card-section>
                     <div class="q-mb-md text-edit" style="font-size:17px;">PENDIDIKAN</div>

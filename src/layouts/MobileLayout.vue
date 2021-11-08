@@ -24,6 +24,7 @@
             </p>
           </div>
           <div class="row" v-else>
+            <q-btn flat round dense icon="menu" class="q-mr-sm" @click="drawer = !drawer"/>
             <p class="text-h6 q-mb-none">
               {{titlePage}}
             </p>
@@ -86,11 +87,11 @@
               <q-avatar size="70px" class="q-mb-sm q-mt-md">
                 <img src="~assets/akun.png">
               </q-avatar>
-              <div class="text-weight-bold col-12 text-white text-center">Gembong Primadjaya</div>
-              <div class="col-12 text-white text-center">@gembongpri</div>
+              <div class="text-weight-bold col-12 text-white text-center">{{completename}}</div>
+              <div class="col-12 text-white text-center">@{{username}}</div>
               <div class="col-5 text-white text-center row items-center justify-center">
                     <img src="~assets/link.png" alt="place" style="display:inline-block;filter: brightness(0) invert(1);">
-                    <p class="q-my-none q-ml-sm">225</p>
+                    <p class="q-my-none q-ml-sm">0</p>
               </div>
 
             </div>
@@ -98,7 +99,7 @@
           <div class="absolute-bottom">
             <q-separator spaced />
             <q-list padding>
-              <q-item clickable v-ripple>
+              <q-item clickable v-ripple @click="Logout">
                  <q-item-section>
                   <div class="row items-center">
                       <img src="~assets/logout.png" alt="Logout">
@@ -219,7 +220,6 @@
       </div>
     </q-footer>
     
-        <search v-model:search="searchs"></search>
   </q-layout>
 </template>
 
@@ -229,11 +229,9 @@ import { ref } from 'vue'
 export default {
   setup () {
     const drawer = ref(false)
-    // const search = ref(false)
 
     return {
       drawer,
-      // search
     }
   },
   computed:{
@@ -243,16 +241,20 @@ export default {
           return ''
         }
         return val.replace(/^./, val[0].toUpperCase())
+      },
+      completename(){
+        return this.$store.state.auth.user.complete_name
+      },
+      username(){
+        return this.$store.state.auth.user.username
       }
   },
-  data(){
-    return{
-      searchs: false,
-      keyword:''
+  methods:{
+    Logout(){
+      this.$store.dispatch('auth/logout')
+      this.$router.push({name: 'login'})
+      this.$store.dispatch('myprofil/logout')
     }
-  },
-  components:{
-    'search' : require('components/Search.vue').default
   }
 }
 </script>

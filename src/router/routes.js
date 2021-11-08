@@ -18,32 +18,11 @@
 // }
 
 const routes = [
-  
-  {
-    path: '/login2',
-    component: () => import('pages/Login2.vue')
-  },
-
   {
     path:'/registrasi',
     component: () => import('pages/CekEmail.vue')
   },
-  {
-    path:'/registers',
-    component: () => import('pages/Register.vue')
-  },
-  {
-    path:'/register2',
-    component: () => import('pages/Register2.vue')
-  },
-  {
-    path:'/testing',
-    component: () => import('layouts/TestingLayout.vue')
-  },
-  {
-    path:'/otps',
-    component: () => import('pages/Otp.vue')
-  },
+  
   {
     path:'/auth',
     redirect:'login',
@@ -52,53 +31,37 @@ const routes = [
       {path:'/login',name:'login', component: () => import('pages/auth/Login.vue')},
       {path:'/cekemail', component: () => import('pages/auth/CekEmail.vue')},
       {path:'/otp', component: () => import('pages/auth/Otp.vue')},
+      {path:'/forgot', component: () => import('pages/auth/Forgot.vue')},
+      {path:'/forgot2', component: () => import('pages/auth/Forgot2.vue')},
       {path:'/register', component: () => import('pages/auth/Register.vue')},
       {path:'/regissuccess',name:'registerberhasil', component: () => import('pages/auth/RegisSucc.vue')},
       {path:'/registered', component: () => import('pages/auth/Register2.vue')},
     ]
   },
-  {
-    path:'/search',
-    component: () => import('components/Search2.vue')
-  },
 
-  // {
-  //   path:'/',
-  //   redirect:'home',
-  //   component: () => import('layouts/BaseLayout.vue'),
-  //   children: [
-  //     {
-  //       path: 'home',name: 'home', component: () => import ('pages/Home.vue'),
-  //       meta:{
-  //         requireAuth : true
-  //       }
-    
-  //     },
-  //     {
-  //       path: 'profil',name: 'profil', component: () => import ('pages/Profil.vue')
-  //     },
-  //     {
-  //       path: 'bisnis',name: 'bisnis', component: () => import ('pages/Profil.vue')
-  //     },
-  //     {
-  //       path: 'chat',name: 'chat', component: () => import ('pages/Profil.vue')
-  //     }
-     
-  //   ]
-  // },
   {path:'/cari', name:'cari', component:()=>import('pages/search/Search.vue')},
   
   {
     path:'/',
     component: () => import('layouts/MobileLayout.vue'),
     children:[
-      {path:'',name:'beranda',component:()=>import('pages/beranda/Beranda.vue')},
+      {path:'',name:'beranda',component:()=>import('pages/beranda/Beranda.vue'),
+        meta:{
+          userverified:true,
+          requireAuth:true
+        }
+      },
       {path:'rekomendasi/:id',name:'rekomendasi', component:()=>import('pages/rekomendasi/Detail.vue'),
         meta:{
           detail:true
         }
       },
-      {path:'koneksi',name:'koneksi',component:()=>import('pages/koneksi/Koneksi.vue')},
+      {path:'koneksi',name:'koneksi',component:()=>import('pages/koneksi/Koneksi.vue'),
+        meta:{
+          userverified:true,
+          requireAuth:true
+        }
+      },
       {path:'cari-alumni',name:'Cari Alumni',component:()=>import('pages/koneksi/Search.vue'),
         meta:{
           nofooter:true,
@@ -110,7 +73,12 @@ const routes = [
           headerback:true
         }
       },
-      {path:'berita',name:'berita',component:()=>import('pages/berita/Berita.vue')},
+      {path:'berita',name:'berita',component:()=>import('pages/berita/Berita.vue'),
+        meta:{
+            userverified:true,
+            requireAuth:true
+          }
+      },
       {path:'berita/detail',name:'beritadetail',component:()=>import('pages/berita/Detail.vue'),
       meta:{
           detail:true
@@ -122,34 +90,44 @@ const routes = [
           detail:true
         }
       },
-      {path:'profil',name:'profil',component:()=>import('pages/profil/Profil.vue')},
+      {path:'profil',name:'profil',component:()=>import('pages/profil/Profil.vue'),
+        meta:{
+          requireAuth:true
+        },
+        
+      },
       {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue'),
         meta:{
           nofooter:true,
+          userverified:true,
           headerback:true
         }
       },
       {path:'notifikasi',name:'notifikasi',component:()=>import('pages/notifikasi/Notifikasi.vue'),
         meta:{
           nofooter:true,
+          userverified:true,
           headerback:true
         }
       },
       {path:'pesan',name:'pesan',component:()=>import('pages/pesan/Pesan.vue'),
         meta:{
           nofooter:true,
+          userverified:true,
           headerback:true
         }
       },
       {path:'detail',name:'detail-pesan',component:()=>import('pages/pesan/Detail.vue'),
         meta:{
           nofooter:true,
+          userverified:true,
           headerback:true
         }
       },
       {path:'pengaturan',name:'setting&Privasi',component:()=>import('pages/pengaturan/Pengaturan.vue'),
         meta:{
           nofooter:true,
+          userverified:true,
           headerback:true
         }
       },

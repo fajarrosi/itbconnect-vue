@@ -48,6 +48,7 @@ export default store(function (/* { ssrContext } */) {
         id:2
       }
     },
+   
     mutations:{
       Verified(state,data){
         state.isVerified = data

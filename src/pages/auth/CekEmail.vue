@@ -41,7 +41,7 @@
         </q-card-section>
         <q-card-actions align="center" class=" q-pb-md q-pt-none" style="margin-top:11px;">
             <span>Sudah memiliki akun? </span>
-            <q-btn flat no-caps class="text-primary text-bold" @click="$router.push('/auth')">
+            <q-btn flat no-caps class="text-primary text-bold" @click="$router.push('/login')">
                 Login Sekarang
             </q-btn>
         </q-card-actions>

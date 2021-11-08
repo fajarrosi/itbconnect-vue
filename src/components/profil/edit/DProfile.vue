@@ -1,10 +1,10 @@
 <template>
     <div>
-         <q-dialog :model-value="dprofil" @click="$emit('update:dprofil', $event.target.value)" persistent>
+         <q-dialog :model-value="dprofil" @click="$emit('update:dprofil', $event.target.value)" @hide="$emit('update:dprofil',false)">
             <q-card class="hide-scrollbar">
                 <q-card-section class="row ">
                     <div class="col-12 text-edit" style="font-size:17px;">PROFIL</div>
-                    <div class="col-4 text-edit">Nama Lengkap*</div>
+                    <div class="col-4 text-edit">Nama Panggilan*</div>
                     <q-input
                     dense
                     outlined
@@ -84,10 +84,6 @@
                         <q-select  outlined dense v-model="prov" :options="optprov" label="Provinsi" bg-color="white" class="q-mb-sm col-8"/>
                         <div class="col-4 text-edit">Kota/Kabupaten</div>
                         <q-select  outlined dense v-model="kota" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm col-8"/>
-                            <div class="col-4 text-edit">Kecamatan</div>
-                        <q-select  outlined dense v-model="kec" :options="optkec" label="Kecamatan" bg-color="white" class="q-mb-sm col-8"/>
-                            <div class="col-4 text-edit">Keluarahan</div>
-                        <q-select  outlined dense v-model="kel" :options="optkel" label="Kelurahan" bg-color="white" class="q-mb-sm col-8"/>
                             <div class="col-4 text-edit">Alamat</div>
                         <q-input
                         outlined
@@ -170,7 +166,8 @@ export default {
     props:[
         'dprofil',
         'dpengalaman',
-        'userbaru'
+        'userbaru',
+        'dataprofil'
     ],
     emits:['update:dpengalaman','update:dprofil'],
     data(){
@@ -284,6 +281,12 @@ export default {
         negara:'',
         alamat:''
         }
+    },
+    mounted(){
+        this.nama = this.$props.dataprofil.nick
+        this.email = this.$props.dataprofil.email
+        this.nowa = this.$props.dataprofil.telephone
+        this.nim = this.$props.dataprofil.nim
     },
     methods:{
         onSave(){

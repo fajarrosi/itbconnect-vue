@@ -1,6 +1,6 @@
 <template>
     <div>
-         <q-dialog :model-value="dminat" @click="$emit('update:dminat', $event.target.value)" persistent>
+         <q-dialog :model-value="dminat" @click="$emit('update:dminat', $event.target.value)" @hide="$emit('update:dminat',false)">
             <q-card class="hide-scrollbar">
                 <q-card-section>
                     <div class="q-mb-md text-edit" style="font-size:17px;">MINAT & ORGANISASI*</div>

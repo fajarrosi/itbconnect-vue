@@ -248,7 +248,7 @@ export default {
           user: this.user,
           org: this.inputs
           })
-          .then((response)=>{
+          .then(()=>{
             this.load = false
             this.btndisabled = false
             this.$router.push({name:'profil'})
@@ -264,7 +264,7 @@ export default {
           prov: this.prov,
           org: this.inputs
         })
-        .then((response)=>{
+        .then(()=>{
           this.load = false
           this.btndisabled = false
           this.$router.push({name:'profil'})
