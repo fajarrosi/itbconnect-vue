@@ -1,9 +1,10 @@
 <template>
     <div>
         <div class="row justify-between">
-            <q-avatar size="92px" style="margin-top:-70px;" >
+            <q-avatar size="92px" style="margin-top:-70px;" v-if="databio.photoprofil">
                 <img :src="'http://127.0.0.1:8000/profile/' + databio.photoprofil" >
             </q-avatar>
+            <q-icon name="account_circle" v-else style="margin-top:-70px;" size="92px" class="text-primary"/>
             <q-btn flat dense style="color:rgba(25,135,191,1);
 font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.name === name">
                 <div>Ubah</div>

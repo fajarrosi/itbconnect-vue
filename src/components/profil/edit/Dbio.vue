@@ -8,8 +8,15 @@
                     </div>
                 </q-img>
                 <div class="row justify-center">
-                    <q-avatar size="92px" style="margin-top:-50px;">
-                        <q-img :src="'http://127.0.0.1:8000/profile/' + databio.photoprofil">
+                    <q-avatar size="92px" style="margin-top:-50px;" v-if="databio.photoprofil">
+                        <q-img :src="'http://127.0.0.1:8000/profile/' + databio.photoprofil" width="92px" height="92px">
+                            <div class="absolute-full text-subtitle2 flex flex-center" @click="onEditHeader">
+                                <img src="~assets/edit.png" alt="edit">
+                            </div>
+                        </q-img>
+                    </q-avatar>
+                    <q-avatar size="92px" style="margin-top:-50px;" v-else>
+                        <q-img src="~assets/akun.png" size="92px">
                             <div class="absolute-full text-subtitle2 flex flex-center" @click="onEditHeader">
                                 <img src="~assets/edit.png" alt="edit">
                             </div>
@@ -137,13 +144,14 @@ export default {
             tw:''
         }
     },
-    created(){
+    mounted(){
         this.domisili = this.databio.domisili
         this.bio = this.databio.bio
         this.linkedin = this.databio.linkedin
         this.ig = this.databio.ig
         this.fb = this.databio.fb
         this.tw = this.databio.twit
+        console.log("mounted dbio")
     },
     methods:{
         onEditHeader(){
