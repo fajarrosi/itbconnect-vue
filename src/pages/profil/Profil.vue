@@ -1,18 +1,12 @@
 <template>
     <q-page class="q-pb-lg">
-        <!-- <div class="row">
-            <q-skeleton type="QBtn" height="120px" class="col"/>
-        </div>
-        <q-card flat class="q-mb-md q-mx-md card-radius" style="margin-top:-40px;" >
-            <q-card-section>
-                <bio v-model:dbio="dbio" :databio="databio"/>
-            </q-card-section>
-        </q-card> -->
+        
+
         <div v-if="load">
-            <img src="~assets/bg-akun.png" alt="background-account">
+            <q-img :src="headerprev ? headerprev : require('assets/bg-akun.png')" alt="background-account" width="428px" height="153px"/>
             <q-card flat class="q-mb-md q-mx-md card-radius" style="margin-top:-40px;" >
                 <q-card-section>
-                    <bio v-model:dbio="dbio" :databio="databio"/>
+                    <bio v-model:dbio="dbio" :databio="databio" :profilprev="profilprev"/>
                 </q-card-section>
             </q-card>
             <div class="row q-mx-md justify-between items-center">
@@ -34,38 +28,37 @@
             </div>
             <q-card flat class="q-mx-md card-radius">
                 <q-card-section class="q-pb-none">
-                    <profil v-model:dprofil="dprofil" :dataprofil="dataprofil"/>
+                    <profil v-model:dprofil="dprofil" :dataprofil="dataprofil" />
                 </q-card-section>
                 <q-card-section class="q-py-none">
-                    <pengalaman v-model:dpengalaman="dpengalaman" :datapengalaman="datapengalaman"/>
+                    <pengalaman v-model:dpengalaman="dpengalaman" :datapengalaman="datapengalaman" :databio="databio"/>
                 </q-card-section>
                 <q-card-section class="q-py-none">
-                    <pendidikan v-model:dpend="dpend" :datapendidikan="datapendidikan"/>
+                    <pendidikan v-model:dpend="dpend" :datapendidikan="datapendidikan" :databio="databio"/>
                 </q-card-section>
                 <q-card-section class="q-py-none">
-                    <organisasi v-model:dminat="dminat" :dataorganisasi="dataorganisasi"/>
+                    <organisasi v-model:dminat="dminat" :dataorganisasi="dataorganisasi" :databio="databio" :datapengda="datapengda"/>
                 </q-card-section>
                 <q-card-section class="q-pt-none">
-                    <bisnis v-model:dbisnis="dbisnis" :databisnis="databisnis"/>
+                    <bisnis v-model:dbisnis="dbisnis" :databisnis="databisnis" :databio="databio"/>
                 </q-card-section>
             </q-card>
         </div>
         <div v-else>
-            <span>Memuat Data</span>
+            <profilload />
         </div>
-            <Dintro v-model:intro="intro" v-model:dbio="dbio"/>
-            <Dbio v-model:dbio="dbio" v-model:dprofil="dprofil" v-model:userbaru="userbaru" :databio="databio"/>
-            <Dprofil v-model:dprofil="dprofil" v-model:userbaru="userbaru" v-model:dpengalaman="dpengalaman" :dataprofil="dataprofil"/>
-            <Dpengalaman v-model:dpengalaman="dpengalaman" v-model:dpend="dpend" v-model:userbaru="userbaru"/>
-            <Dpend v-model:dpend="dpend" v-model:dminat="dminat" v-model:userbaru="userbaru"/>
-            <Dminat v-model:dminat="dminat" v-model:dbisnis="dbisnis" v-model:userbaru="userbaru"/>
-            <Dbisnis v-model:dbisnis="dbisnis" v-model:userbaru="userbaru"/>
+            <Dintro v-model:intro="intro" v-model:dbio="dbio" v-if="intro"/>
+            <Dbio v-model:dbio="dbio" v-model:dprofil="dprofil" v-model:userbaru="userbaru" :databio="databio" :dataorganisasi="dataorganisasi" v-if="dbio" v-model:headerprev="headerprev" v-model:profilprev="profilprev"/>
+            <Dprofil v-model:dprofil="dprofil" v-model:userbaru="userbaru" v-model:dpengalaman="dpengalaman" :dataprofil="dataprofil" v-if="dprofil" :pnegara="negara" :pprov="prov" :pagama="agama"/>
+            <Dpengalaman v-model:dpengalaman="dpengalaman" v-model:dpend="dpend" v-model:userbaru="userbaru" :datapengalaman="datapengalaman" v-if="dpengalaman"/>
+            <Dpend v-model:dpend="dpend" v-model:dminat="dminat" v-model:userbaru="userbaru" :datapendidikan="datapendidikan" v-if="dpend" :jenjang="jenjang" :prodi="prodi"/>
+            <Dminat v-model:dminat="dminat" v-model:dbisnis="dbisnis" v-model:userbaru="userbaru" :dataorganisasi="dataorganisasi" v-if="dminat" :organization="organization" :pengda="pengda" :iaprodi="iaprodi" :datapengda="datapengda"/>
+            <Dbisnis v-model:dbisnis="dbisnis" v-model:userbaru="userbaru" v-if="dbisnis" :bisnisfield="bisnisfield"/>
     </q-page>
 </template>
 
 <script>
-// import store from 'src/store'
-// import { api } from 'boot/axios'
+
 import Dintro from 'src/components/profil/Dintro.vue'
 import Dbio from 'components/profil/edit/Dbio.vue'
 import Dprofil from 'src/components/profil/edit/DProfile.vue'
@@ -89,7 +82,8 @@ export default {
         'pengalaman': require('components/profil/Pengalaman.vue').default,
         'pendidikan' : require('components/profil/Pendidikan.vue').default,
         'organisasi' : require('components/profil/Organisasi.vue').default,
-        'bisnis' : require('components/profil/Bisnis.vue').default
+        'bisnis' : require('components/profil/Bisnis.vue').default,
+        'profilload': require('components/profil/Profilload.vue').default
     },
     data(){
         return{
@@ -101,35 +95,43 @@ export default {
             dbisnis:false,
             dpend:false,
             userbaru:false,
-            load:false
+            load:false,
+            headerprev:'',
+            profilprev:''
         }
     },
-    // beforeRouteEnter (to, from, next) {
-    //     let config = {
-    //         headers: {
-    //             Authorization : `Bearer ${store().state.auth.token}`
-    //         }
-    //     }
-    //     api.get('user/profile',config)
-    //     .then((response)=>{
-    //         console.log("response data data",response.data.data)
-    //         store().commit('myprofil/setBio',response.data.data)
-    //         store().commit('myprofil/setProfil',response.data.data)
-    //         store().commit('myprofil/setPengalaman',response.data.data)
-    //         store().commit('myprofil/setPendidikan',response.data.data)
-    //         store().commit('myprofil/setOrganisasi',response.data.data)
-    //         // store().dispatch('myprofil/getProfil',response.data.data)
-    //         setTimeout(()=>{
-    //             next()
-    //         },3000)
-    //     })
-    // },
 
     methods:{
-        ...mapActions('myprofil', ['getProfil']),
+        ...mapActions("myprofil", ["getProfil","getOrg","getPengda","getIaprodi",'getJenjang','getProdi','getNegara','getProv','getAgama','getBisnisField']),
+        async getData(){
+            this.getProfil()
+            .then(()=>{
+                if(this.databio.headerprofil){
+                    this.headerprev = this.header + this.databio.headerprofil
+                }
+                if(this.databio.photoprofil){
+                    this.profilprev = this.profil + this.databio.photoprofil
+                }
+                if(!this.userVerified){
+                    this.intro = true
+                    this.userbaru = true
+                }
+                this.load =true
+            })
+            this.getNegara()
+            this.getProv()
+            this.getAgama()
+            this.getJenjang()
+            this.getProdi()
+            this.getOrg()
+            this.getPengda()
+            this.getIaprodi()
+            this.getBisnisField()
+            
+        }
     },
     computed:{
-        ...mapState('myprofil',['databio','dataprofil','datapengalaman','datapendidikan','dataorganisasi','databisnis']),
+        ...mapState('myprofil',['databio','dataprofil','datapengalaman','datapendidikan','dataorganisasi','databisnis','organization','pengda','iaprodi','jenjang','prodi','negara','prov','agama','datapengda','bisnisfield']),
         userVerified(){
             return this.$store.state.auth.user.is_verified
         }
@@ -138,14 +140,13 @@ export default {
         if(Object.keys(this.databio).length > 0){
             this.load = true
         }else{
-            this.getProfil()
-            .then(()=>{
-                this.load =true
-                if(!this.userVerified){
-                    this.intro = true
-                    this.userbaru = true
-                }
-            })
+            this.getData()
+        }
+        if(this.databio.headerprofil){
+            this.headerprev = this.header + this.databio.headerprofil
+        }
+        if(this.databio.photoprofil){
+            this.profilprev = this.profil + this.databio.photoprofil
         }
     },
 }

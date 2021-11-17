@@ -5,6 +5,16 @@ export default function () {
     datapengalaman:{},
     datapendidikan:{},
     dataorganisasi:{},
-    databisnis:{}
+    databisnis:{},
+    organization:'',
+    pengda:'',
+    iaprodi:'',
+    jenjang:'',
+    prodi:'',
+    negara:'',
+    prov:'',
+    agama:'',
+    datapengda:{},
+    bisnisfield:''
   }
 }

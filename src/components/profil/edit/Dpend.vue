@@ -5,12 +5,11 @@
                 <q-card-section>
                     <div class="q-mb-md text-edit" style="font-size:17px;">PENDIDIKAN</div>
                 <div class="row q-mb-lg" v-for="(pend,k) in pendidikan" :key="k">
-                    
-                    <div class="col-4 text-edit">Jenjang*</div>
-                    <q-select  outlined dense v-model="pend.jenjang" emit-value map-options :options="optjenjang" label="Select Jenjang Pendidikan" bg-color="white" class="q-mb-sm col-8" />
+                        <div class="col-4 text-edit">Jenjang*</div>
+                        <q-select  outlined dense v-model="pend.jenjang" emit-value map-options :options="optjenjang" label="Select     Jenjang Pendidikan" bg-color="white" class="q-mb-sm col-8" />
                     <div class="col-4 text-edit">Universitas*</div>
                     <q-select  outlined dense v-model="pend.univ" emit-value map-options :options="optuniv" label="Select Universitas" bg-color="white" class="q-mb-sm col-8" />
-                    <div class="col-11 q-ml-auto row" v-if="pend.univ === '2'">
+                    <div class="col-11 q-ml-auto row" v-if="pend.univ === 2">
                         <div class="col-4 text-edit">Univ Lainnya</div>
                         <q-input
                         dense
@@ -32,7 +31,7 @@
                         hide-bottom-space
                         />
                     </div>
-                    <div class="col-12 row" v-if="pend.univ === '1'">
+                    <div class="col-12 row" v-if="pend.univ === 1 ">
                         <div class="col-4 text-edit">Prodi </div>
                         <q-select  outlined dense v-model="pend.prodi" emit-value map-options :options="optprodi" label="Select Prodi" bg-color="white" class="q-mb-sm col-8" />
                     </div>
@@ -106,7 +105,14 @@
                 <q-card-actions align="center" class="q-mb-md">
                     <q-btn  no-caps label="Kembali" outline
                     style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dpend', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5"/>
+                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
+                :disabled="disabled">
+                        <template v-slot:loading>
+                            <div class="row items-center">
+                                <q-spinner-facebook />  
+                            </div>
+                        </template>
+                    </q-btn>
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -118,53 +124,67 @@ export default {
     props:[
         'dpend',
         'userbaru',
-        'dminat'
+        'dminat',
+        'datapendidikan',
+        'jenjang',
+        'prodi'
     ],
     emits:['update:dminat','update:dpend'],
     data(){
         return{
-            optjenjang:[
-                {
-                    label:'S1',
-                    value:'1'
-                },
-                {
-                    label:'S2',
-                    value:'2'
-                }
-            ],
+            optjenjang:[],
             optuniv:[
                 {
                     label:'ITB',
-                    value:'1'
+                    value:1
                 },
                 {
                     label:'Lainnya',
-                    value:'2'
+                    value:2
                 }
             ],
-            optprodi:[
-                {
-                    label:'Prodi1',
-                    value:'1'
-                },
-                {
-                    label:'Prodi2',
-                    value:'2'
-                }
-            ],
-            pendidikan:[
-                {
-                    jenjang:'',
-                    univ:'',
+            optprodi:[],
+            pendidikan:[],
+            load:false,
+            disabled:false,
+            send:[]
+        }
+    },
+    created(){
+        this.jenjang.forEach(element => {
+        let opt ={}
+        opt.label = element.name
+        opt.value = element.id
+        this.optjenjang.push(opt)
+        })
+        this.prodi.forEach(element => {
+            this.optprodi.push(element.name)
+        })
+    },
+    mounted(){
+        this.datapendidikan.forEach(el=>{
+            if(el.is_itb){
+                this.pendidikan.push({
+                    jenjang:el.education_id,
+                    univ:1,
                     prodilain:'',
                     univlain:'',
+                    prodi:el.program_study,
+                    tahunmasuk:el.entry_year,
+                    tahunkeluar:el.graduated_year,
+                })
+            }else{
+                this.pendidikan.push({
+                    jenjang:el.education_id,
+                    univ:2,
+                    prodilain:el.program_study,
+                    univlain:el.campus_name,
                     prodi:'',
-                    tahunmasuk:'',
-                    tahunkeluar:'',
-                }
-            ]
-        }
+                    tahunmasuk:el.entry_year,
+                    tahunkeluar:el.graduated_year,
+                })
+            }
+        })
     },
     methods:{
         add(){
@@ -181,12 +201,40 @@ export default {
             this.pendidikan.splice(val,1)
         },
         onSave(){
-            if (this.userbaru) {
-                this.$emit('update:dpend', false)
-                this.$emit('update:dminat', true)
-            }else{
-                this.$emit('update:dpend', false)
-            }   
+            this.load = true
+            this.disabled = true
+            this.pendidikan.forEach(el=>{
+                if(el.univ === 1){
+                    this.send.push({
+                        campus_name: 'ITB',
+                        education_id: el.jenjang,
+                        program_study: el.prodi,
+                        entry_year: el.tahunmasuk,
+                        graduated_year: el.tahunkeluar,
+                        is_itb: true
+                    })
+                }else{
+                    this.send.push({
+                        campus_name: el.univlain,
+                        education_id: el.jenjang,
+                        program_study: el.prodilain,
+                        entry_year: el.tahunmasuk,
+                        graduated_year: el.tahunkeluar,
+                        is_itb: false
+                    })
+                }
+            })
+            this.$store.dispatch('myprofil/updEdu',this.send)
+            .then(()=>{
+                this.load = false
+                this.disabled = false
+                if (this.userbaru) {
+                    this.$emit('update:dpend', false)
+                    this.$emit('update:dminat', true)
+                }else{
+                    this.$emit('update:dpend', false)
+                }   
+            })
 
         },
         checkValue (val, reason, details) {

@@ -60,17 +60,6 @@ export default {
                 value:'2'
             }
         ],
-        // optnegara:[
-        //     {
-        //         label:'Neg1',
-        //         value:'1'
-        //     },
-        //     {
-        //         label:'Neg2',
-        //         value:'2'
-        //     },
-        // ],
-
         }
     },
     props:[

@@ -2,22 +2,24 @@
     <div>
         <q-dialog :model-value="dbio" @click="$emit('update:dbio', $event.target.value)" @hide="$emit('update:dbio',false)">
             <q-card class="hide-scrollbar">
-                <q-img src="~assets/bg-akun.png">
-                    <div class="absolute-full text-subtitle2 flex flex-center" @click="onEditHeader">
+                <input type="file" @change="onHeaderSelected" style="display:none;" ref="hpupload"/>
+                <q-img :src="prevhp ? prevhp : require('assets/bg-akun.png')" width="418px" height="153px">
+                    <div class="absolute-full text-subtitle2 flex flex-center" @click="$refs.hpupload.click()">
                         <img src="~assets/edit.png" alt="edit">
                     </div>
                 </q-img>
                 <div class="row justify-center">
-                    <q-avatar size="92px" style="margin-top:-50px;" v-if="databio.photoprofil">
+                    <input type="file" @change="onFileSelected" style="display:none;" ref="ppupload"/>
+                    <!-- <q-avatar size="92px" style="margin-top:-50px;" v-if="databio.photoprofil">
                         <q-img :src="'http://127.0.0.1:8000/profile/' + databio.photoprofil" width="92px" height="92px">
-                            <div class="absolute-full text-subtitle2 flex flex-center" @click="onEditHeader">
+                            <div class="absolute-full text-subtitle2 flex flex-center" @click="$refs.ppupload.click()">
                                 <img src="~assets/edit.png" alt="edit">
                             </div>
                         </q-img>
-                    </q-avatar>
-                    <q-avatar size="92px" style="margin-top:-50px;" v-else>
-                        <q-img src="~assets/akun.png" size="92px">
-                            <div class="absolute-full text-subtitle2 flex flex-center" @click="onEditHeader">
+                    </q-avatar> -->
+                    <q-avatar size="92px" style="margin-top:-50px;">
+                        <q-img :src="prevpp ? prevpp : require('assets/akun.png')" width="92px" height="92px">
+                            <div class="absolute-full text-subtitle2 flex flex-center" @click="$refs.ppupload.click()">
                                 <img src="~assets/edit.png" alt="edit">
                             </div>
                         </q-img>
@@ -42,10 +44,11 @@
                     bg-color="white"
                     hide-bottom-space
                     bottom-slots
+                    disable
                     >
                     <template v-slot:hint>
                         <div class="text-caption q-pa-none">
-                            Domisili tempat Anda tinggal/kerja, sehingga memudahkan sesama alumni menemukan Anda.
+                            Untuk Edit di Profil. Domisili tempat Anda tinggal/kerja, sehingga memudahkan sesama alumni menemukan Anda. 
                         </div>
                     </template>
                     </q-input>
@@ -63,18 +66,12 @@
                     
                     <div class="col-2 text-edit">Minat</div>
                     <div class="col-10">
-                        <q-btn color="secondary q-mr-sm" outline no-caps>
-                            <div class="text-grey-8">Musik</div>
-                        </q-btn>
-                        <q-btn color="secondary q-mr-sm" outline no-caps>
-                            <div class="text-grey-8">Musik</div>
-                        </q-btn>
-                        <q-btn color="secondary q-mr-sm" outline no-caps>
-                            <div class="text-grey-8">Musik</div>
+                        <q-btn color="secondary q-mr-sm q-mt-sm" outline no-caps v-for="(org,index) in dataorganisasi" :key="index">
+                            <div class="text-grey-8">{{org.organization.name}}</div>
                         </q-btn>
                     </div>
                     <div class="col-12 text-grey-7 q-mt-xs" >Untuk edit di Organisasi</div>
-                    <div class="col-12 text-edit" style="font-size:17px;">TAUTAN</div>
+                    <div class="col-12 text-edit q-mt-md q-mb-sm" style="font-size:17px;">TAUTAN</div>
                     <div class="col-4 text-edit">Linkedin</div>
                     <q-input
                     dense
@@ -119,7 +116,14 @@
                 <q-card-actions align="center" class="q-mb-md">
                     <q-btn  no-caps label="Kembali" outline
                     style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dbio', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5"/>
+                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
+                :disabled="disabled">
+                        <template v-slot:loading>
+                            <div class="row items-center">
+                                <q-spinner-facebook />  
+                            </div>
+                        </template>
+                    </q-btn>
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -132,7 +136,10 @@ export default {
         'dbio',
         'dprofil',
         'userbaru',
-        'databio'
+        'databio',
+        'dataorganisasi',
+        'headerprev',
+        'profilprev'
     ],
     data(){
         return{
@@ -141,7 +148,13 @@ export default {
             linkedin:'',
             ig:'',
             fb:'',
-            tw:''
+            tw:'',
+            load:false,
+            disabled:false,
+            prevpp:'',
+            srcpp:'',
+            prevhp:'',
+            srchp:''
         }
     },
     mounted(){
@@ -151,19 +164,49 @@ export default {
         this.ig = this.databio.ig
         this.fb = this.databio.fb
         this.tw = this.databio.twit
-        console.log("mounted dbio")
+        if(this.databio.photoprofil){
+            this.prevpp = this.profilprev
+        }
+        if(this.databio.headerprofil){
+            this.prevhp = this.headerprev
+        }
     },
     methods:{
-        onEditHeader(){
-            console.log("test")
+        onFileSelected(event){
+            this.srcpp = event.target.files[0]
+            this.prevpp = URL.createObjectURL(event.target.files[0])
+        },
+        onHeaderSelected(event){
+            this.srchp = event.target.files[0]
+            this.prevhp = URL.createObjectURL(event.target.files[0])
         },
         onSave(){
-            if (this.userbaru) {
-                this.$emit('update:dbio', false)
-                this.$emit('update:dprofil', true)
-            }else{
-                this.$emit('update:dbio', false)
-            }
+            this.load = true
+            this.disabled = true
+            let form = new FormData()
+            form.append('photo_profile',this.srcpp)
+            form.append('header_profile',this.srchp)
+            form.append('description',this.bio)
+            form.append('facebook_url',this.fb)
+            form.append('instagram_url',this.ig)
+            form.append('twitter_url',this.tw)
+            form.append('linkedin_url',this.linkedin)
+            this.$store.dispatch('myprofil/updBio',form)
+            .then(()=>{
+                this.load = false
+                this.disabled = false
+                this.$emit('update:headerprev',this.prevhp)
+                this.$emit('update:profilprev',this.prevpp)
+                if(this.userbaru){
+                    this.$emit('update:dbio', false)
+                    this.$emit('update:dprofil', true)
+                }else{
+                    this.$emit('update:dbio', false)
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+            })
         }
     }
 }

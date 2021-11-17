@@ -17,7 +17,7 @@
         dense
         :modelValue="thnmasuk"
         @update:modelValue="event => $emit('update:thnmasuk', event)" 
-        
+        mask="####"
         label="Tahun Masuk"
         lazy-rules
         :rules="[
@@ -31,6 +31,7 @@
         outlined
         dense
         :modelValue="thnkeluar"
+        mask="####"
         @update:modelValue="event => $emit('update:thnkeluar', event)" 
         label="Tahun Keluar"
         lazy-rules

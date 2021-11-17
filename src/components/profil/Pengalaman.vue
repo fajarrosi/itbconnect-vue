@@ -4,13 +4,13 @@
                 <div class="title-section">PENGALAMAN</div>
                 <!-- v-if="datapengalaman[0].user_id === userid" -->
                 <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="datapengalaman[0].user_id === userid">
+font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.userid === userid">
                 <div>Ubah</div>
                 <q-icon name="edit" size="15px"/>
                 </q-btn>
             </div>
-            <ul style="padding-left:15px;" class="q-my-none profil-color">
-                <li v-for="(pengalaman,index) in datapengalaman" :key="index">{{pengalaman.company_name}} <span v-if="pengalaman.location">, {{pengalaman.location}}</span> <span v-if="pengalaman.starting_year">, {{pengalaman.starting_year}}-{{pengalaman.end_year}}</span> <br>
+            <ul style="padding-left:15px;" class="q-my-none ">
+                <li v-for="(pengalaman,index) in datapengalaman" :key="index">{{pengalaman.company_name}} <span v-if="pengalaman.location">, {{pengalaman.location}}</span> <span v-if="pengalaman.starting_year">, {{pengalaman.starting_year}} - </span> <span v-if="pengalaman.is_work">Sekarang</span> <span v-else> {{pengalaman.end_year}} </span><br>
                     sebagai {{pengalaman.position}}
                 </li>
             </ul>
@@ -25,7 +25,8 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="datapengalaman[0].us
 export default {
     props:[
         'dpengalaman',
-        'datapengalaman'
+        'datapengalaman',
+        'databio'
     ],
     emits:['update:dpengalaman'],
     computed:{

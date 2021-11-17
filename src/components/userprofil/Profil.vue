@@ -4,16 +4,16 @@
             <div class="title-section">PROFIL</div>
             
         <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="dataprofil.userid === userid">
+font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="dataprofil.nick === nick">
                 <div>Ubah</div>
                 <q-icon name="edit" size="15px"/>
             </q-btn>
         </div>
-        <div class="row ">
+        <div class="row profil-color">
             <div class="col-4">Nama Panggilan</div>
             <div class="col-6">: {{dataprofil.nick}}</div>
         </div>
-        <div class="locked" v-if="dataprofil.userid !== userid && !dataprofil.connect">
+        <div class="locked" v-if="dataprofil.nick !== nick && !dataprofil.connect">
             <div class="row justify-center"  style="padding-top:13%;">
                 <div class="col-12 text-center">
                     <img src="~assets/padlock.png" alt="lock">
@@ -28,35 +28,35 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="dataprofil.userid ==
             </div>
             
         </div>
-        <div :class="dataprofil.userid !== userid && !dataprofil.connect ? 'blur' : ''">
-            <div class="row " >
+        <div :class="dataprofil.nick !== nick && !dataprofil.connect ? 'blur' : ''">
+            <div class="row profil-color" >
                 <div class="col-4">Jenis Kelamin</div>
                 <div class="col-3" v-if="dataprofil.gender === 'male'">: Laki-laki</div>
                 <div class="col-3" v-else>: Perempuan</div>
                 <div class="col-3">Gol. Darah</div>
                 <div class="col-2">: {{dataprofil.blood}}</div>
             </div>
-            <div class="row ">
+            <div class="row profil-color">
                 <div class="col-4">Status</div>
                 <div class="col-3" v-if="dataprofil.status === 'yes'">: Menikah</div>
                 <div class="col-3" v-else>: Lajang</div>
                 <div class="col-3">Agama</div>
                 <div class="col-2">: {{dataprofil.religion}}</div>
             </div>
-            <div class="row ">
+            <div class="row profil-color">
                 <div class="col-4">Kewarganegaraan</div>
                 <div class="col-6">: {{dataprofil.citizenship}}</div>
             </div>
-            <div class="row ">
+            <div class="row profil-color">
                 <div class="col-4" v-if="dataprofil.negara === 78">Alamat Dalam Negeri</div>
                 <div class="col-4" v-else>Alamat Luar Negeri</div>
                 <div class="col-8 text-justify">: {{dataprofil.domisili}}</div>
             </div>
-            <div class="row ">
+            <div class="row profil-color">
                 <div class="col-4">Email</div>
                 <div class="col-6">: {{dataprofil.email}}</div>
             </div>
-            <div class="row ">
+            <div class="row profil-color">
                 <div class="col-4">No. Telepon</div>
                 <div class="col-6">: {{dataprofil.telephone}}</div>
             </div>
@@ -81,8 +81,8 @@ export default {
     ],
     emits:['update:dprofil'],
     computed:{
-        userid(){
-            return this.$store.state.auth.user.id
+        nick(){
+            return this.$store.state.auth.user.nickname
         }
     },
     methods:{

@@ -95,6 +95,14 @@ export default {
             this.remember = JSON.parse(localStorage.getItem('remember'))
         }
     },
+    beforeRouteEnter(to,from,next){
+        next(vm=>{
+            if(vm.$store.getters['auth/isAuthenticated']){
+                console.log("true")
+                vm.$router.push('/')
+            }
+        })
+    },
     methods: {
         getAnswer(){
             if(this.remember){

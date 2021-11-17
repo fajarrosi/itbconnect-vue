@@ -1,7 +1,6 @@
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 import auth from './auth'
-import profile from './profile'
 import myprofil from './myprofil'
 import createPersistedState from 'vuex-persistedstate';
 
@@ -61,8 +60,7 @@ export default store(function (/* { ssrContext } */) {
     },
     modules: {
       auth,
-      myprofil,
-      profile
+      myprofil
     },
     plugins: [createPersistedState()],
 

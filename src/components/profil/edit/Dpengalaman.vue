@@ -10,7 +10,7 @@
                     <q-input
                     dense
                     outlined
-                    v-model="peng.perusahaan"
+                    v-model="peng.company_name"
                     placeholder="Perusahaan"
                     class="q-mb-sm col-8"
                     bg-color="white"
@@ -21,7 +21,7 @@
                     <q-input
                     dense
                     outlined
-                    v-model="peng.alamat"
+                    v-model="peng.location"
                     placeholder="Alamat perusahaan"
                     class="q-mb-sm col-8"
                     bg-color="white"
@@ -29,19 +29,66 @@
                     />
                     <div class="col-4 text-edit">Tahun Aktif*</div>
                     <q-input
-                    dense
-                    outlined
-                    v-model="peng.tahun"
-                    placeholder="ex: 2002 - 2007"
-                    class="q-mb-sm col-8"
-                    bg-color="white"
-                    hide-bottom-space
-                    />
+                        outlined
+                        dense
+                        lazy-rules
+                        v-model="peng.starting_year" mask="####" 
+                        class="q-mb-sm col-4"
+                        bg-color="white"
+                        hide-bottom-space
+                        hide-hint
+                        placeholder="Thn Masuk"
+                        bottom-slots
+                        >
+                    <template v-slot:after>
+                        <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy ref="tahunmasuk" transition-show="scale" transition-hide="scale">
+                            <q-date v-model="peng.starting_year" minimal default-view="Years" emit-immediately mask="YYYY"
+                            @update:model-value="checkValue"
+                            >
+                            <!-- <div class="row items-center justify-end">
+                                <q-btn v-close-popup label="OK" color="primary" flat />
+                            </div> -->
+                            </q-date>
+                        </q-popup-proxy>
+                        </q-icon>
+                    </template>
+                    </q-input>
+                    <div class="col-4 row">
+                        <q-input
+                        outlined
+                        dense
+                        lazy-rules
+                        v-model="peng.end_year" mask="####" 
+                        class="q-mb-none col-12"
+                        bg-color="white"
+                        hide-bottom-space
+                        hide-hint
+                        placeholder="Thn Keluar"
+                        bottom-slots
+                        :disable="peng.is_work"
+                        >
+                        <template v-slot:after>
+                            <q-icon name="event" class="cursor-pointer">
+                            <q-popup-proxy ref="tahunkeluar" transition-show="scale" transition-hide="scale">
+                                <q-date v-model="peng.end_year" minimal default-view="Years" emit-immediately mask="YYYY"
+                                @update:model-value="checkValue2" :disable="peng.is_work"
+                                >
+                                <!-- <div class="row items-center justify-end">
+                                    <q-btn v-close-popup label="OK" color="primary" flat />
+                                </div> -->
+                                </q-date>
+                            </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                        </q-input>
+                        <q-checkbox v-model="peng.is_work" label="Sampai Sekarang" class="col-12" size="xs" style="font-size:11px;" @click="sekarang(k)"/>
+                    </div>
                     <div class="col-4 text-edit">Posisi*</div>
                     <q-input
                     dense
                     outlined
-                    v-model="peng.posisi"
+                    v-model="peng.position"
                     placeholder="Posisi"
                     class="q-mb-sm col-8"
                     bg-color="white"
@@ -57,7 +104,14 @@
                 <q-card-actions align="center" class="q-mb-md">
                     <q-btn  no-caps label="Kembali" outline
                     style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dpengalaman', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5"/>
+                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
+                :disabled="disabled">
+                        <template v-slot:loading>
+                            <div class="row items-center">
+                                <q-spinner-facebook />  
+                            </div>
+                        </template>
+                    </q-btn>
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -69,41 +123,71 @@ export default {
     props:[
         'dpengalaman',
         'dpend',
-        'userbaru'
+        'userbaru',
+        'datapengalaman'
     ],
     emits:['update:dpend','update:dpengalaman'],
     data(){
         return{
-            pengalaman:[
-                {
-                    posisi:'',
-                    alamat:'',
-                    tahun:'',
-                    perusahaan:'',
-                }
-            ]
+            pengalaman:[],
+            load:false,
+            disabled:false,
         }
+    },
+    mounted(){
+        this.datapengalaman.forEach(el => {
+            this.pengalaman.push({
+                company_name: el.company_name,
+                position : el.position,
+                location : el.location,
+                starting_year : el.starting_year,
+                end_year : el.end_year,
+                is_work : el.is_work
+            })
+        });
     },
     methods:{
         add(){
             this.pengalaman.push({
-                posisi:'',
-                alamat:'',
-                tahun:'',
-                perusahaan:'',
+                company_name: '',
+                position : '',
+                location : '',
+                starting_year : '',
+                end_year : '',
+                is_work : false,
             })
         },
         remove(val){
             this.pengalaman.splice(val,1)
         },
+        sekarang(val){
+            this.pengalaman[val].end_year = ''
+        },
         onSave(){
-            if (this.userbaru) {
-                this.$emit('update:dpengalaman', false)
-                this.$emit('update:dpend', true)
-            }else{
-                this.$emit('update:dpengalaman', false)
-            }   
+            this.load = true
+            this.disabled = true
+            this.$store.dispatch('myprofil/updExp',this.pengalaman)
+            .then(()=>{
+                this.load = false
+                this.disabled = false
+                if (this.userbaru) {
+                    this.$emit('update:dpengalaman', false)
+                    this.$emit('update:dpend', true)
+                }else{
+                    this.$emit('update:dpengalaman', false)
+                }   
+            })
 
+        },
+        checkValue (val, reason, details) {
+            if (reason === 'year') {
+                this.$refs.tahunmasuk.hide()
+            }
+        },
+        checkValue2 (val, reason, details) {
+            if (reason === 'year') {
+                this.$refs.tahunkeluar.hide()
+            }
         }
     }
 }

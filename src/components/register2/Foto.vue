@@ -101,16 +101,11 @@ export default {
             this.srcimg = event.target.files[0]
             this.preview = URL.createObjectURL(event.target.files[0])
             this.$emit('update:previmg',this.preview)
-            // let p =  URL.createObjectURL(event.target.files[0])
         },
         onUpload(){
-        const fd = new FormData()
         const fe = new FormData()
         // fd.append('name',value,filename)
         fe.append('image',this.selectedFile,this.selectedFile.name)
-        console.log("fd",fd,"fe",fe)
-        console.log("testing")
-        // $axios.post('/')
         },
     }
 }

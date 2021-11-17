@@ -94,7 +94,12 @@ const routes = [
         meta:{
           requireAuth:true
         },
-        
+      },
+      {path:'profil/editbisnis',name:'editbisnis',component:()=>import('pages/profil/EditBisnis.vue'),
+        meta:{
+          requireAuth:true,
+          detail:true
+        },
       },
       {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue'),
         meta:{

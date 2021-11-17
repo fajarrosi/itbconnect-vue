@@ -3,68 +3,115 @@
         <div class="row justify-between">
             <div class="title-section">BISNIS DAN PEKERJAAN</div>
             <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databisnis.id === 1">
+font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.userid === userid">
                 <div>Ubah</div>
                 <q-icon name="edit" size="15px"/>
             </q-btn>
         </div>
-        <div  class="profil-color" v-if="Object.keys(databisnis).length > 0">
-            <div class="row">
-                <img src="~assets/blogo.png" alt="bisnislogo" class="col-3" style="width:97px;">
-                <div class="col-8">
-                    <div class="row q-pl-sm">
-                        <div class="text-bold col-12" style="font-size:15px;">Nama Jabatan</div>
-                        <p class="text-caption q-my-none col-12">Nama Perusahaan</p>
-                        <p class="text-caption q-my-none">1 Januari 2021 - Sekarang</p>
-                        <p class="text-caption q-my-none">Bandung, Jawa Barat</p>
-                        <p class="text-caption q-my-none">http://Loremipsumdolorsitamet.com </p>
+           
+            <div class="" v-if="Object.keys(bisnis).length > 0">
+                <div class="row " v-for="(b,index) in bisnis" :key="index">
+                    <q-img :src="b.prevlogo ? b.prevlogo : require('assets/blogo.png')" alt="bisnislogo" class="col-3" width="97px" height="98px" />
+                    <div class="col-8">
+                        <div class="row q-pl-sm">
+                            <div class="text-bold col-12" style="font-size:15px;">{{b.position}}</div>
+                            <p class="text-caption q-my-none col-12">{{b.business_name}}</p>
+                            <p class="text-caption q-my-none col-12">{{b.starting_year}} - {{b.end_year}}</p>
+                            <p class="text-caption q-my-none col-12">{{b.location}}</p>
+                            <p class="text-caption q-my-none col-12">{{b.portfolio}}</p>
+                        </div>
                     </div>
+                    <p class="text-caption text-justify col-12 q-mt-md">
+                        {{b.business_information}}
+                    </p>
+                    <div class="col-4 text-center row" v-for="(produk,ind) in b.produk" :key="ind">
+                        <q-img :src="produk.prevlogo ? produk.prevlogo : require('assets/bisnisket.png')" alt="bisnis keterangan" class="col-11" width="110px" height="64px" />
+                        <span class="col-12">{{produk.deskripsi}}</span>
+                    </div>
+                    
+                    <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" class="col-12"/>
                 </div>
             </div>
-            <div class="row q-mt-md">
-                <p class="text-caption text-justify">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis asperiores optio earum, non error mollitia ipsum fugiat laborum autem. Dolore pariatur porro debitis delectus iste aliquid quidem numquam esse unde alias, temporibus officiis aspernatur nam quasi voluptatem molestiae! Nostrum non atque voluptatem dicta delectus quam voluptatum repellendus facilis, dolore velit iusto laboriosam autem corrupti eligendi unde quas architecto? Iusto sed ut nemo quos temporibus error, at dolores maiores officia soluta unde quisquam rerum sit tempora perferendis? Voluptatibus neque odio ad, modi accusamus doloremque possimus alias numquam delectus voluptatem ipsa quaerat. Sed rem odio dolorem atque magnam assumenda autem eius vel.
-                </p>
+            <div v-else>
+                <span>Tidak Ada</span>
+                <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" v-if="n !== 3"/>
             </div>
-            <div class="row ">
-                <div class="col-4 text-center">
-                    <img src="~assets/bisnisket.png" alt="bisnis keterangan" >
-                    <span>Keterangan 1</span>
-                </div>
-                <div class="col-4 text-center">
-                    <img src="~assets/bisnisket.png" alt="bisnis keterangan" >
-                    <span>Keterangan 1</span>
-                </div>
-                <div class="col-4 text-center">
-                    <img src="~assets/bisnisket.png" alt="bisnis keterangan" >
-                    <span>Keterangan 1</span>
-                </div>
-            </div>
-            <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" v-if="n !== 3"/>
-        </div>
-
-        <q-dialog v-model="previmg" persistent transition-show="scale" transition-hide="scale">
-            <q-card>
-                <q-card-section class="row items-center q-pb-none">
-                    <div class="text-h6">Close icon</div>
-                    <q-space />
-                    <q-btn icon="close" flat round dense v-close-popup />
-                </q-card-section>
-            </q-card>
-        </q-dialog>
     </div>
 </template>
 
 <script>
 export default {
-    props:[
-        'dbisnis',
-        'databisnis'
-    ],
-    emits:['update:dbisnis'],
+    computed:{
+        userid(){
+            return this.$store.state.auth.user.id
+        },
+        databisnis(){
+            return this.$store.state.myprofil.databisnis
+        },
+        databio(){
+            return this.$store.state.myprofil.databio
+        }
+    },
+    data(){
+        return{
+            produk:[],
+            bisnis:[]
+        }
+    },
+    mounted(){
+        if(Object.keys(this.databisnis).length > 0){
+            this.databisnis.forEach(el=>{
+                this.bisnis.push({
+                    logo:el.logo,
+                    prevlogo:'',
+                    position:el.position,
+                    business_name:el.business_name,
+                    portfolio:el.portfolio,
+                    location:el.location,
+                    business_information:el.business_information,
+                    business_field_id:el.business_field_id,
+                    starting_year:el.starting_year,
+                    end_year:el.end_year,
+                    produk:[],
+                    id:el.id
+                })
+                el.produk.forEach(pr=>{
+                    this.produk.push({
+                        bisnisid:pr.user_bussiness_id,
+                        deskripsi:pr.description,
+                        logo:pr.product_image,
+                    })
+                })
+
+            })
+            this.bisnis.forEach(el=>{
+                if(el.logo){
+                    el.prevlogo = this.bisnislogo + el.logo
+                }
+            })
+            this.produk.forEach(pr=>{
+                this.bisnis.forEach(el=>{
+                    if(pr.bisnisid === el.id){
+                        if(pr.logo){
+                            el.produk.push({
+                                deskripsi: pr.deskripsi,
+                                prevlogo: this.produkimg + pr.logo
+                            })
+                        }else{
+                            el.produk.push({
+                                deskripsi: pr.deskripsi,
+                                prevlogo: ''
+                            })
+                        }
+                    }
+                })
+            })
+            
+        }
+    },
     methods:{
         ubah(){
-            this.$emit('update:dbisnis',true)
+            this.$router.push({name:'editbisnis'})
         }
     }
 }

@@ -13,6 +13,10 @@
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
+                    @keyup="this.$data.nama = $event.target.value.replace(/\w\S*/g,
+                    function(txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    })"
                     />
                     <div class="col-4 text-edit">Tempat Lahir*</div>
                     <q-input
@@ -23,6 +27,10 @@
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
+                    @keyup="this.$data.tempat = $event.target.value.replace(/\w\S*/g,
+                    function(txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    })"
                     />
                     <div class="col-4 text-edit">Tgl Lahir*</div>
                     <q-input
@@ -73,7 +81,23 @@
                         </div>
                     </div>
                     <div class="col-4 text-edit">Kewarganegaraan</div>
-                    <q-select  outlined dense v-model="kewarganegaraan" :options="optkewarganegaraan" bg-color="white" class="q-mb-sm col-8"/>
+                    <q-input
+                        outlined
+                        dense
+                        v-model="kewarganegaraan"
+                        label="Kewarganegaraan"
+                        lazy-rules
+                        :rules="[
+                        (val) => (val && val.length > 0) || 'Kewarganegaraan tidak boleh kosong',
+                        ]"
+                        class="q-mb-sm col-8"
+                        bg-color="white"
+                        hide-bottom-space
+                        @keyup="this.$data.kewarganegaraan = $event.target.value.replace(/\w\S*/g,
+                    function(txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    })"
+                        />
                     <div class="col-3 text-edit">Alamat*</div>
                     <div class="col-9 row">
                         <q-radio v-model="dalam" val="1" label="Dalam Negeri" class="col"/>
@@ -82,8 +106,10 @@
                     <div v-if="dalam === '1'" class="col-11 row" style="margin-left:auto;">
                         <div class="col-4 text-edit">Provinsi</div>
                         <q-select  outlined dense v-model="prov" :options="optprov" label="Provinsi" bg-color="white" class="q-mb-sm col-8"/>
-                        <div class="col-4 text-edit">Kota/Kabupaten</div>
-                        <q-select  outlined dense v-model="kota" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm col-8"/>
+                        <div class="col-12 row" v-if="kotashow">
+                            <div class="col-4 text-edit">Kota/Kabupaten</div>
+                            <q-select  outlined dense v-model="kota" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm col-8"/>
+                        </div>
                             <div class="col-4 text-edit">Alamat</div>
                         <q-input
                         outlined
@@ -126,6 +152,7 @@
                     class="q-mb-sm col-9"
                     bg-color="white"
                     hide-bottom-space
+                    maxlength="24"
                     />
                     <div class="col-3 text-edit">Email*</div>
                     <q-input
@@ -146,6 +173,7 @@
                     class="q-mb-sm col-9"
                     bg-color="white"
                     hide-bottom-space
+                    maxlength="12"
                     />
                     <div class="col-12 text-grey-7 q-mt-xs" >
                         Untuk privasi Alamat, edit di Pengaturan&Privasi 
@@ -154,7 +182,14 @@
                 <q-card-actions align="center" class="q-mb-md">
                     <q-btn  no-caps label="Kembali" outline
                     style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dprofil', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5"/>
+                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
+                :disabled="disabled">
+                        <template v-slot:loading>
+                            <div class="row items-center">
+                                <q-spinner-facebook />  
+                            </div>
+                        </template>
+                    </q-btn>
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -162,45 +197,43 @@
 </template>
 
 <script>
+import { api } from 'boot/axios'
 export default {
     props:[
         'dprofil',
         'dpengalaman',
         'userbaru',
-        'dataprofil'
+        'dataprofil',
+        'pnegara',
+        'pprov',
+        'pagama'
     ],
     emits:['update:dpengalaman','update:dprofil'],
     data(){
         return{
-            optkewarganegaraan:[
-               { label:'Indonesia',
-                value:'1'},
-               { label:'India',
-                value:'2'}
-            ],
             optstatus:[
                { label:'Menikah',
                 value:'1'},
                { label:'Lajang',
                 value:'2'}
             ],
-            optagama:[
-               { label:'Islam',
-                value:'1'},
-               { label:'Kristen',
-                value:'2'}
-            ],
+            optagama:[],
             optgoldar:[
                { label:'O',
-                value:'1'},
+                value:'o'},
                { label:'A',
-                value:'2'}
+                value:'a'},
+               { label:'AB',
+                value:'ab'},
+               { label:'B',
+                value:'b'},
+                
             ],
             optjkelamin:[
-               { label:'Laki-laki',
-                value:'1'},
-               { label:'Perempuan',
-                value:'2'}
+                { label:'Laki-laki',
+                    value:'1'},
+                { label:'Perempuan',
+                    value:'2'}
             ],
             optdomisili:[
             {
@@ -212,56 +245,9 @@ export default {
                 value:'2'
             }
         ],
-        optprov:[
-            {
-                label:'Jambi',
-                value:'1'
-            },
-            {
-                label:'Palembang',
-                value:'2'
-            },
-        ],
-        optkota:[
-            {
-                label:'Kota1',
-                value:'1'
-            },
-            {
-                label:'Kota2',
-                value:'2'
-            },
-        ],
-        optkec:[
-            {
-                label:'Kec1',
-                value:'1'
-            },
-            {
-                label:'Kec2',
-                value:'2'
-            },
-        ],
-        optkel:[
-            {
-                label:'Kel1',
-                value:'1'
-            },
-            {
-                label:'Kel2',
-                value:'2'
-            },
-        ],
-        optnegara:[
-            {
-                label:'Neg1',
-                value:'1'
-            },
-            {
-                label:'Neg2',
-                value:'2'
-            },
-        ],
+        optprov:[],
+        optkota:[],
+        optnegara:[],
         nama:'',
         tempat:'',
         tgl:'',
@@ -276,27 +262,180 @@ export default {
         dalam:'',
         prov:'',
         kota:'',
-        kec:'',
-        kel:'',
         negara:'',
-        alamat:''
+        alamat:'',
+        kotashow:false,
+        load:false,
+        disabled:false,
+        }
+    },
+    created(){
+        this.pagama.forEach(el=>{
+            let opt = {}
+            opt.label = el.name
+            opt.value = el.id
+            this.optagama.push(opt)
+        })
+        
+        this.pprov.forEach(element => {
+            let opt ={}
+            opt.label = element.name
+            opt.value = element.id
+            this.optprov.push(opt)
+        })
+        this.pnegara.forEach(element => {
+            let opt ={}
+            opt.label = element.country_name
+            opt.value = element.id
+            this.optnegara.push(opt)
+        })
+        if(this.dataprofil.religion){
+            this.agama = this.optagama.find((ag)=>ag.label.includes(this.dataprofil.religion))
+        }
+        if(this.dataprofil.prov){
+            this.prov = this.optprov.find((opt)=> opt.value === this.dataprofil.prov)
+        }
+        if(this.dataprofil.negara){
+            this.negara = this.optnegara.find((opt)=> opt.value === this.dataprofil.negara)
         }
     },
     mounted(){
-        this.nama = this.$props.dataprofil.nick
-        this.email = this.$props.dataprofil.email
-        this.nowa = this.$props.dataprofil.telephone
-        this.nim = this.$props.dataprofil.nim
+        this.nama = this.dataprofil.nick
+        this.email = this.dataprofil.email
+        this.nowa = this.dataprofil.telephone
+        this.nim = this.dataprofil.nim
+        this.tempat = this.dataprofil.pob
+        this.tgl = this.dataprofil.dob.replace(/\-/gi,'/')
+        this.jkelamin = this.optjkelamin.find((jk)=> 
+            this.dataprofil.gender === 'male' ? jk.label.includes('Laki-laki') : jk.label.includes('Perempuan')
+        )
+        this.status = this.optstatus.find((st)=>
+            this.dataprofil.status === 'yes' ? st.label.includes('Menikah') : st.label.includes('Lajang')
+        )
+        this.goldar = this.optgoldar.find((gd)=> gd.value.includes(this.dataprofil.blood))
+        this.kewarganegaraan = this.dataprofil.citizenship
+        if(this.dataprofil.negara === 78){
+            this.dalam = '1'
+            this.alamat = this.dataprofil.domisili
+            // this.getProv()
+        }else{
+            this.dalam = '2'
+            this.alamat = this.dataprofil.domisili
+            // this.getNegara()
+        }
+    },
+    watch:{
+        prov: function(val){
+            this.optkota = []
+            this.kotashow = false
+            this.kota = ''
+            api.get(`complex/city/${val.value}`)
+            .then((response)=>{
+            response.data.data.forEach(element => {
+            let opt ={}
+            opt.label = element.name
+            opt.value = element.id
+            this.optkota.push(opt)
+            this.kotashow = true
+            })
+            if(this.dataprofil.city){
+                this.kota = this.optkota.find((opt)=> opt.value === this.dataprofil.city)
+            }
+        })
+        .catch((error)=> console.log("error",error))
+        }
     },
     methods:{
         onSave(){
-            if(this.userbaru){
-                this.$emit('update:dprofil',false)
-                this.$emit('update:dpengalaman',true)
+            this.load = true
+            this.disabled = true
+            let sendData = {}
+            sendData.nickname = this.nama
+            sendData.pob= this.tempat
+            sendData.dob = this.tgl.replace(/\//gi,'-')
+            if(this.jkelamin.label === 'Laki-laki'){
+                sendData.gender = 'male'
             }else{
-                this.$emit('update:dprofil',false)
+                sendData.gender = 'female'
             }
-        }
+            sendData.blood = this.goldar.value
+            if(this.status.value === '1'){
+                sendData.marriage = 'yes'
+            }else{
+                sendData.marriage = 'no'
+            }
+            sendData.religion_id = this.agama.value
+            sendData.citizenship = this.kewarganegaraan
+            if(this.dalam === '1'){
+                sendData.province_id = this.prov.value
+                sendData.cities_id = this.kota.value
+                sendData.country_id = 78
+            }else{
+                sendData.country_id = this.negara.value
+            }
+            sendData.address = this.alamat
+            sendData.nim = this.nim
+            
+            sendData.email = this.email
+            sendData.telephone = this.nowa
+            this.$store.dispatch('myprofil/updProfil',sendData)
+            .then(response=>{
+                this.load = false
+                this.disabled = false
+                if(this.userbaru){
+                    this.$emit('update:dprofil',false)
+                    this.$emit('update:dpengalaman',true)
+                }else{
+                    this.$emit('update:dprofil',false)
+                }
+            })
+            .catch(err=>{
+                console.log("error",err)
+            })
+        },
+        // async getReligion(){
+        //     return await api.get('complex/religion')
+        // .then(response=>{
+        //     response.data.data.forEach(el=>{
+        //         let opt = {}
+        //         opt.label = el.name
+        //         opt.value = el.id
+        //         this.optagama.push(opt)
+        //     })
+        //     if(this.dataprofil.religion){
+        //         this.agama = this.optagama.find((ag)=>ag.label.includes(this.dataprofil.religion))
+        //     }
+        // })
+
+        // },
+        // async getProv(){
+        //     return await api.get('complex/province')
+        //     .then((response)=>{
+        //         response.data.data.forEach(element => {
+        //         let opt ={}
+        //         opt.label = element.name
+        //         opt.value = element.id
+        //         this.optprov.push(opt)
+        //         })
+        //         if(this.dataprofil.prov){
+        //             this.prov = this.optprov.find((opt)=> opt.value === this.dataprofil.prov)
+        //         }
+        //     })
+        //     .catch((error)=> console.log("error",error))
+        // },
+        // async getNegara(){
+        //     return await api.get('complex/country')
+        //     .then((response)=>{
+        //         response.data.data.forEach(element => {
+        //         let opt ={}
+        //         opt.label = element.country_name
+        //         opt.value = element.id
+        //         this.optnegara.push(opt)
+        //         })
+        //         this.negara = this.optnegara.find((opt)=> opt.value === this.dataprofil.negara)
+        //     })
+        //     .catch((error)=> console.log("error",error))
+        // },
     }
 }
 </script>

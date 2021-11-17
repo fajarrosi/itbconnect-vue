@@ -1,12 +1,11 @@
 <template>
     <div>
         <div class="row justify-between">
-            <q-avatar size="92px" style="margin-top:-70px;" v-if="databio.photoprofil">
-                <img :src="'http://127.0.0.1:8000/profile/' + databio.photoprofil" >
+            <q-avatar size="92px" style="margin-top:-70px;">
+                <q-img :src="profilprev ? profilprev : require('assets/akun.png')" width="92px" height="92px" />
             </q-avatar>
-            <q-icon name="account_circle" v-else style="margin-top:-70px;" size="92px" class="text-primary"/>
             <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.name === name">
+font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.userid === userid">
                 <div>Ubah</div>
                 <q-icon name="edit" size="15px"/>
             </q-btn>
@@ -47,36 +46,16 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.name === nam
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     props:[
-        'dbio',
-        'databio'
+        'databio',
+        'profilprev'
     ],
-    emits:['update:dbio'],
     computed:{
-        name(){
-            return this.$store.state.auth.user.complete_name
-        },
-        // photo(){
-        //     return URL.createObjectURL(this.$props.databio.photoprofil)
-        // }
-    },
-    mounted(){
-        // axios.get('http://127.0.0.1:8000/profile/' + this.databio.photoprofil)
-        // .then((response) =>{
-        //     this.photo  = response.data
-        // })
-        
-    },
-    data(){
-        return{
-            photo:null
+        userid(){
+            return this.$store.state.auth.user.id
         }
     },
-    // mounted(){
-    //     this.photo = URL.createObjectURL(this.$props.databio.photoprofil)
-    // },
     methods:{
         ubah(){
             this.$emit('update:dbio',true)

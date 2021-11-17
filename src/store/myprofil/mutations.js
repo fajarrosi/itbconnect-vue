@@ -25,7 +25,8 @@ export function setBio(state,data){
         ig: data.profile.instagram_url,
         twit: data.profile.twitter_url,
         linkedin : data.profile.linkedin_url,
-        friend : data.total_connect
+        friend : data.total_connect,
+        userid : data.id
     }
 }
 
@@ -41,7 +42,12 @@ export function setProfil(state,data){
         telephone: data.telephone,
         negara: data.address.country_id,
         domisili:data.address.address,
-        nim: data.nim
+        prov:data.address.province_id,
+        city:data.address.cities_id,
+        nim: data.nim,
+        pob:data.pob,
+        dob: data.dob,
+        userid: data.id
     }
 }
 
@@ -55,8 +61,46 @@ export function setPendidikan(state,data){
 
 export function setOrganisasi(state,data){
     state.dataorganisasi = data.interest
+    state.datapengda = data.user_organization
+}
+
+export function setBisnis(state,data){
+    state.databisnis = data.business
 }
 
 export function delProfil(state){
     state.databio = {}
+}
+
+export function setOrganization(state,data){
+    state.organization = data
+}
+
+export function setPengda(state,data){
+    state.pengda = data
+}
+
+export function setIaprodi(state,data){
+    state.iaprodi = data
+}
+
+export function setJenjang(state,data){
+    state.jenjang = data
+}
+
+export function setProdi(state,data){
+    state.prodi = data
+}
+
+export function setNegara(state,data){
+    state.negara = data
+}
+export function setProv(state,data){
+    state.prov = data
+}
+export function setAgama(state,data){
+    state.agama = data
+}
+export function setBisnisfield(state,data){
+    state.bisnisfield = data
 }
