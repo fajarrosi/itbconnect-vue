@@ -275,8 +275,6 @@ export default {
             if(res.logo){
                 this.bisnis.prevlogo = this.bisnislogo + res.logo
             }
-            console.log("created",this.id)
-            console.log("result",res)
         }else{
             this.bisnis = {
                 prevlogo:'',
@@ -299,10 +297,6 @@ export default {
                 ]
             }
         }
-    },
-    mounted(){
-        console.log("mounted",this.id)
-
     },
     methods:{
         checkValue (val, reason, details) {

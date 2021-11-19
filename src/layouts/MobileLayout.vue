@@ -85,7 +85,7 @@
             <div class="row justify-center">
 
               <q-avatar size="70px" class="q-mb-sm q-mt-md">
-                <img src="~assets/akun.png">
+                <q-img :src="photoprofil ? photoprofil : require('assets/akun.png')" alt="photoprofilakun" width="70px" height="70px"/>
               </q-avatar>
               <div class="text-weight-bold col-12 text-white text-center">{{completename}}</div>
               <div class="col-12 text-white text-center">@{{username}}</div>
@@ -111,88 +111,14 @@
           </div>
         </q-drawer>
 
-<!-- <div class="row justify-center container-drawer">
-  <div class="mobile text-black">
-    <div  class="content-drawer">
-        <q-list padding>
-              <q-item clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="inbox" />
-                </q-item-section>
-
-                <q-item-section>
-                  Notifikasi
-                </q-item-section>
-              </q-item>
-
-              <q-item active clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="star" />
-                </q-item-section>
-
-                <q-item-section>
-                  Calendar
-                </q-item-section>
-              </q-item>
-
-              <q-item clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="send" />
-                </q-item-section>
-
-                <q-item-section>
-                  Pesan
-                </q-item-section>
-              </q-item>
-
-              <q-item clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="drafts" />
-                </q-item-section>
-
-                <q-item-section>
-                  Pengaturan & Privasi
-                </q-item-section>
-              </q-item>
-              <q-item clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="drafts" />
-                </q-item-section>
-
-                <q-item-section>
-                  Bantuan & Feedback
-                </q-item-section>
-              </q-item>
-            </q-list>
-    </div>
-  </div>
-</div> -->
-
     <q-page-container >
       <div class="row justify-center bg-grey-2">
         <div class="mobile bg-secondary">
           <router-view></router-view>
         </div>
       </div>
-      <!-- <div class="row justify-center bg-grey-3">
-        <div class="mobile2 bg-white">
-          <q-tabs class="text-black foot" no-caps  
-              indicator-color="white"
-              >
-                  <q-route-tab 
-                  v-for="t in tabs" :key="t"
-                  :to="t.route"
-                  :icon="t.icon"
-                  :label="t.label"
-                  
-                  exact
-                  active-class="custom-active"
-                  @click="drawerLeft = !drawerLeft"
-                  />
-              </q-tabs>
-        </div>
-      </div> -->
     </q-page-container>
+
     <q-footer v-if="!$route.meta.nofooter">
       <div class="row justify-center bg-grey-2">
         <div class="mobile bg-white row text-center text-black" style="box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.25);">
@@ -224,7 +150,7 @@
 </template>
 
 <script>
-
+import {  mapState, mapActions } from "vuex";
 import { ref } from 'vue'
 export default {
   setup () {
@@ -247,14 +173,33 @@ export default {
       },
       username(){
         return this.$store.state.auth.user.username
-      }
+      },
+      photoprofil(){
+        if(this.$store.state.myprofil.databio.photoprofil){
+          return this.profil + this.$store.state.myprofil.databio.photoprofil
+        }else{
+          return ''
+        }
+      },
+      ...mapState('myprofil',['databio','dataprofil','datapengalaman','datapendidikan','dataorganisasi','databisnis']),
+     
   },
   methods:{
+    ...mapActions("myprofil", ["getProfil"]),
+    async getData(){
+        this.getProfil()
+      },
     Logout(){
       this.$store.dispatch('auth/logout')
       this.$router.push({name: 'login'})
       this.$store.dispatch('myprofil/logout')
     }
+  },
+  created(){
+    if(!this.databio && !this.dataprofil && !this.datapengalaman && !this.datapendidikan && !this.dataorganisasi){
+      this.getData()
+    }
+   
   }
 }
 </script>

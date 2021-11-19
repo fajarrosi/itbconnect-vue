@@ -1,11 +1,11 @@
 export default function () {
   return {
-    databio:{},
-    dataprofil:{},
-    datapengalaman:{},
-    datapendidikan:{},
-    dataorganisasi:{},
-    databisnis:{},
+    databio:'',
+    dataprofil:'',
+    datapengalaman:'',
+    datapendidikan:'',
+    dataorganisasi:'',
+    databisnis:'',
     organization:'',
     pengda:'',
     iaprodi:'',
@@ -14,7 +14,7 @@ export default function () {
     negara:'',
     prov:'',
     agama:'',
-    datapengda:{},
+    datapengda:'',
     bisnisfield:''
   }
 }

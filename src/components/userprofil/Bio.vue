@@ -4,12 +4,7 @@
             <q-avatar size="92px" style="margin-top:-70px;">
                 <q-img :src="photoprofil ? photoprofil : require('assets/akun.png')" width="92px" height="92px" />
             </q-avatar>
-            <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.userid === userid">
-                <div>Ubah</div>
-                <q-icon name="edit" size="15px"/>
-            </q-btn>
-            <q-btn color="primary" label="Kirim Pesan" v-else-if="databio.connect" dense no-caps class="btn-radius text-13 q-px-md"/>
+            <q-btn color="primary" label="Kirim Pesan" v-if="databio.connect" dense no-caps class="btn-radius text-13 q-px-md"/>
         </div>
         <div class="row">
             <div class="col-9  text-primary text-h6" style="font-weight:600;">{{databio.name}}</div>
@@ -19,13 +14,13 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.userid === u
         <div class="row">
             <div class="col">
                 <div class="row items-center">
-                    <img src="~assets/pin.png" alt="place">
+                    <img src="~assets/pin.png" alt="domisiliikon">
                     <p class="place q-my-none q-ml-sm">{{databio.domisili}}</p>
                 </div>
             </div>
             <div class="col">
                 <div class="row items-center">
-                    <img src="~assets/link.png" alt="place">
+                    <img src="~assets/link.png" alt="orangikon">
                     <p class="place q-my-none q-ml-sm">
                         <span >{{databio.friend}} orang</span>
                     </p>
@@ -48,25 +43,17 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.userid === u
 <script>
 export default {
     computed:{
-        userid(){
-            return this.$store.state.auth.user.id
-        },
         photoprofil(){
-            if(this.$store.state.myprofil.databio.photoprofil){
-                return this.profil + this.$store.state.myprofil.databio.photoprofil
+            if(this.$store.state.userrekomen.photoprofil){
+                return this.profil + this.$store.state.userrekomen.photoprofil
             }else{
                 return ''
             }
         },
         databio(){
-            return this.$store.state.myprofil.databio
+            return this.$store.state.userrekomen
         }
     },
-    methods:{
-        ubah(){
-            this.$emit('update:dbio',true)
-        }
-    }
 }
 </script>
 

@@ -3,7 +3,7 @@
         <img src="~assets/bg-akun.png" alt="background-account">
         <q-card flat class="q-mb-md q-mx-md card-radius" style="margin-top:-40px;" >
             <q-card-section>
-                <bio :databio="userrekomen"/>
+                <bio/>
             </q-card-section>
         </q-card>
         <div class="row q-mx-md justify-between items-center">
@@ -26,19 +26,19 @@
         <q-card flat class="q-mx-md card-radius">
                 
                 <q-card-section class="q-pb-none">
-                    <profil :dataprofil="dataprofil"/>
+                    <profil/>
                 </q-card-section>
                 <q-card-section class="q-pb-none" v-if="userrekomen.connect">
-                    <pengalaman :datapengalaman="datapengalaman"/>
+                    <pengalaman />
                 </q-card-section>
                 <q-card-section class="q-pb-none" v-if="userrekomen.connect">
-                    <pendidikan :datapendidikan="datapendidikan"/>
+                    <pendidikan />
                 </q-card-section>
                 <q-card-section class="q-pb-none" v-if="userrekomen.connect">
-                    <organisasi :dataorganisasi="dataorganisasi"/>
+                    <organisasi />
                 </q-card-section>
                 <q-card-section v-if="userrekomen.connect">
-                    <bisnis  :databisnis="databisnis"/>
+                    <bisnis/>
                 </q-card-section>
         </q-card>
         <p class="text-bold q-mt-md q-mx-md text-17 q-mb-none" style="color:#155897;">Rekomendasi</p>
@@ -76,16 +76,16 @@
 import {  mapState } from "vuex";
 export default {
     components:{
-        'bio' : require('components/profil/Bio.vue').default,
-        'profil':require('components/profil/Profil.vue').default,
-        'pengalaman': require('components/profil/Pengalaman.vue').default,
-        'pendidikan' : require('components/profil/Pendidikan.vue').default,
-        'organisasi' : require('components/profil/Organisasi.vue').default,
-        'bisnis' : require('components/profil/Bisnis.vue').default,
+        'bio' : require('components/userprofil/Bio.vue').default,
+        'profil':require('components/userprofil/Profil.vue').default,
+        'pengalaman': require('components/userprofil/Pengalaman.vue').default,
+        'pendidikan' : require('components/userprofil/Pendidikan.vue').default,
+        'organisasi' : require('components/userprofil/Organisasi.vue').default,
+        'bisnis' : require('components/userprofil/Bisnis.vue').default,
         'rekomendasi' : require('components/rekomendasi/Rekomendasi.vue').default
     },
     computed:{
-        ...mapState(['userrekomen','dataprofil','datapengalaman','datapendidikan','databisnis','dataorganisasi']),
+        ...mapState(['userrekomen']),
         getRekomen(){
            return val => this.rekomen.slice((val-1)*this.perPages,(val-1)*this.perPages+this.perPages)
         }

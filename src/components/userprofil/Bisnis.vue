@@ -2,11 +2,6 @@
     <div>
         <div class="row justify-between">
             <div class="title-section">BISNIS DAN PEKERJAAN</div>
-            <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah">
-                <div>Ubah</div>
-                <q-icon name="edit" size="15px"/>
-            </q-btn>
         </div>
            
             <div class="" v-if="Object.keys(bisnis).length > 0">
@@ -34,7 +29,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
             </div>
             <div v-else>
                 <span>Tidak Ada</span>
-                <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" />
+                <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;"/>
             </div>
     </div>
 </template>
@@ -43,7 +38,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 export default {
     computed:{
         databisnis(){
-            return this.$store.state.myprofil.databisnis
+            return this.$store.state.databisnis
         },
     },
     data(){
@@ -103,11 +98,6 @@ export default {
             
         }
     },
-    methods:{
-        ubah(){
-            this.$router.push({name:'editbisnis'})
-        }
-    }
 }
 </script>
 

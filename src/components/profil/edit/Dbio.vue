@@ -136,10 +136,6 @@ export default {
         'dbio',
         'dprofil',
         'userbaru',
-        'databio',
-        'dataorganisasi',
-        'headerprev',
-        'profilprev'
     ],
     data(){
         return{
@@ -157,6 +153,28 @@ export default {
             srchp:''
         }
     },
+    computed:{
+        photoprofil(){
+            if(this.$store.state.myprofil.databio.photoprofil){
+                return this.profil + this.$store.state.myprofil.databio.photoprofil
+            }else{
+                return ''
+            }
+        },
+        headerphoto(){
+            if(this.$store.state.myprofil.databio.headerprofil){
+                return this.header + this.$store.state.myprofil.databio.headerprofil
+            }else{
+                return ''
+            }
+        },
+        databio(){
+            return this.$store.state.myprofil.databio
+        },
+        dataorganisasi(){
+            return this.$store.state.myprofil.dataorganisasi
+        }
+    },
     mounted(){
         this.domisili = this.databio.domisili
         this.bio = this.databio.bio
@@ -164,11 +182,12 @@ export default {
         this.ig = this.databio.ig
         this.fb = this.databio.fb
         this.tw = this.databio.twit
-        if(this.databio.photoprofil){
-            this.prevpp = this.profilprev
+        if(this.photoprofil){
+            this.prevpp = this.photoprofil
         }
-        if(this.databio.headerprofil){
-            this.prevhp = this.headerprev
+        
+        if(this.headerphoto){
+            this.prevhp = this.headerphoto
         }
     },
     methods:{
@@ -195,8 +214,6 @@ export default {
             .then(()=>{
                 this.load = false
                 this.disabled = false
-                this.$emit('update:headerprev',this.prevhp)
-                this.$emit('update:profilprev',this.prevpp)
                 if(this.userbaru){
                     this.$emit('update:dbio', false)
                     this.$emit('update:dprofil', true)

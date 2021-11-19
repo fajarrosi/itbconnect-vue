@@ -79,14 +79,13 @@ const routes = [
             requireAuth:true
           }
       },
-      {path:'berita/detail',name:'beritadetail',component:()=>import('pages/berita/Detail.vue'),
+      {path:'berita/:slug',name:'beritadetail',component:()=>import('pages/berita/Detail.vue'),
       meta:{
           detail:true
         }
       },
-      {path:'berita/list',name:'Daftar Berita',component:()=>import('pages/berita/Listberita.vue'),
+      {path:'berita/daftar-berita',name:'Daftar Berita',component:()=>import('pages/berita/Listberita.vue'),
       meta:{
-          nofooter:true,
           detail:true
         }
       },

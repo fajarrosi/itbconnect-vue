@@ -2,6 +2,7 @@ import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 import auth from './auth'
 import myprofil from './myprofil'
+import news from './news'
 import createPersistedState from 'vuex-persistedstate';
 
 // import example from './module-example'
@@ -32,11 +33,12 @@ export default store(function (/* { ssrContext } */) {
       },
       dataprofil:{
         id:2,
-        connect:false,
+        connect:true,
       },
       datapengalaman:{
         id:2
       },
+      datapengda:'',
       datapendidikan:{
         id:2
       },
@@ -60,7 +62,8 @@ export default store(function (/* { ssrContext } */) {
     },
     modules: {
       auth,
-      myprofil
+      myprofil,
+      news
     },
     plugins: [createPersistedState()],
 

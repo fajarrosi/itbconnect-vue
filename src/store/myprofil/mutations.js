@@ -69,7 +69,11 @@ export function setBisnis(state,data){
 }
 
 export function delProfil(state){
-    state.databio = {}
+    state.databio = ''
+    state.datapendidikan = ''
+    state.dataprofil = ''
+    state.datapengalaman = ''
+    state.dataorganisasi = ''
 }
 
 export function setOrganization(state,data){

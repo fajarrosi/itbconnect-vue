@@ -148,47 +148,18 @@
           <div class="text-17 text-bold" style="color:#505050;">Kabar Alumni</div>
       </div>
 
-        <q-carousel
-            v-model="slider4"
-            swipeable
-            animated
-            infinite
-            transition-prev="slide-right"
-            transition-next="slide-left"
-            control-color="black"
-            style="background-color:transparent;"
-            class="text-black q-mb-md"
-            height="350px"
-        >
-            <q-carousel-slide :name="1" style="overflow:hidden;">
-              <div class="container" style="display:flex;width:700px;">
-                <cardberita v-for="(berita,i) in getBerita(1)" :key="i" :databerita="berita"/>            
-              </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="2" style="overflow:hidden;">
-              <div class="container" style="display:flex;width:700px;">
-                <cardberita v-for="(berita,i) in getBeritas(2)" :key="i" :databerita="berita"/>            
-              </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="3" style="overflow:hidden;">
-              <div class="container" style="display:flex;width:700px;">
-                <cardberita v-for="(berita,i) in getBeritas(3)" :key="i" :databerita="berita"/>            
-              </div>
-            </q-carousel-slide>
-        </q-carousel>
+      <topberitas :alumni="true"/>
 
     </q-page>
 </template>
 
 <script>
-
 export default {
   data(){
       return{
           slider1:1,
           slider2:1,
           slider3:1,
-          slider4:1,
           slider5:1,
           rekomen:[
             {
@@ -246,33 +217,7 @@ export default {
               pp:'gambar2.png'
             },
           ],
-          berita:[
-            {
-              title:'Kabar ALumni ke-1',
-              desk:'Kabar ALumni ke- ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.',
-              date:'19 April 2021',
-              kabar:true
-            },
-            {
-              title:'Kabar ALumni ke-2',
-              desk:'Kabar ALumni ke- ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.',
-              date:'19 April 2021',
-              kabar:true
-            },
-            {
-              title:'Kabar ALumni ke-3',
-              desk:'Kabar ALumni ke- ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.',
-              date:'19 April 2021',
-              kabar:true
-            },
-            {
-              title:'Kabar ALumni ke-4',
-              desk:'Kabar ALumni ke- ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.',
-              date:'19 April 2021',
-              kabar:true
-            }
-          ],
-          perPage:2,
+          
           perPages:3
       }
   },
@@ -280,16 +225,12 @@ export default {
     getRekomen(){
       return val => this.rekomen.slice((val-1)*this.perPages,(val-1)*this.perPages+this.perPages)
     },
-    getBerita(){
-      return val => this.berita.slice((val-1)*this.perPage,(val-1)*this.perPage+this.perPage)
-    },
-    getBeritas(){
-      return val => this.berita.slice(val-1,(val-1)*this.perPage+1)
-    }
+   
   },
   components:{
     'rekomendasi' : require('components/rekomendasi/Rekomendasi.vue').default,
-    'cardberita' : require('components/cardberita/Cardberita.vue').default
+    'topberitas' : require('components/berita/TopNews.vue').default,
+
   }
 }
 

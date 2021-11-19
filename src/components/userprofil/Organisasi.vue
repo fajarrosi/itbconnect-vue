@@ -2,19 +2,14 @@
     <div>
         <div class="row justify-between" >
             <div class="title-section">ORGANISASI</div>
-            <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah">
-                <div>Ubah</div>
-                <q-icon name="edit" size="15px"/>
-            </q-btn>
         </div>
-        <div v-if="dataorganisasi.length > 0">
-            <ul style="padding-left:0;list-style:none;" class="q-my-none ">
-                <li v-for="(organisasi,index) in dataorganisasi" :key="index">
-                    {{organisasi.organization.name}}
-                </li>
-            </ul>
-        </div>
+            <div v-if="dataorganisasi.length > 0">
+                <ul style="padding-left:0;list-style:none;" class="q-my-none ">
+                    <li v-for="(organisasi,index) in dataorganisasi" :key="index">
+                        {{organisasi.organization.name}}
+                    </li>
+                </ul>
+            </div>
             <div class="title-section q-mt-md">Pengurus Daerah & IA Prodi</div>
             <div v-if="Object.keys(datapengda).length > 0">
                 <div >{{datapengda.commisariat.name}}</div>
@@ -32,22 +27,14 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 
 <script>
 export default {
-    props:[
-        'dminat',
-    ],
     computed:{
         datapengda(){
-            return this.$store.state.myprofil.datapengda
+            return this.$store.state.datapengda
         },
         dataorganisasi(){
-            return this.$store.state.myprofil.dataorganisasi
+            return this.$store.state.dataorganisasi
         }
     },
-    methods:{
-        ubah(){
-            this.$emit('update:dminat',true)
-        }
-    }
 }
 </script>
 

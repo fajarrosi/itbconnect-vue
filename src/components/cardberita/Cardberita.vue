@@ -1,29 +1,25 @@
 <template>
     <div class="content q-mr-md cursor-pointer" :style="detail ? 'width:200px;' : 'width:400px;'">
-        <q-card class="card-radius q-hoverable relative-position" v-ripple @click="$router.push('/berita/detail')">
+        <q-card class="card-radius q-hoverable relative-position" v-ripple @click="$router.push(`/berita/${databerita.slug}`)">
         <span class="q-focus-helper"></span>
-            <q-chip class="text-white q-ml-none text-bold ppa" label="Seputar PP-IA" style="border-radius:0;z-index:99;" v-if="!databerita.kabar"/>
+            <q-chip class="text-white q-ml-none text-bold ppa" label="Seputar PP-IA" style="border-radius:0;z-index:99;" v-if="databerita.type_news !== 'alumni-news'"/>
             <q-img
-                src="~assets/berita.png"
+                :src="newsimage ? newsimage : require('assets/berita.png')"
                 spinner-color="primary"
                 spinner-size="82px"
                 :draggable="false"
+                :width="detail ? '200px' :'334px'"
+                :height="detail ? '117px' : '195px'"
+                class="card-radius"
             />
-            <!-- <img src="~assets/berita.png" draggable="false"> -->
-            <q-chip class="text-white q-ml-none kabar text-bold" label="Kabar Alumni" v-if="databerita.kabar"/>
-            <!-- <q-card-section class="q-py-none"  :class="databerita.kabar ? 'mt-20' : ''">
-            <div class="text-15 text-bold title-berita cursor-pointer" >{{databerita.title}}</div>
-            </q-card-section> -->
-            <q-card-section class="q-pb-sm" :class="databerita.kabar ? 'mt-20' : ''">
+            <q-chip class="text-white q-ml-none kabar text-bold" label="Kabar Alumni" v-if="databerita.type_news === 'alumni-news'"/>
+            <q-card-section class="q-pb-sm" :class="databerita.type_news === 'alumni-news' ? 'mt-20' : ''">
                 <div class="row">
-                    <!-- <q-chip class="text-white q-ml-none text-bold ppa" label="Seputar PP-IA" style="border-radius:0;" v-if="!databerita.kabar"/>
-                    <img src="~assets/berita.png" draggable="false">
-                    <q-chip class="text-white q-ml-none kabar text-bold" label="Kabar Alumni" v-if="databerita.kabar"/> -->
                     <div class="text-15 text-bold col-12" >{{databerita.title}}</div>
                     <div class="col-12 text-13 ellipsis-3-lines">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea soluta perspiciatis odio distinctio error nam commodi aut rerum! Qui, quasi.
+                        {{databerita.description}}
                     </div>
-                    <div class="text-13 text-bold q-mt-sm col-12" style="color:#a2a2a2;">19 April 2021</div>
+                    <div class="text-13 text-bold q-mt-sm col-12" style="color:#a2a2a2;">{{tampil}}</div>
                 </div>
             </q-card-section>
         </q-card>
@@ -31,8 +27,24 @@
 </template>
 
 <script>
+import { date } from 'quasar'
 export default {
-    props:['databerita','detail']
+    props:['databerita','detail'],
+    computed:{
+        tampil(){
+            let formatNow = date.formatDate(this.databerita.updated_at,'DD MMMM YYYY',{
+                months: ['Januari', 'Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+            })
+            return formatNow
+        },
+        newsimage(){
+            if(this.databerita.image){
+                return this.newsimg + this.databerita.image
+            }else{
+                return ''
+            }
+        }
+    }
 }
 </script>
 

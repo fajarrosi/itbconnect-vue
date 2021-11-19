@@ -2,11 +2,7 @@
     <div>
             <div class="row justify-between">
                 <div class="title-section">PENGALAMAN</div>
-                <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah">
-                <div>Ubah</div>
-                <q-icon name="edit" size="15px"/>
-                </q-btn>
+                <!-- v-if="datapengalaman[0].user_id === userid" -->
             </div>
             <div v-if="datapengalaman.length > 0">
                 <ul style="padding-left:15px;" class="q-my-none ">
@@ -24,19 +20,11 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 
 <script>
 export default {
-    props:[
-        'dpengalaman',
-    ],
     computed:{
         datapengalaman(){
-            return this.$store.state.myprofil.datapengalaman
+            return this.$store.state.datapengalaman
         }
     },
-    methods:{
-        ubah(){
-            this.$emit('update:dpengalaman',true)
-        }
-    }
 }
 </script>
 

@@ -1,12 +1,11 @@
 <template>
     <q-page class="q-pb-lg">
-        
 
-        <div v-if="load">
-            <q-img :src="headerprev ? headerprev : require('assets/bg-akun.png')" alt="background-account" width="428px" height="153px"/>
+        <div v-if="valid">
+            <q-img :src="headerphoto ? headerphoto : require('assets/bg-akun.png')" alt="background-account" width="428px" height="153px"/>
             <q-card flat class="q-mb-md q-mx-md card-radius" style="margin-top:-40px;" >
                 <q-card-section>
-                    <bio v-model:dbio="dbio" :databio="databio" :profilprev="profilprev"/>
+                    <bio v-model:dbio="dbio"/>
                 </q-card-section>
             </q-card>
             <div class="row q-mx-md justify-between items-center">
@@ -48,7 +47,7 @@
             <profilload />
         </div>
             <Dintro v-model:intro="intro" v-model:dbio="dbio" v-if="intro"/>
-            <Dbio v-model:dbio="dbio" v-model:dprofil="dprofil" v-model:userbaru="userbaru" :databio="databio" :dataorganisasi="dataorganisasi" v-if="dbio" v-model:headerprev="headerprev" v-model:profilprev="profilprev"/>
+            <Dbio v-model:dbio="dbio" v-model:dprofil="dprofil" v-model:userbaru="userbaru" :databio="databio" :dataorganisasi="dataorganisasi" v-if="dbio"/>
             <Dprofil v-model:dprofil="dprofil" v-model:userbaru="userbaru" v-model:dpengalaman="dpengalaman" :dataprofil="dataprofil" v-if="dprofil" :pnegara="negara" :pprov="prov" :pagama="agama"/>
             <Dpengalaman v-model:dpengalaman="dpengalaman" v-model:dpend="dpend" v-model:userbaru="userbaru" :datapengalaman="datapengalaman" v-if="dpengalaman"/>
             <Dpend v-model:dpend="dpend" v-model:dminat="dminat" v-model:userbaru="userbaru" :datapendidikan="datapendidikan" v-if="dpend" :jenjang="jenjang" :prodi="prodi"/>
@@ -95,29 +94,12 @@ export default {
             dbisnis:false,
             dpend:false,
             userbaru:false,
-            load:false,
-            headerprev:'',
-            profilprev:''
         }
     },
 
     methods:{
         ...mapActions("myprofil", ["getProfil","getOrg","getPengda","getIaprodi",'getJenjang','getProdi','getNegara','getProv','getAgama','getBisnisField']),
         async getData(){
-            this.getProfil()
-            .then(()=>{
-                if(this.databio.headerprofil){
-                    this.headerprev = this.header + this.databio.headerprofil
-                }
-                if(this.databio.photoprofil){
-                    this.profilprev = this.profil + this.databio.photoprofil
-                }
-                if(!this.userVerified){
-                    this.intro = true
-                    this.userbaru = true
-                }
-                this.load =true
-            })
             this.getNegara()
             this.getProv()
             this.getAgama()
@@ -127,26 +109,41 @@ export default {
             this.getPengda()
             this.getIaprodi()
             this.getBisnisField()
-            
         }
     },
     computed:{
         ...mapState('myprofil',['databio','dataprofil','datapengalaman','datapendidikan','dataorganisasi','databisnis','organization','pengda','iaprodi','jenjang','prodi','negara','prov','agama','datapengda','bisnisfield']),
         userVerified(){
             return this.$store.state.auth.user.is_verified
+        },
+        headerphoto(){
+            if(this.$store.state.myprofil.databio.headerprofil){
+                return this.header + this.$store.state.myprofil.databio.headerprofil
+            }else{
+                return ''
+            }
+        },
+        valid(){
+            if(Object.keys(this.databio).length > 0){
+                return true
+            }else {
+                return false
+            }
+        },
+    },
+    watch:{
+        databio: function(){
+            if(Object.keys(this.databio).length > 0){
+                if(!this.userVerified){
+                    this.intro = true
+                    this.userbaru = true
+                }
+            }
         }
     },
     created(){
-        if(Object.keys(this.databio).length > 0){
-            this.load = true
-        }else{
+        if(!this.negara && !this.prov && !this.agama && !this.jenjang && !this.prodi && !this.organization && !this.pengda && !this.iaprodi && !this.bisnisfield){
             this.getData()
-        }
-        if(this.databio.headerprofil){
-            this.headerprev = this.header + this.databio.headerprofil
-        }
-        if(this.databio.photoprofil){
-            this.profilprev = this.profil + this.databio.photoprofil
         }
     },
 }
