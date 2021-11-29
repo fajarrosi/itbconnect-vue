@@ -55,14 +55,14 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-ripple @click="$router.push({name:'pesan'})">
+              <!-- <q-item clickable v-ripple @click="$router.push({name:'pesan'})">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/pesan.png" alt="pesan">
                     <div class="text-black q-ml-sm">Pesan</div>
                   </div>
                 </q-item-section>
-              </q-item>
+              </q-item> -->
               <q-item clickable v-ripple @click="$router.push({name:'setting&Privasi'})">
                 <q-item-section>
                   <div class="row items-center">
@@ -85,13 +85,13 @@
             <div class="row justify-center">
 
               <q-avatar size="70px" class="q-mb-sm q-mt-md">
-                <q-img :src="photoprofil ? photoprofil : require('assets/akun.png')" alt="photoprofilakun" width="70px" height="70px"/>
+                <q-img :src="photoprofil ? photoprofil : require('assets/akun23.png')" alt="photoprofilakun" width="70px" height="70px"/>
               </q-avatar>
               <div class="text-weight-bold col-12 text-white text-center">{{completename}}</div>
               <div class="col-12 text-white text-center">@{{username}}</div>
               <div class="col-5 text-white text-center row items-center justify-center">
                     <img src="~assets/link.png" alt="place" style="display:inline-block;filter: brightness(0) invert(1);">
-                    <p class="q-my-none q-ml-sm">0</p>
+                    <p class="q-my-none q-ml-sm">{{databio.friend}}</p>
               </div>
 
             </div>

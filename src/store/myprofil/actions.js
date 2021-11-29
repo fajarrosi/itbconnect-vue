@@ -141,6 +141,19 @@ export function getOrg(context){
     })
 }
 
+export function getProfesi(context){
+    return new Promise((resolve,reject)=>{
+        api.get('complex/profession')
+        .then(response=>{
+            context.commit('setProfesi',response.data.data)
+            resolve('ok')
+        })
+        .catch(err=>{
+            reject(err)
+        })
+    })
+}
+
 export function getPengda(context){
     return new Promise((resolve,reject)=>{
         api.get('complex/pengda')
@@ -326,3 +339,11 @@ export function delProduk(context,id){
         })
     })
 }
+
+export function deleteall(context){
+    return new Promise((resolve)=>{
+        context.commit('delAll')
+                resolve("OK")
+    })
+}
+

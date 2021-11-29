@@ -35,9 +35,7 @@
                 </div>
             </div>
             <q-separator spaced class="col-12" style="border:2px solid #e6e6e6;margin-bottom:16px;"/>
-            <div class="text-caption text-justify q-pb-md">
-                {{news.description}}
-            </div>
+            <div class="text-caption text-justify q-pb-md" v-html="news.description"></div>
             <div class="col-12 row" v-if="othernews.length > 0">
                 <div class="text-17 text-bold" style="color:#505050;">Baca Juga</div>
                 <q-separator spaced class="col-12 q-mb-none" style="border:2px solid #e6e6e6;"/>
@@ -172,8 +170,8 @@ export default {
     },
     totalPage(){
       if(this.othernews.length > 0 ){
-          if(this.othernews.length === 1){
-              return this.othernews.length
+          if(this.othernews.length < 3){
+              return 1
           }else{
               return this.othernews.length - 2
           }

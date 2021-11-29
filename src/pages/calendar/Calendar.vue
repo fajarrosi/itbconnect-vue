@@ -1,33 +1,64 @@
 <template>
     <q-page class="q-py-md q-px-lg">
-        <div class="row justify-center">
+        <div v-if="valid">
+            <div class="row justify-center">
             <div class="col-7 row items-center">
                 <q-btn color="white" icon="arrow_back_ios" class="text-black arrow-btn-left" @click="prevMonth()"/>
                 <span class="text-primary q-mx-md" style="font-size:18px;">{{tampil}}</span>
                 <q-btn color="white" icon="arrow_forward_ios" class="text-black arrow-btn-right" @click="nextMonth()"/>
             </div>
-        </div>
-        <q-card class="q-mt-lg" flat>
-            <q-card-section class="q-pa-none bg-secondary" >
-                <q-scroll-area style="height: 65vh;">
-                <div class="row" v-if="Object.keys(onShow).length == 0">
-                    <div class="col text-center text-primary q-pa-sm left-even" style="font-size:20px;">Belum Ada Agenda</div>
-                </div>
-                <div class="row justify-between container" v-for="(n,key) in onShow" :key="key">
-                    <div class="col-2 text-center text-primary q-pa-sm left-side" style="font-size:20px;">
-                        {{eventTgl(key)}}
-                    </div >
-                    <div class="col-10 text-primary q-pa-sm right-side" >
-                        <div v-for="(item, i) in n" :key="i" :class="i > 0  ? 'q-mt-md' : ''">
-                            {{item.evtime}} <br>
-                            {{item.evtitle}} <br>
-                            {{item.evspeaker}} <br>
+            </div>
+            <q-card class="q-mt-lg" flat>
+                <q-card-section class="q-pa-none bg-secondary" >
+                    <q-scroll-area style="height: 65vh;">
+                    <div class="row" v-if="Object.keys(onShows).length === 0">
+                        <div class="col text-center text-primary q-pa-sm left-even" style="font-size:20px;">Belum Ada Agenda</div>
+                    </div>
+                    <div class="row justify-between container" v-for="(n,key) in onShows" :key="key">
+                        <div class="col-2 text-center text-primary q-pa-sm left-side" style="font-size:20px;">
+                            {{eventTgl(key)}}
+                        </div >
+                        <div class="col-10 text-primary q-pa-sm right-side" >
+                            <div v-for="(item, i) in n" :key="i" :class="i > 0  ? 'q-mt-md' : ''" class="row">
+                                <div class="text-15 col-12">{{item.dari[0]}} - {{item.sampai[0]}}</div>
+                                <div class="text-15 col-12">{{item.title}}</div>
+                                <div class="text-15 col-12 ellipsis-2-lines">{{item.description}}</div>
+                            
+                            </div>
                         </div>
                     </div>
+                    </q-scroll-area>
+                </q-card-section>
+            </q-card>
+        </div>
+        <div v-else>
+            <div class="row justify-center">
+                <div class="col-7 row items-center justify-between">
+                    <q-skeleton class="col-2 q-mb-sm" height="25px"/>
+                    <q-skeleton class="col-6 q-mb-sm" height="25px"/>
+                    <q-skeleton class="col-2 q-mb-sm" height="25px"/>
                 </div>
-                </q-scroll-area>
-            </q-card-section>
-        </q-card>
+            </div>
+            <q-card class="q-mt-lg" flat>
+                <q-card-section class="q-pa-none bg-secondary" >
+                    <q-scroll-area style="height: 65vh;">
+                    <div class="row justify-between container" v-for="n in 6" :key="n">
+                        <div class="col-2 text-center text-primary q-pa-sm left-side" style="font-size:20px;">
+                            <q-skeleton class="q-mb-sm" height="80px"/>
+                        </div >
+                        <div class="col-10 text-primary q-pa-sm right-side" >
+                            <div v-for="i in n" :key="i" :class="i > 0  ? 'q-mt-md' : ''" class="row">
+                                <q-skeleton class="q-mb-sm col-12" height="12px"/>
+                                <q-skeleton class="q-mb-sm col-12" height="12px"/>
+                                <q-skeleton class="q-mb-sm col-12" height="12px"/>
+                            </div>
+                        </div>
+                    </div>
+                    </q-scroll-area>
+                </q-card-section>
+            </q-card>
+        </div>
+        
     </q-page>
 </template>
 
@@ -161,12 +192,28 @@ export default {
                 },
             ],
             eventschange:'',
-            sideleft:1
+            agenda:'',
+            agendagroup:'',
+            valid:false
         }
     },
     mounted(){
         this.sekarang = new Date()
         this.eventschange = groupBy(this.events,'evdate')
+        this.$store.dispatch('getAgenda')
+        .then(response=>{
+            this.agenda = response
+            this.agenda.forEach(el=>{
+                el.tgl = el.start_time.replace(/\s\d{2}:\d{2}:\d{2}/,'')
+                el.dari = el.start_time.match(/\d{2}:\d{2}/)
+                el.sampai = el.end_time.match(/\d{2}:\d{2}/)
+            })
+            this.agendagroup = groupBy(this.agenda,'tgl')
+            this.valid = true
+        })
+        .catch(error=>{
+            console.log("error",error)
+        })
     },
     computed:{
         tampil(){
@@ -186,6 +233,17 @@ export default {
             })
             return terbaru
         },
+        onShows(){
+            let terbaru = {}
+            let tgl1 = date.formatDate(this.sekarang,'YYYY-MM')
+            Object.keys(this.agendagroup).forEach(key=>{
+                let a = date.formatDate(key,'YYYY-MM')
+                if(a === tgl1){
+                    terbaru[key] = this.agendagroup[key]
+                }
+            })
+            return terbaru
+        },
     },
     methods:{
         prevMonth(){
@@ -197,8 +255,6 @@ export default {
         eventTgl(val){
             return date.formatDate(val,'DD')
         },
-        
-        
     }
 }
 </script>

@@ -23,7 +23,7 @@
                 :name="3"
                 :done="step > 3"
             >
-            <Akun v-model:username="user.username" v-model:password="user.password" v-model:konfirmasi="user.konfirmasi"/>
+            <Akun v-model:username="user.username" v-model:password="user.password" v-model:usuccess="usuccess" v-model:konfirmasi="user.konfirmasi"/>
             </q-step>
             
 
@@ -149,6 +149,7 @@ export default {
       optjenjang:[],
       optprodi:[],
       alumnus:false,
+      usuccess:false
     };
   },
   computed: {

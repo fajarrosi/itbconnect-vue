@@ -24,7 +24,7 @@
 export default {
     computed:{
         datapendidikan(){
-            return this.$store.state.datapendidikan
+            return this.$store.state.rekomendasi.datapendidikan
         }
     },
 }

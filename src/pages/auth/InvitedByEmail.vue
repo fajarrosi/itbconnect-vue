@@ -3,7 +3,7 @@
     </div>
 </template>
 <script>
-import { useQuasar, QSpinnerGears } from 'quasar'
+import { useQuasar} from 'quasar'
 import { onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
@@ -26,34 +26,30 @@ export default {
         $q.loading.show({
           message: `Checking Your Email.... ${val}`
         })
-        // let email = $store.getters['auth/cekEmail'](val)
-        
 
         timer = setTimeout(() => {
           $q.loading.show({
-            spinner: QSpinnerGears,
-            spinnerColor: 'red',
-            messageColor: 'black',
-            backgroundColor: 'yellow',
             message: 'Redirect to register page'
           })
 
           timer = setTimeout(() => {
             $q.loading.hide()
-            // if(email){
-                $store.dispatch('auth/userReg',val)
-                .then(()=>{
+                $store.dispatch('auth/cekEmail',val)
+                .then(() => {
                     $router.push('/register')
                 })
-                .catch((error)=>{
-                  console.log("error",error)
+                .catch(() => {
                     $router.push('/register')
-                    // console.log("tidak ada email",e)
                 })
-            // }else{
-            //     $router.push('/register')
-            //     console.log("tidak ada email")
-            // }
+                // $store.dispatch('auth/userReg',val)
+                // .then(()=>{
+                //     $router.push('/register')
+                // })
+                // .catch((error)=>{
+                //   console.log("error",error)
+                //     $router.push('/register')
+                //     // console.log("tidak ada email",e)
+                // })
             timer = void 0
           }, 2000)
         }, 3000)

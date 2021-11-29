@@ -20,12 +20,6 @@ export function delUser(state){
     state.token = ''
 }
 
-export function setUserLogin(state,data){
-    state.userlogin = data
-    state.remember = true
-}
-
-export function delUserLogin(state){
-    state.userlogin = ''
-    state.remember = false
+export function updateUsername(state,data){
+    state.user.username = data
 }

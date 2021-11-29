@@ -12,11 +12,11 @@ export function setBio(state,data){
     }
     state.databio = {
         name: data.complete_name,
-        prodi: data.univercity[data.univercity.length - 1 ].program_study,
-        tahunmasuk: data.univercity[data.univercity.length - 1 ].entry_year,
+        prodi: data.univercity[0].program_study,
+        tahunmasuk: data.univercity[0].entry_year,
         domisili: doms,
-        jabatan : data.experience[data.experience.length -1].position,
-        perusahaan: data.experience[data.experience.length -1].company_name,
+        jabatan : data.experience[0].position,
+        perusahaan: data.experience[0].company_name,
         created : result,
         bio :data.description,
         photoprofil : data.profile.photo_profile,
@@ -107,4 +107,23 @@ export function setAgama(state,data){
 }
 export function setBisnisfield(state,data){
     state.bisnisfield = data
+}
+
+export function setProfesi(state,data){
+    state.profesi = data
+}
+export function delAll(state){
+    state.profesi = ''
+    state.bisnisfield = ''
+    state.agama = ''
+    state.prov = ''
+    state.negara = ''
+    state.prodi = ''
+    state.iaprodi = ''
+    state.jenjang = ''
+    state.pengda =''
+    state.organization = ''
+}
+export function updateFriend(state,data){
+    state.databio.friend = data
 }

@@ -61,33 +61,7 @@
                     <q-list  padding class="q-mx-md">
                         <q-separator spaced />
                         <div v-if="newsFilter.length > 0">
-                            <div v-for="(list,n) in newsFilter" :key="n">
-                                
-                                <q-item clickable v-ripple @click="$router.push(`/berita/${list.slug}`)" >
-                                    <q-item-section top thumbnail class="q-ml-none">
-                                        <img :src="newsimage(list) ? newsimage(list) : require('assets/berita.png')" >
-                                    </q-item-section>
-
-                                    <q-item-section>
-                                        <q-item-label class="ellipsis-2-lines">{{list.title}}</q-item-label>
-                                        <q-item-label caption class="ellipsis-2-lines">
-                                            {{list.description}}
-                                        </q-item-label>
-                                        <q-item-label caption>{{tampil(list)}}</q-item-label>
-                                        <q-item-label caption >
-                                            <q-badge color="primary" label="Kabar Alumni" v-if="list.type_news === 'alumni-news'"/>
-                                            <q-badge color="primary" label="PP-IA" v-else-if="list.type_news === 'pp-ia'"/>
-                                            <q-badge color="primary" label="Lowongan Kerja" v-else-if="list.type_news === 'job-vacancies'"/>
-                                            <q-badge color="primary" label="Info Projek" v-else-if="list.type_news === 'project-info'"/>
-                                            <q-badge color="primary" label="Beasiswa" v-else-if="list.type_news === 'beasiswa'"/>
-                                            <q-badge color="primary" label="Lainnya" v-else/>
-                                        </q-item-label>
-                                    </q-item-section>
-
-                                </q-item>
-
-                                <q-separator spaced />
-                            </div>
+                            <item-news v-for="(list,n) in newsFilter" :key="n" :news="list" :badge="true" :time="false"/>
                         </div>
                         <div v-else>
                             <q-item>
@@ -115,7 +89,9 @@
                 <q-skeleton class="col-3 q-mb-sm" height="20px"/>
             </div>
             <q-separator spaced class="col-12" style="border:1px solid #e6e6e6;margin-bottom:16px;"/>
-            <listload />
+            <q-scroll-area style="height: 55vh;" class="col-12 row">
+                <listload v-for="n in 10" :key="n"/>
+            </q-scroll-area>
         </div>
         
         
@@ -124,11 +100,11 @@
 
 <script>
 import { ref } from 'vue'
-import { date } from 'quasar'
 import { debounce } from 'quasar'
 export default {
     components:{
-        'listload' : require('components/berita/ListLoad.vue').default
+        'listload' : require('components/berita/ListLoad.vue').default,
+        'item-news' : require('components/berita/ItemNews.vue').default
     },
     setup () {
         return {
@@ -185,15 +161,6 @@ export default {
         etc(){
             return this.news ? this.news.filter((k)=> k.type_news == 'etc') : ''
         },
-       
-        tampil(){
-            return val => date.formatDate(val.updated_at,'DD MMMM YYYY',{
-                months: ['Januari', 'Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
-            })
-        },
-        newsimage(){
-            return val => val.image ? this.newsimg + val.image : ''
-        }
     },
     watch:{
         keyword(){

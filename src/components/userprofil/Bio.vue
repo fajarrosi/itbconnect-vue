@@ -2,7 +2,7 @@
     <div>
         <div class="row justify-between">
             <q-avatar size="92px" style="margin-top:-70px;">
-                <q-img :src="photoprofil ? photoprofil : require('assets/akun.png')" width="92px" height="92px" />
+                <q-img :src="photoprofil ? photoprofil : require('assets/akun23.png')" width="92px" height="92px" />
             </q-avatar>
             <q-btn color="primary" label="Kirim Pesan" v-if="databio.connect" dense no-caps class="btn-radius text-13 q-px-md"/>
         </div>
@@ -44,14 +44,14 @@
 export default {
     computed:{
         photoprofil(){
-            if(this.$store.state.userrekomen.photoprofil){
-                return this.profil + this.$store.state.userrekomen.photoprofil
+            if(this.$store.state.rekomendasi.databio.photoprofil){
+                return this.profil + this.$store.state.rekomendasi.databio.photoprofil
             }else{
                 return ''
             }
         },
         databio(){
-            return this.$store.state.userrekomen
+            return this.$store.state.rekomendasi.databio
         }
     },
 }

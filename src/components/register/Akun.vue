@@ -64,7 +64,8 @@ export default {
     props:[
         'username',
         'password',
-        'konfirmasi'
+        'konfirmasi',
+        'usuccess'
     ],
     data(){
         return{

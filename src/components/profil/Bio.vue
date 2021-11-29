@@ -2,14 +2,13 @@
     <div>
         <div class="row justify-between">
             <q-avatar size="92px" style="margin-top:-70px;">
-                <q-img :src="photoprofil ? photoprofil : require('assets/akun.png')" width="92px" height="92px" />
+                <q-img :src="photoprofil ? photoprofil : require('assets/akun23.png')" width="92px" height="92px" />
             </q-avatar>
             <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.userid === userid">
+font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 <div>Ubah</div>
                 <q-icon name="edit" size="15px"/>
             </q-btn>
-            <q-btn color="primary" label="Kirim Pesan" v-else-if="databio.connect" dense no-caps class="btn-radius text-13 q-px-md"/>
         </div>
         <div class="row">
             <div class="col-9  text-primary text-h6" style="font-weight:600;">{{databio.name}}</div>
@@ -48,9 +47,6 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" v-if="databio.userid === u
 <script>
 export default {
     computed:{
-        userid(){
-            return this.$store.state.auth.user.id
-        },
         photoprofil(){
             if(this.$store.state.myprofil.databio.photoprofil){
                 return this.profil + this.$store.state.myprofil.databio.photoprofil

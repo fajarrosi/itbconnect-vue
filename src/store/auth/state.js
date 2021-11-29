@@ -3,7 +3,5 @@ export default function () {
     token: '',
     alumni:'', /*utk register alumni*/
     user:'',
-    userlogin:'',
-    remember:''
   }
 }

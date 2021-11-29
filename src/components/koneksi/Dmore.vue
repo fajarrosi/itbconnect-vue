@@ -3,28 +3,57 @@
         <q-dialog :model-value="dmore" @click="$emit('update:dmore', $event.target.value)" position="bottom" @hide="$emit('update:dmore',false)">
             <q-card class="hide-scrollbar">
                 <q-card-section>
-                    <div class="text-17 text-bold"> Luke Pearce</div>
-                    <div class="text-15">Teknik Mesin'86</div>
-                    <q-btn no-caps class="text-left q-pl-none" flat>
+                    <div class="text-17 text-bold">{{detail.complete_name}}</div>
+                    <div class="text-15">{{detail.univercity[0].program_study}} '{{tahun()}}</div>
+                    <!-- <q-btn no-caps class="text-left q-pl-none" flat>
                         <img src="~assets/email.png" alt="pesan">
                         <div class="text-13 q-ml-md">Kirim Pesan</div>
-                    </q-btn>
+                    </q-btn> -->
                     <br>
-                    <q-btn no-caps class="text-left q-pl-none" flat>
+                    <q-btn no-caps class="text-left q-pl-none" flat @click="onDelete">
                         <img src="~assets/remove-user.png" alt="hapus">
                         <div class="text-13 q-ml-md">Hapus dari Koneksi</div>
                     </q-btn>
                 </q-card-section>
             </q-card>
         </q-dialog>
+        <dialogdelete v-model:ddelete="ddelete" v-if="ddelete" v-model:dload="dload" v-model:ddisabled="ddisabled"/>
     </div>
 </template>
 
 <script>
 export default {
     props:[
-        'dmore'
+        'dmore','detail'
     ],
+    components:{
+        'dialogdelete' : require('components/DialogDelete.vue').default,
+    },
+    data(){
+        return {
+            ddelete:false,
+            dload:false,
+            ddisabled:false
+        }
+    },
+    methods:{
+        onDelete(){
+            this.ddelete = true
+        },
+        tahun(){
+            return this.detail.univercity[0].entry_year.substring(2,4)
+        },
+        onDeleting(){
+            this.dload = true
+            this.ddisabled = true
+            this.$store.dispatch('koneksi/DeleteConnection',{friend_id : this.detail.id})
+            .then(()=>{
+                this.dload = false
+                this.ddisabled = false
+                this.ddelete = false
+            })
+        }
+    }
 }
 </script>
 

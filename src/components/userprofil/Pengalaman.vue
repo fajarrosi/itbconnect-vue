@@ -22,7 +22,7 @@
 export default {
     computed:{
         datapengalaman(){
-            return this.$store.state.datapengalaman
+            return this.$store.state.rekomendasi.datapengalaman
         }
     },
 }

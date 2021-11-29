@@ -1,61 +1,85 @@
 <template>
-    <q-card class="rekomen-card card-radius cursor-pointer" @click="$router.push(`/rekomendasi/${id}`)">
+<div class="q-pr-sm" style="width:150px;height:322px;" >
+    <q-card class="rekomen-card card-radius cursor-pointer" @click="$router.push(`/detail-user/${rekomendasi.id}`)">
         <!-- <div v-ripple class="cursor-pointer q-hoverable relative-position" > -->
             <q-img
-                src="~assets/akun23.png"
+                :src="profilimage ? profilimage : require('assets/akun23.png')"
                 spinner-color="primary"
                 spinner-size="82px"
                 height="130px"
+                width="142px"
                 :draggable="false"
             />
             <!-- <img src="" style="height:130px;" > -->
             <q-card-section class="q-pt-sm q-pb-none" >
             <div class="row">
-                <div class="col-12 text-caption text-justify ellipsis " style="font-weight:600;" >{{name}}</div>
-                <div class="col-10 ellipsis text-caption" style="font-weight:600;">- {{prodi}}</div>
+                <div class="col-12 text-caption text-justify ellipsis " style="font-weight:600;" >{{rekomendasi.complete_name}}</div>
+                <div class="col-10 ellipsis text-caption" style="font-weight:600;">- {{rekomendasi.univercity[0].program_study}}</div>
                 <div class="col-2 text-caption ellipsis" style="font-weight:600;">'{{tahun()}}</div>
             </div>
             </q-card-section>
             <q-card-section class="q-pb-md q-pt-none row">
-            <div class="text-13 ellipsis-2-lines text-primary col-12">
-                {{jabatan}} {{perusahaan}}
+            <div class="text-13 ellipsis text-primary col-12">
+                {{rekomendasi.experience[0].position}} 
             </div>
-            <q-btn :color="wait ? 'grey-8' : 'primary'"  no-caps style="margin-top:8px;" class="col-12 btn-radius" @click.stop="onSubmit">
+            <div class="text-13 ellipsis text-primary col-12">
+                {{rekomendasi.experience[0].company_name}}
+            </div>
+            <q-btn :color="wait ? 'grey-8' : 'primary'"  no-caps style="margin-top:8px;" class="col-12 btn-radius" @click.stop="onSubmit" :disable="btndisable" :loading="load">
                 <div class="row">
                     <q-icon name="done" v-if="wait" class="col-2" size="15px"/>
                     <div class="text-white col-10" >{{wait ? 'Menunggu' : 'Connect'}}</div>
                 </div>
+                <template v-slot:loading>
+                    <q-spinner-facebook />
+                </template>
             </q-btn>
             </q-card-section>
         <!-- </div> -->
     </q-card>
+</div>
 </template>
 
 <script>
 export default {
-    props:['name','pp','prodi','tahunmasuk','jabatan','perusahaan','id'],
+    props:['rekomendasi'],
     data(){
         return{
             wait:false,
-            user:''
+            btndisable:false,
+            load:false
         }
     },
     methods:{
         tahun(){
-            return this.$props.tahunmasuk.substring(2,4)
+            return this.rekomendasi.univercity[0].entry_year.substring(2,4)
         },
+        
         onSubmit(){
             if(!this.wait){
-                this.user = {
-                    name: this.$props.name,
-                    id:this.$props.id,
-                }
-                // push ke api add koneksi
-                this.wait = true
+                // console.log("waitnya false",this.wait)
+                this.btndisable = true
+                this.load = true
+                this.$store.dispatch('rekomendasi/addConnect',{
+                    friend_id : this.rekomendasi.id
+                })
+                .then(()=>{
+                    // console.log("response dari addConnect",response)
+                    this.load = false
+                    this.wait = true
+                })
+                .catch(error=>{
+                    console.log("error dari addConnect",error)
+                })
+            }
+        },
+    },
+    computed:{
+        profilimage(){
+            if(this.rekomendasi.profile.photo_profile){
+                return this.profil + this.rekomendasi.profile.photo_profile
             }else{
-                this.user = ''
-                // push ke api remove koneksi
-                this.wait = false
+                return ''
             }
         },
     }

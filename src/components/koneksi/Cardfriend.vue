@@ -4,38 +4,49 @@
         <div class="row items-center ">
             <div class="col-2 text-center">
                 <q-avatar size="60px">
-                    <img src="~assets/akun.png" >
+                    <img :src="profilimage(koneksi.profile) ? profilimage(koneksi.profile) : require('assets/akun23.png')" >
                 </q-avatar>
             </div>
             <div class="col-8 q-pl-sm">
-                <div>{{koneksi.name}} - {{koneksi.jurusan}}'{{tahun()}}</div>
-                <div class="text-primary text-13">{{koneksi.profesi}} {{koneksi.perusahaan}}</div>
+                <div>{{koneksi.complete_name}} - {{koneksi.univercity[0].program_study}}'{{tahun()}}</div>
+                <div class="text-primary text-13">{{koneksi.experience[0].position}} {{koneksi.experience[0].company_name}}</div>
             </div>
             <div class="col-2 text-right">
                 <q-btn class="bg-white btncek" icon="more_horiz" size="md" @click.stop="onMore"/>
             </div>
         </div>
         <q-separator spaced inset />
+        <d-more v-model:dmore="dmore" :detail="koneksi" v-if="dmore"/>
     </div>
 </template>
 
 <script>
 export default {
-    props:['dmore','koneksi'],
-    emits:['update:dmore'],
+    props:['koneksi'],
+    components:{
+        'd-more': require('components/koneksi/Dmore.vue').default,
+    },
     methods:{
         onMore(){
-            this.$emit('update:dmore',true)
+            this.dmore = true
         },
         tahun(){
-            return this.$props.koneksi.tahunmasuk.substring(2,4)
+            return this.koneksi.univercity[0].entry_year.substring(2,4)
         },
         movePage(){
-            setTimeout(() => {
-                this.$router.push('/rekomendasi/3')
-            }, 400);
+                this.$router.push(`/detail-user/${this.koneksi.id}`)
         }
-    }
+    },
+    data(){
+        return {
+            dmore:false
+        }
+    },
+    computed:{
+        profilimage(){
+            return val=> val.photo_profile ? this.profil + val.photo_profile : ''
+        }
+    },
 }
 </script>
 

@@ -15,6 +15,7 @@ export default function () {
     prov:'',
     agama:'',
     datapengda:'',
-    bisnisfield:''
+    bisnisfield:'',
+    profesi:''
   }
 }

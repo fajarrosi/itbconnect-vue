@@ -19,7 +19,7 @@
                 <q-card-actions align="center" class="q-mb-md" >
                     <q-btn  no-caps label="Kembali" outline
                     style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dminat', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
+                    <q-btn  no-caps label="Simpan" :color="valid ? 'primary' : 'grey'" @click="onSave" class="col-5" :loading="load"
                 :disabled="disabled">
                         <template v-slot:loading>
                             <div class="row items-center">
@@ -89,7 +89,7 @@ export default {
             selectedpengda:'',
             selectediaprodi:'',
             load:false,
-            disabled:false,
+            btndisabled:false,
         }
     },
     methods:{
@@ -121,6 +121,24 @@ export default {
                 }   
             })
         },
+    },
+    computed:{
+        valid(){
+            if(this.selectedpengda && this.selectediaprodi){
+                return true
+            }else{
+                return false
+            }
+        },
+        disabled(){
+            if(this.valid){
+                if (this.btndisabled){
+                    return true
+                }
+                return false
+            }
+            return true
+        }
     }
 }
 </script>

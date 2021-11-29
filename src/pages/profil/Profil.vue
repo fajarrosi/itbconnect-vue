@@ -47,7 +47,7 @@
             <profilload />
         </div>
             <Dintro v-model:intro="intro" v-model:dbio="dbio" v-if="intro"/>
-            <Dbio v-model:dbio="dbio" v-model:dprofil="dprofil" v-model:userbaru="userbaru" :databio="databio" :dataorganisasi="dataorganisasi" v-if="dbio"/>
+            <Dbio v-model:dbio="dbio" v-model:dprofil="dprofil" v-model:userbaru="userbaru"  v-if="dbio"/>
             <Dprofil v-model:dprofil="dprofil" v-model:userbaru="userbaru" v-model:dpengalaman="dpengalaman" :dataprofil="dataprofil" v-if="dprofil" :pnegara="negara" :pprov="prov" :pagama="agama"/>
             <Dpengalaman v-model:dpengalaman="dpengalaman" v-model:dpend="dpend" v-model:userbaru="userbaru" :datapengalaman="datapengalaman" v-if="dpengalaman"/>
             <Dpend v-model:dpend="dpend" v-model:dminat="dminat" v-model:userbaru="userbaru" :datapendidikan="datapendidikan" v-if="dpend" :jenjang="jenjang" :prodi="prodi"/>
@@ -142,9 +142,13 @@ export default {
         }
     },
     created(){
-        if(!this.negara && !this.prov && !this.agama && !this.jenjang && !this.prodi && !this.organization && !this.pengda && !this.iaprodi && !this.bisnisfield){
+        if(this.negara && this.prov && this.agama && this.jenjang && this.prodi && this.organization && this.pengda && this.iaprodi && this.bisnisfield){
+            console.log('true')
+        }else{
             this.getData()
+            console.log('false')
         }
+
     },
 }
 </script>

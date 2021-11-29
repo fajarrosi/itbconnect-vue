@@ -175,13 +175,6 @@ export function forgot(context,email){
     })
 }
 
-export function setLogin(context,user){
-    context.commit('setUserLogin',user)
-}
-
-export function delLogin(context){
-    context.commit('delUserLogin')
-}
 
 
 

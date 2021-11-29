@@ -46,16 +46,7 @@
             </q-btn>
         </q-card-actions>
         </q-card>
-        <q-dialog v-model="loads" persistent>
-            <q-card>
-                <q-card-actions align="center">
-                        <q-spinner-facebook
-                        color="primary"
-                        size="100px"
-                        />
-                </q-card-actions>
-            </q-card>
-        </q-dialog>
+      
     </q-page>
 </template>
 

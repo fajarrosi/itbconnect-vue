@@ -10,15 +10,15 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
         </div>
         <div v-if="dataorganisasi.length > 0">
             <ul style="padding-left:0;list-style:none;" class="q-my-none ">
-                <li v-for="(organisasi,index) in dataorganisasi" :key="index">
+                <li v-for="organisasi in dataorganisasi" :key="organisasi.id">
                     {{organisasi.organization.name}}
                 </li>
             </ul>
         </div>
             <div class="title-section q-mt-md">Pengurus Daerah & IA Prodi</div>
-            <div v-if="Object.keys(datapengda).length > 0">
-                <div >{{datapengda.commisariat.name}}</div>
-                <div >{{datapengda.iaprodi.name}}</div>
+            <div v-if="datapengda">
+                <div>{{datapengda.commisariat.name}}</div>
+                <div>{{datapengda.iaprodi.name}}</div>
             </div>
             <div v-else>
                 <div class="grey">Tidak Ada</div>

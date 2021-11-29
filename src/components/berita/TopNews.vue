@@ -22,8 +22,8 @@
                 </q-carousel>
             </div>
             <div v-else class="q-my-md">
-                <span class="q-mx-md text-17 text-bold " style="color:#505050;" v-if="alumni">Belum Ada Berita Alumni</span>
-                <span class="q-mx-md text-17 text-bold " style="color:#505050;" v-else>Belum Ada Berita Seputar PP-IA</span>
+                <span class="q-mx-md text-15 text-bold " style="color:#505050;" v-if="alumni">Belum Ada Berita Alumni</span>
+                <span class="q-mx-md text-15 text-bold " style="color:#505050;" v-else>Belum Ada Berita Seputar PP-IA</span>
             </div>
             
         </div>
@@ -49,7 +49,6 @@ export default {
             slider:1,
             valid:false,
             news:'',
-            slider2:1
         }
     },
     computed:{
@@ -65,7 +64,8 @@ export default {
                 }
             }
             return 0
-        }
+        },
+      
     },
     created(){
         if(this.alumni){

@@ -38,7 +38,7 @@
 export default {
     computed:{
         databisnis(){
-            return this.$store.state.databisnis
+            return this.$store.state.rekomendasi.databisnis
         },
     },
     data(){
@@ -48,7 +48,7 @@ export default {
         }
     },
     mounted(){
-        if(Object.keys(this.databisnis).length > 0){
+        if(this.databisnis.length > 0){
             this.databisnis.forEach(el=>{
                 this.bisnis.push({
                     logo:el.logo,

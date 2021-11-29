@@ -9,7 +9,3 @@ export function isVerifiedemail(state){
 export function isVerifieduser(state){
     return state.user.is_verified
 }
-
-export function userLogin(state){
-    return state.userlogin
-}

@@ -11,7 +11,7 @@
                 </ul>
             </div>
             <div class="title-section q-mt-md">Pengurus Daerah & IA Prodi</div>
-            <div v-if="Object.keys(datapengda).length > 0">
+            <div v-if="datapengda">
                 <div >{{datapengda.commisariat.name}}</div>
                 <div >{{datapengda.iaprodi.name}}</div>
             </div>
@@ -29,10 +29,10 @@
 export default {
     computed:{
         datapengda(){
-            return this.$store.state.datapengda
+            return this.$store.state.rekomendasi.datapengda
         },
         dataorganisasi(){
-            return this.$store.state.dataorganisasi
+            return this.$store.state.rekomendasi.dataorganisasi
         }
     },
 }

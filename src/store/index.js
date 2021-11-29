@@ -3,8 +3,10 @@ import { createStore } from 'vuex'
 import auth from './auth'
 import myprofil from './myprofil'
 import news from './news'
+import rekomendasi from './rekomendasi'
+import koneksi from './koneksi'
 import createPersistedState from 'vuex-persistedstate';
-
+import { api } from 'boot/axios'
 // import example from './module-example'
 
 /*
@@ -18,52 +20,112 @@ import createPersistedState from 'vuex-persistedstate';
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
-    state:{
-      isVerified:'',
-      userrekomen:{
-        name:'Budi',
-        prodi:'Teknik Informatika',
-        tahunmasuk:'1990',
-        jabatan:'CEO',
-        perusahaan:'Pelindo Energi Logistik',
-        domisili:'Bandung',
-        bio:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias consequatur aliquid impedit saepe et. Assumenda delectus ipsum vero. Tenetur aliquid laudantium debitis eveniet dolores quam, cupiditate nulla sint iste, modi pariatur dolorem. Voluptatum tenetur vel facere modi cupiditate praesentium iste soluta. Voluptates sed animi maiores fugiat, ullam placeat esse vero expedita maxime eaque corrupti optio quos aliquid nam tenetur! Est possimus volu',
-        connect:false,
-        id:2
-      },
-      dataprofil:{
-        id:2,
-        connect:true,
-      },
-      datapengalaman:{
-        id:2
-      },
-      datapengda:'',
-      datapendidikan:{
-        id:2
-      },
-      dataorganisasi:{
-        id:2
-      },
-      databisnis:{
-        id:2
-      }
-    },
-   
-    mutations:{
-      Verified(state,data){
-        state.isVerified = data
-      }
-    },
     actions:{
-      setVerified({commit}, payload){
-        commit('Verified',payload)
-      }
+      searchData(context,keyword){
+        return new Promise((resolve,reject)=>{
+        let config = {
+            headers: {
+                Authorization : `Bearer ${context.rootState.auth.token}`
+            },
+        }
+        api.post('user/search',keyword,config)
+        .then(response=>{
+            resolve(response.data.data)
+        })
+        .catch(error=>{
+            reject(error)
+        })
+        })
+      },
+      getAgenda(context){
+        return new Promise((resolve,reject)=>{
+        let config = {
+            headers: {
+                Authorization : `Bearer ${context.rootState.auth.token}`
+            },
+        }
+        api.get('user/agenda',config)
+        .then(response=>{
+            resolve(response.data.data)
+        })
+        .catch(error=>{
+            reject(error)
+        })
+        })
+      },
+      getCaraousel(context){
+        return new Promise((resolve,reject)=>{
+        let config = {
+            headers: {
+                Authorization : `Bearer ${context.rootState.auth.token}`
+            },
+        }
+        api.get('user/list-caraousel',config)
+        .then(response=>{
+            resolve(response.data.data)
+        })
+        .catch(error=>{
+            reject(error)
+        })
+        })
+      },
+      changePassword(context,password){
+        return new Promise((resolve,reject)=>{
+        let config = {
+            headers: {
+                Authorization : `Bearer ${context.rootState.auth.token}`
+            },
+        }
+        api.post('user/change-password',password,config)
+        .then(response=>{
+            resolve(response.data)
+        })
+        .catch(error=>{
+            reject(error)
+        })
+        })
+      },
+      checkPassword(context,password){
+        return new Promise((resolve,reject)=>{
+        let config = {
+            headers: {
+                Authorization : `Bearer ${context.rootState.auth.token}`
+            },
+        }
+        api.post('user/check-password',password,config)
+        .then(()=>{
+            resolve("OK")
+        })
+        .catch(()=>{
+            reject("fail")
+        })
+        })
+      },
+      changeUsername(context,username){
+        return new Promise((resolve,reject)=>{
+        let config = {
+            headers: {
+                Authorization : `Bearer ${context.rootState.auth.token}`
+            },
+        }
+        api.post('user/change-username',username,config)
+        .then(response=>{
+            context.commit('auth/updateUsername', response.data.data, {root: true})
+            resolve(response.data)
+        })
+        .catch(error=>{
+            reject(error)
+        })
+        })
+      },
+      
     },
     modules: {
       auth,
       myprofil,
-      news
+      news,
+      rekomendasi,
+      koneksi
     },
     plugins: [createPersistedState()],
 

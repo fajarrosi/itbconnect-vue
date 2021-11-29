@@ -19,8 +19,8 @@
 
 const routes = [
   {
-    path:'/registrasi',
-    component: () => import('pages/CekEmail.vue')
+    path:'/invitedbyemail',
+    component: () => import('pages/auth/InvitedByEmail.vue')
   },
   
   {
@@ -51,7 +51,7 @@ const routes = [
           requireAuth:true
         }
       },
-      {path:'rekomendasi/:id',name:'rekomendasi', component:()=>import('pages/rekomendasi/Detail.vue'),
+      {path:'detail-user/:id',name:'profil user', component:()=>import('pages/rekomendasi/Detail.vue'),
         meta:{
           detail:true
         }
@@ -68,7 +68,7 @@ const routes = [
           headerback:true
         }
       },
-      {path:'/cari-koneksi', name:'Koneksi Anda', component:()=>import('pages/koneksi/Searchkoneksi.vue'),
+      {path:'cari-koneksi', name:'Koneksi Anda', component:()=>import('pages/koneksi/Searchkoneksi.vue'),
         meta:{
           headerback:true
         }
@@ -110,6 +110,12 @@ const routes = [
       {path:'notifikasi',name:'notifikasi',component:()=>import('pages/notifikasi/Notifikasi.vue'),
         meta:{
           nofooter:true,
+          userverified:true,
+          headerback:true
+        }
+      },
+      {path:'permintaan',name:'permintaan',component:()=>import('pages/notifikasi/RequestDetail.vue'),
+        meta:{
           userverified:true,
           headerback:true
         }

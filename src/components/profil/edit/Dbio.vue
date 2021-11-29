@@ -18,7 +18,7 @@
                         </q-img>
                     </q-avatar> -->
                     <q-avatar size="92px" style="margin-top:-50px;">
-                        <q-img :src="prevpp ? prevpp : require('assets/akun.png')" width="92px" height="92px">
+                        <q-img :src="prevpp ? prevpp : require('assets/akun23.png')" width="92px" height="92px">
                             <div class="absolute-full text-subtitle2 flex flex-center" @click="$refs.ppupload.click()">
                                 <img src="~assets/edit.png" alt="edit">
                             </div>
