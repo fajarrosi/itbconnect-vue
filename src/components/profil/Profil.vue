@@ -18,7 +18,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" >
                 <div class="col-3" v-if="dataprofil.gender === 'male'">: Laki-laki</div>
                 <div class="col-3" v-else>: Perempuan</div>
                 <div class="col-3">Gol. Darah</div>
-                <div class="col-2">: {{dataprofil.blood}}</div>
+                <div class="col-2">: {{dataprofil.blood.toUpperCase()}}</div>
             </div>
             <div class="row ">
                 <div class="col-4">Status</div>

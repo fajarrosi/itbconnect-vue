@@ -12,17 +12,19 @@
             </div>
         </q-header> -->
         <q-page-container class="bg-secondary">
-          <div class="row justify-center logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="146" height="70" viewBox="0 0 146 70">
+          <div class="row justify-center logo text-center">
+            <div class="text-bold col-12" style="font-size:75px;color:#1368c2;margin-bottom:-25px;">CTD</div>
+            <div class="text-grey col-12">Connecting The Dots</div>
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="146" height="70" viewBox="0 0 146 70">
               <g id="Group_765" data-name="Group 765" transform="translate(6275 -195)">
-                <text id="CTD" transform="translate(-6247 245)" fill="#1368c2" font-size="47" font-family="OpenSans, Open Sans"><tspan x="0" y="0">CTD</tspan></text>
+                <text id="CTD" transform="translate(-6247 245)" fill="#1368c2" font-size="47" font-weight="700" font-family="OpenSans, Open Sans"><tspan x="0" y="0">CTD</tspan></text>
                 <text id="Connecting_The_Dots" data-name="Connecting The Dots" transform="translate(-6202 261)" fill="#225faa" font-size="15" font-family="OpenSans, Open Sans"><tspan x="-72.583" y="0">Connecting The Dots</tspan></text>
               </g>
-            </svg>
+            </svg> -->
           </div>
           <div class="row justify-center">
             <div class="base-container ">
-              <router-view></router-view>
+                <router-view></router-view>
             </div>
           </div>
 
@@ -63,9 +65,9 @@ export default {};
    background-color: $secondary;
  } */
 
-.q-page-container .logo{
+/* .q-page-container .logo{
   padding-top: 60px;
-}
+} */
 
 .copyright {
       color: #05386b;

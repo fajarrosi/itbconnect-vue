@@ -38,8 +38,8 @@
                 <q-card-section class="q-py-none">
                     <organisasi v-model:dminat="dminat" :dataorganisasi="dataorganisasi" :databio="databio" :datapengda="datapengda"/>
                 </q-card-section>
-                <q-card-section class="q-pt-none">
-                    <bisnis v-model:dbisnis="dbisnis" :databisnis="databisnis" :databio="databio"/>
+                <q-card-section class="q-pt-none ">
+                    <bisnis />
                 </q-card-section>
             </q-card>
         </div>
@@ -143,10 +143,9 @@ export default {
     },
     created(){
         if(this.negara && this.prov && this.agama && this.jenjang && this.prodi && this.organization && this.pengda && this.iaprodi && this.bisnisfield){
-            console.log('true')
+            // console.log('true')
         }else{
             this.getData()
-            console.log('false')
         }
 
     },

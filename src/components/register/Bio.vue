@@ -29,11 +29,12 @@
         label="Alamat Email Aktif"
         lazy-rules
         :rules="[
-        (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
+        (val) => (val && val.length > 0) || 'Email tidak boleh kosong', val => validEmail(val)
         ]"
         class="q-mb-sm"
         bg-color="white"
         hide-bottom-space
+        type="email"
         />
         <q-input
         outlined
@@ -110,8 +111,7 @@
                   </template>
                 </q-input> -->
                 
-        <q-checkbox :modelValue="cek"
-        @update:modelValue="event => $emit('update:cek', event)"  label="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur, veritatis." />
+        
     </div>
 </template>
 
@@ -125,9 +125,8 @@ export default {
         'tgl',
         'bln',
         'thn',
-        'cek',
     ],
-    emits: ['update:tgl','update:bln','update:thn','update:cek','update:name','update:email','update:nowa','update:tempat'],
+    emits: ['update:tgl','update:bln','update:thn','update:name','update:email','update:nowa','update:tempat'],
     data(){
         return{
             opttgl:[],
@@ -169,6 +168,13 @@ export default {
         // }
     },
     methods:{
+        validEmail(val){
+            if(val.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                return true;
+            }else{
+                return 'Email tidak valid';
+            }
+        },
         OptTgl(){
             for (let index =1; index < 32; index++) {
                 if(index < 10){

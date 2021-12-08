@@ -1,7 +1,7 @@
 <template>
     <q-page class="bg-white">
-        <q-card flat >
-            <q-card-section class="q-pb-none">
+        <q-card flat class="header-card bg-white">
+            <q-card-section >
                 <div class="row items-center">
                     <q-input
                     dense
@@ -36,12 +36,12 @@
             </q-card>
         </div>
         <div v-else>
-            <q-scroll-area style="height: 55vh;">
+            <!-- <q-scroll-area style="height: 55vh;"> -->
                 <q-card flat>
                     <q-card-section>
                         <div v-if="koneksi !== undefined">
                             <div v-if="koneksiFilter.length > 0">
-                                <CardFriend v-for="n in koneksiFilter" :key="n" :koneksi="n"/>
+                                    <CardFriend v-for="n in koneksiFilter" :key="n" :koneksi="n"/>
                             </div>
                             <div v-else>
                                 <div class="text-15 q-mb-sm">Anda Belum Memiliki Koneksi, 
@@ -55,7 +55,7 @@
 
                     </q-card-section>
                 </q-card>
-            </q-scroll-area>
+            <!-- </q-scroll-area> -->
         </div>
        
     </q-page>
@@ -144,5 +144,12 @@ export default {
 .pil-btn.q-btn::before
 {
     box-shadow: none;
+}
+.header-card{
+    position:sticky;
+    position: -webkit-sticky;
+    top:49px;
+    z-index:2;
+    
 }
 </style>

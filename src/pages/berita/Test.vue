@@ -60,7 +60,44 @@
                 <!-- <q-scroll-area style="height: 55vh;"> -->
                     <q-list  padding class="q-mx-md">
                         <q-separator spaced />
-                        <div v-if="newsFilter.length > 0">
+                        <q-item clickable v-ripple v-for="n in 20" :key="n">
+                            <q-item-section top thumbnail class="q-ml-none">
+                                <img src="~assets/berita.png">
+                            </q-item-section>
+
+                            <q-item-section>
+                                <q-item-label lines="2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error tempora accusantium ipsa aut alias officia explicabo excepturi hic autem dignissimos?</q-item-label>
+                                <q-item-label caption class="ellipsis-2-lines description" ref="desc" v-html="news.description" style="display:none;">
+                                </q-item-label>
+                                <q-item-label caption lines="2">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ab architecto nostrum rerum, optio ducimus. Aliquam expedita dolor unde ex.
+                                </q-item-label>
+                                <q-item-label caption>20 November 2021</q-item-label>
+                                <q-item-label caption >
+                                    <q-badge color="primary" label="Kabar Alumni"/>
+                                </q-item-label>
+                            </q-item-section>
+                        </q-item>
+                        <q-separator spaced />
+                        <q-item clickable v-ripple>
+                            <q-item-section top thumbnail class="q-ml-none">
+                                <img src="~assets/berita.png">
+                            </q-item-section>
+
+                            <q-item-section>
+                                <q-item-label lines="2">Terakhir</q-item-label>
+                                <q-item-label caption class="ellipsis-2-lines description" ref="desc" v-html="news.description" style="display:none;">
+                                </q-item-label>
+                                <q-item-label caption lines="2">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ab architecto nostrum rerum, optio ducimus. Aliquam expedita dolor unde ex.
+                                </q-item-label>
+                                <q-item-label caption>20 November 2021</q-item-label>
+                                <q-item-label caption >
+                                    <q-badge color="primary" label="Kabar Alumni"/>
+                                </q-item-label>
+                            </q-item-section>
+                        </q-item>
+                        <!-- <div v-if="newsFilter.length > 0">
                             <item-news v-for="(list,n) in newsFilter" :key="n" :news="list" :badge="true" :time="false"/>
                         </div>
                         <div v-else>
@@ -72,7 +109,7 @@
                                     <q-item-label>Tidak Ada Data</q-item-label>
                                 </q-item-section>
                             </q-item>
-                        </div>
+                        </div> -->
                     </q-list>
                 <!-- </q-scroll-area> -->
             
@@ -102,7 +139,7 @@ import { debounce } from 'quasar'
 export default {
     components:{
         'listload' : require('components/berita/ListLoad.vue').default,
-        'item-news' : require('components/berita/ItemNews.vue').default
+        // 'item-news' : require('components/berita/ItemNews.vue').default
     },
     setup () {
         return {

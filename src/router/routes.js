@@ -29,8 +29,8 @@ const routes = [
     component: () => import('layouts/AuthLayout.vue'),
     children: [
       {path:'/login',name:'login', component: () => import('pages/auth/Login.vue')},
-      {path:'/cekemail', component: () => import('pages/auth/CekEmail.vue')},
-      {path:'/otp', component: () => import('pages/auth/Otp.vue')},
+      {path:'/cekemail',name:'cekemail', component: () => import('pages/auth/CekEmail.vue')},
+      {path:'/otp',name:'otp', component: () => import('pages/auth/Otp.vue')},
       {path:'/forgot', component: () => import('pages/auth/Forgot.vue')},
       {path:'/forgot2', component: () => import('pages/auth/Forgot2.vue')},
       {path:'/register', component: () => import('pages/auth/Register.vue')},
@@ -40,7 +40,6 @@ const routes = [
   },
 
   {path:'/cari', name:'cari', component:()=>import('pages/search/Search.vue')},
-  
   {
     path:'/',
     component: () => import('layouts/MobileLayout.vue'),
@@ -89,6 +88,7 @@ const routes = [
           detail:true
         }
       },
+      
       {path:'profil',name:'profil',component:()=>import('pages/profil/Profil.vue'),
         meta:{
           requireAuth:true
@@ -141,10 +141,22 @@ const routes = [
           headerback:true
         }
       },
-
+      // route testing
+      {path:'berita/test',name:'test',component:()=>import('pages/berita/Test.vue'),
+      meta:{
+          detail:true
+        }
+      },
     ]
   },
-
+  {
+    path:'/testlayout',
+    component: () => import('layouts/FirstLayout.vue'),
+    children:[
+      {path:'/logins', component: () => import('pages/auth/Login.vue')},
+    ]
+    
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

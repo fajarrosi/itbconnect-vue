@@ -14,8 +14,9 @@
                 label="Alamat E-mail"
                 lazy-rules
                 :rules="[
-                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
+                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',val => validEmail(val)
                 ]"
+                type="email"
                 class="q-mb-sm"
                 bg-color="white"
                 hide-bottom-space
@@ -24,9 +25,9 @@
         <q-card-section class="q-py-none text-right">
                 <q-btn
                 label="Submit"
-                color="primary"
+                :color="valid ? 'primary' : 'grey'"
                 :loading="load"
-                :disabled="btndisabled"
+                :disabled="disabled"
                 no-caps
                 style="padding-left:24px;padding-right:24px;" 
                 class="btn-radius"
@@ -59,7 +60,31 @@ export default {
             btndisabled: false,
         }
     },
+    computed:{
+        valid(){
+            if(this.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                return true
+            }
+            return false
+        },
+        disabled(){
+            if(this.valid){
+                if (this.btndisabled){
+                    return true
+                }
+                return false
+            }
+            return true
+        }
+    },
     methods:{
+        validEmail(val){
+            if(val.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                return true;
+            }else{
+                return 'Email tidak valid';
+            }
+        },
         cekemail(){
             this.load = true
             this.btndisabled = true

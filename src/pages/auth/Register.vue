@@ -1,5 +1,6 @@
 <template>
-  <q-page >
+<div>
+<q-page >
     <q-card flat class="auth-card">
       <q-card-section>
             <q-stepper v-model="step" ref="stepper" color="primary" animated contracted flat inactive-color="white" 
@@ -9,7 +10,7 @@
                 :name="1"
                 :done="step > 1"
             >
-              <Bio v-model:name="user.name" v-model:email="user.email" v-model:nowa="user.nowa" v-model:tempat="user.tempat" v-model:tgl="user.tgl" v-model:thn="user.thn" v-model:bln="user.bln" v-model:cek="user.cek"/>
+              <Bio v-model:name="user.name" v-model:email="user.email" v-model:nowa="user.nowa" v-model:tempat="user.tempat" v-model:tgl="user.tgl" v-model:thn="user.thn" v-model:bln="user.bln" />
             </q-step>z
 
             <q-step
@@ -43,6 +44,7 @@
                     class="q-mr-md col btn-radius"
                     style=" color:#707070;"
                     size="12px"
+                    :disabled="btndisabled"
                 />
                 <q-btn
                     v-if="step > 1 && step !== 4"
@@ -102,8 +104,13 @@
             </q-stepper>
       </q-card-section>
     </q-card>
-    <DialogUser v-model:alumnus="alumnus"/>
+    <DialogUser v-model:alumnus="alumnus" v-if="alumnus"/>
+   
   </q-page>
+
+  <dialog-leave v-model:dleave="dleave" v-if="dleave"/>
+</div>
+  
 </template>
 
 <script>
@@ -120,7 +127,8 @@ export default {
     Pend,
     Akun,
     Ringkasan,
-    DialogUser
+    DialogUser,
+    'dialog-leave' : require('components/DialogLeave.vue').default
   },
   
   data() {
@@ -134,7 +142,6 @@ export default {
         tgl:'',
         bln:'',
         thn:'',
-        cek:false,
         jenjang:'',
         prodi:'',
         tahunmasuk:'',
@@ -149,7 +156,9 @@ export default {
       optjenjang:[],
       optprodi:[],
       alumnus:false,
-      usuccess:false
+      usuccess:false,
+      confirmleave:false,
+      dleave:false
     };
   },
   computed: {
@@ -168,17 +177,17 @@ export default {
     valid(){
       if(this.step === 1){
         // jika valid maka primary tidak maka grey
-        if(this.user.name && this.user.email && this.user.nowa && this.user.tempat && this.user.tgl && this.user.bln && this.user.thn){
+        if(this.user.name && this.user.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) && this.user.nowa && this.user.tempat && this.user.tgl && this.user.bln && this.user.thn){
           return true
         }
           return false
       }else if(this.step === 2){
-        if(this.user.jenjang && this.user.prodi && this.user.tahunmasuk && this.user.tahunkeluar){
+        if(this.user.jenjang && this.user.prodi && (this.user.tahunmasuk.length >= 4) && (this.user.tahunkeluar.length >= 4)){
           return true
         }
         return false
       }else if(this.step === 3){
-        if(this.user.username && this.user.password && this.user.konfirmasi){
+        if(this.usuccess && this.user.password && (this.user.konfirmasi === this.user.password)){
           return true
         }
         return false
@@ -203,7 +212,6 @@ export default {
         jenjangname = this.optjenjang.find(x =>  x.value === this.user.jenjang)
       }
           return jenjangname.label
-      
       
     },
   },
@@ -230,9 +238,22 @@ export default {
     this.getJenjang()
     this.getProdi()
   },
-  
+  beforeRouteLeave(to, from, next) {
+    if(to.name === 'cekemail' && this.confirmleave){
+      next()
+    }
+    else if(to.name === 'cekemail'){
+      this.dleave = true
+      next(false)
+    }else{
+      next()
+    }
+  },
   methods:{
-    
+    onLeave(){
+      this.confirmleave = true
+      this.$router.push('/cekemail')
+    },
     getProdi(){
         api.get('complex/prodi')
         .then((response)=>{

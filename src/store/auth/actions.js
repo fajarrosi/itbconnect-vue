@@ -135,7 +135,7 @@ export function register2(context,data){
 
         api.post('detail/biodata',form,config)
         .then((response)=>{
-            resolve("berhasil",response)
+            resolve(response)
         })
         .catch((error)=>{
             reject(error)

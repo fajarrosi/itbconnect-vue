@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="row justify-between">
+    <div class="row"> 
+        <div class="row justify-between col-12">
             <div class="title-section">BISNIS DAN PEKERJAAN</div>
             <q-btn flat dense style="color:rgba(25,135,191,1);
 font-size: 12px;padding-top:0;" no-caps @click="ubah">
@@ -8,9 +8,8 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 <q-icon name="edit" size="15px"/>
             </q-btn>
         </div>
-           
-            <div class="" v-if="Object.keys(bisnis).length > 0">
-                <div class="row " v-for="(b,index) in bisnis" :key="index">
+        <div class="row col-12" v-if="Object.keys(bisnis).length > 0">
+                <div class="row col-12" v-for="(b,index) in bisnis" :key="index">
                     <q-img :src="b.prevlogo ? b.prevlogo : require('assets/blogo.png')" alt="bisnislogo" class="col-3" width="97px" height="98px" />
                     <div class="col-8">
                         <div class="row q-pl-sm">
@@ -21,9 +20,9 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                             <p class="text-caption q-my-none col-12">{{b.portfolio}}</p>
                         </div>
                     </div>
-                    <p class="text-caption text-justify col-12 q-mt-md">
+                    <div class="text-justify col-12 q-mt-md ">
                         {{b.business_information}}
-                    </p>
+                    </div>
                     <div class="col-4 text-center row" v-for="(produk,ind) in b.produk" :key="ind">
                         <q-img :src="produk.prevlogo ? produk.prevlogo : require('assets/bisnisket.png')" alt="bisnis keterangan" class="col-11" width="110px" height="64px" />
                         <span class="col-12">{{produk.deskripsi}}</span>
@@ -31,11 +30,12 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                     
                     <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" class="col-12"/>
                 </div>
-            </div>
-            <div v-else>
-                <span>Tidak Ada</span>
-                <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" />
-            </div>
+        </div>
+
+        <div v-else class="row col-12">
+            <span class="col-12">Tidak Ada</span>
+            <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" />
+        </div>
     </div>
 </template>
 

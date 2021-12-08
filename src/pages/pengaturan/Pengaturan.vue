@@ -24,7 +24,7 @@
                             bg-color="white"
                             hide-bottom-space
                             :loading="uload"
-                            :rules="[ val => val && val.length > 0 || 'username tidak boleh kosong']"
+                            :rules="[ val => val && val.length >= 5 || 'username minimal 5 karakter']"
                             input-class="username"
                         >
                         <template v-slot:append >
@@ -112,9 +112,12 @@ export default {
         username(val){
             this.usuccess = false
             this.uerror = false
-            if(val){
+            if(val.length >= 5){
                 this.uload = true
                 this.debouncedGetAnswer()
+            }else{
+                this.usuccess = false
+            this.uerror = false
             }
         },
         usuccess(val){

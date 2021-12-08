@@ -15,15 +15,16 @@
                 label="Alamat E-mail"
                 lazy-rules
                 :rules="[
-                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',
+                (val) => (val && val.length > 0) || 'Email tidak boleh kosong',val => validEmail(val)
                 ]"
                 class="q-mb-sm"
                 bg-color="white"
                 hide-bottom-space
+                type="email"
             />
         </q-card-section>
         <q-card-actions align="center" class="q-px-lg">
-            <q-btn no-caps label="Submit" style="border-radius: 8px; " class="col " color="primary" :loading="load" :disabled="btndisabled" @click="forgot">
+            <q-btn no-caps label="Submit" style="border-radius: 8px; " class="col " :color="valid ? 'primary' : 'grey'" :loading="load" :disabled="disabled" @click="forgot">
                 <template v-slot:loading>
                     <q-spinner-facebook />
                 </template>
@@ -49,7 +50,31 @@ export default {
             btndisabled: false,
         }
     },
+    computed:{
+        valid(){
+            if(this.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                return true
+            }
+            return false
+        },
+        disabled(){
+            if(this.valid){
+                if (this.btndisabled){
+                    return true
+                }
+                return false
+            }
+            return true
+        }
+    },
     methods:{
+        validEmail(val){
+            if(val.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                return true;
+            }else{
+                return 'Email tidak valid';
+            }
+        },
         forgot(){
             this.load = true
             this.btndisabled = true

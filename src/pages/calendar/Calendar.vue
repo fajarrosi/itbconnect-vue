@@ -1,16 +1,16 @@
 <template>
     <q-page class="q-py-md q-px-lg">
         <div v-if="valid">
-            <div class="row justify-center">
-            <div class="col-7 row items-center">
-                <q-btn color="white" icon="arrow_back_ios" class="text-black arrow-btn-left" @click="prevMonth()"/>
-                <span class="text-primary q-mx-md" style="font-size:18px;">{{tampil}}</span>
-                <q-btn color="white" icon="arrow_forward_ios" class="text-black arrow-btn-right" @click="nextMonth()"/>
+            <div class="row justify-center header-calendar">
+                <div class="col-7 row items-center">
+                    <q-btn color="white" icon="arrow_back_ios" class="text-black arrow-btn-left" @click="prevMonth()"/>
+                    <span class="text-primary q-mx-md" style="font-size:18px;">{{tampil}}</span>
+                    <q-btn color="white" icon="arrow_forward_ios" class="text-black arrow-btn-right" @click="nextMonth()"/>
+                </div>
             </div>
-            </div>
-            <q-card class="q-mt-lg" flat>
+            <q-card flat>
                 <q-card-section class="q-pa-none bg-secondary" >
-                    <q-scroll-area style="height: 65vh;">
+                    <!-- <q-scroll-area style="height: 65vh;"> -->
                     <div class="row" v-if="Object.keys(onShows).length === 0">
                         <div class="col text-center text-primary q-pa-sm left-even" style="font-size:20px;">Belum Ada Agenda</div>
                     </div>
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     </div>
-                    </q-scroll-area>
+                    <!-- </q-scroll-area> -->
                 </q-card-section>
             </q-card>
         </div>
@@ -294,5 +294,14 @@ export default {
 }
 .container:nth-child(odd) .right-side{
     background-color:#f2f2f2;
+}
+.header-calendar{
+    position:sticky;
+    position:-webkit-sticky;
+    top:40px;
+    background:#ccdbdc;
+    z-index:2;
+    padding-top:20px;
+    padding-bottom:20px;
 }
 </style>

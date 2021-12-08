@@ -1,4 +1,5 @@
 <template>
+<div>
   <q-page>
     <q-card flat class="auth-card">
       <q-card-section>
@@ -51,9 +52,10 @@
                 no-caps
               />
               <q-btn
-                v-if="step === 1 && step !== 3"
+                v-if="step === 1 "
                 @click="$refs.stepper.next()"
-                color="primary"
+                :color="valid ? 'primary' : 'grey'"
+                :disabled="!valid"
                 label="Berikutnya"
                 style="border-radius: 8px;margin-left:auto;"
                 size="12px"
@@ -63,7 +65,8 @@
               <q-btn
                 v-if="step === 2"
                 @click="$refs.stepper.next()"
-                color="primary"
+                :color="valid ? 'primary' : 'grey'"
+                :disabled="!valid"
                 label="Berikutnya"
                 style="border-radius: 8px"
                 size="12px"
@@ -73,11 +76,11 @@
               <q-btn
                 v-if="step === 4"
                 @click="onSubmit"
-                color="primary"
+                :color="valid ? 'primary' : 'grey'"
                 label="Lanjutkan"
                 style="border-radius: 8px"
                 :loading="load"
-                :disabled="btndisabled"
+                :disabled="disabled"
                 size="12px"
                 no-caps
                 class="col"
@@ -94,28 +97,27 @@
         </q-stepper>
       </q-card-section>
     </q-card>
-    <DialogIntro v-model:intro="intro"/>
+    <DialogIntro v-model:intro="intro" v-if="intro"/>
   </q-page>
+  <dialog-leave v-model:dleave="dleave" v-if="dleave" />
+</div>
+  
 </template>
 
 <script>
-import { ref } from "vue";
 import Alamat from 'components/register2/Alamat.vue'
 import Pekerjaan from 'components/register2/Pekerjaan.vue'
 import Foto from 'components/register2/Foto.vue'
 import DialogIntro from 'components/register2/DialogIntro.vue'
 import { api } from 'boot/axios'
 export default {
-  setup() {
-    return {
-      step: ref(1),
-    };
-  },
+  
   components:{
       Alamat,
       Pekerjaan,
       Foto,
-      DialogIntro
+      DialogIntro,
+      'dialog-leave' : require('components/DialogLeave.vue').default
   },
   data() {
     return {
@@ -144,7 +146,9 @@ export default {
       optkota:[],
       kotashow:false,
       optorganisasi:[],
-      optnegara:[]
+      optnegara:[],
+      dleave:false,
+      step:1
     };
   },
   computed:{
@@ -155,6 +159,50 @@ export default {
       }
       let result = a.org.map(a=>a.org)
       return result
+    },
+    valid(){
+      if(this.step === 1){
+        if(this.user.dalam.value == '1' && this.prov && this.user.kota && this.user.alamat){
+          return true
+        }
+        else if(this.user.dalam.value == '2' && this.user.negara && this.user.alamat){
+          return true
+        }else{
+          return false
+        }
+      } else if(this.step === 2){
+        if(this.user.perusahaan && this.user.jabatan && this.user.profesi){
+          return true
+        }else{
+          return false
+        }
+      } else if(this.step === 4){
+        if(this.organization[0]){
+          return true
+        }else{
+          return false
+        }
+      }
+      else{
+        return false
+      }
+    },
+    disabled(){
+      if(this.valid){
+          if (this.btndisabled){
+              return true
+          }
+          return false
+      }
+      return true
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    if(to.name === 'otp'){
+      this.dleave = true
+      next(false)
+    }else{
+      next()
     }
   },
   mounted(){
@@ -183,6 +231,10 @@ export default {
         }
     },
   methods:{
+    onLeave(){
+      this.dleave = false
+      alert('tidak dapat meninggalkan halaman')
+    },
     async getProvinsi(){
       return await api.get('complex/province')
         .then((response)=>{
@@ -247,10 +299,15 @@ export default {
           user: this.user,
           org: this.inputs
           })
-          .then(()=>{
+          .then(response=>{
             this.load = false
             this.btndisabled = false
-            this.$router.push({name:'profil'})
+            // this.$router.push({name:'profil'})
+            if(response.status === 200){
+              this.$router.push({name:'profil'})
+            }else{
+              console.log("response",response)
+            }
           })
           .catch((error)=>{
             this.load = false
@@ -263,10 +320,14 @@ export default {
           prov: this.prov,
           org: this.inputs
         })
-        .then(()=>{
+        .then(response=>{
           this.load = false
           this.btndisabled = false
-          this.$router.push({name:'profil'})
+          if(response.status === 200){
+            this.$router.push({name:'profil'})
+          }else{
+            console.log("response",response)
+          }
         })
         .catch((error)=>{
           this.load = false

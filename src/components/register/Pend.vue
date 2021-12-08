@@ -21,7 +21,7 @@
         label="Tahun Masuk"
         lazy-rules
         :rules="[
-        (val) => (val && val.length > 0) || 'Tahun masuk tidak boleh kosong',
+        (val) => (val && val.length > 0) || 'Tahun masuk tidak boleh kosong', val => val.length >= 4 || 'Tahun masuk harus 4 digit'
         ]"
         bg-color="white"
         class="col-6"
@@ -36,7 +36,7 @@
         label="Tahun Keluar"
         lazy-rules
         :rules="[
-        (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',
+        (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',val => val.length >= 4 || 'Tahun keluar harus 4 digit'
         ]"
         bg-color="white"
         class="col-5"
