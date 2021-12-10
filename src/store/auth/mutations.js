@@ -15,6 +15,10 @@ export function updateEmailVerified(state,data){
     state.user.email_verified_at = data
 }
 
+export function updateUserVerified(state,data){
+    state.user.is_verified = data
+}
+
 export function delUser(state){
     state.user = ''
     state.token = ''

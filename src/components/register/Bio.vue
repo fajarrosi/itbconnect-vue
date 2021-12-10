@@ -5,6 +5,7 @@
         Mohon isikan biodata Anda dengan benar
         </div>
         <hr class="line-cards q-my-md">
+        <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md q-mt-sm">
         <q-input
         dense
         outlined
@@ -24,18 +25,26 @@
         <q-input
         outlined
         dense
-        :modelValue="email"
-        @update:modelValue="event => $emit('update:email', event)"
+        v-model="bemail"
         label="Alamat Email Aktif"
         lazy-rules
+        :loading="load"
         :rules="[
         (val) => (val && val.length > 0) || 'Email tidak boleh kosong', val => validEmail(val)
         ]"
-        class="q-mb-sm"
+        class="q-mb-sm q-mt-none"
         bg-color="white"
         hide-bottom-space
         type="email"
-        />
+        input-class="email"
+        >
+        <template v-slot:append>
+            <q-avatar color="positive" text-color="white" icon="done"  v-if="success"/>
+            <q-icon name="error"  v-if="error" class="text-negative"/>
+        </template>
+        </q-input>
+        <span style="font-size:11px;padding-left:10px;" class="col-12 text-positive" v-if="success">Email dapat digunakan</span>
+        <span style="font-size:11px;padding-left:10px;" class="col-12 text-negative" v-if="error">Email tidak dapat digunakan karena email sudah terdaftar</span>
         <q-input
         outlined
         dense
@@ -48,7 +57,7 @@
         :rules="[
         (val) => (val && val.length > 0) || 'Nomor Whatsapp tidak boleh kosong',
         ]"
-        class="q-mb-sm"
+        class="q-mb-sm q-mt-none"
         bg-color="white"
         hide-bottom-space
         >
@@ -67,7 +76,7 @@
         :rules="[
         (val) => (val && val.length > 0) || 'Tempat Lahir tidak boleh kosong',
         ]"
-        class="q-mb-sm"
+        class="q-mb-sm q-mt-none"
         bg-color="white"
         hide-bottom-space
         input-class="qname"
@@ -77,46 +86,60 @@
         </div>
         <div class="row q-my-sm justify-between">
             <q-select emit-value map-options outlined dense  :modelValue="tgl"
-        @update:modelValue="event => $emit('update:tgl', event)" :options="opttgl" label="Tgl" bg-color="white" class="col-3"/>
+        @update:modelValue="event => $emit('update:tgl', event)" :options="opttgl" label="Tgl" bg-color="white" class="col-3"
+        lazy-rules
+        :rules="[
+            val => val !== null && val !== '' || 'Tgl tidak boleh kosong',
+        ]"
+        hide-bottom-space
+        />
             <q-select emit-value map-options outlined dense  :modelValue="bln"
-        @update:modelValue="event => $emit('update:bln', event)" :options="optbln" label="Bulan" bg-color="white" class="col-4"/>
+        @update:modelValue="event => $emit('update:bln', event)" :options="optbln" label="Bulan" bg-color="white" class="col-4"
+        lazy-rules
+        :rules="[
+            val => val !== null && val !== '' || 'Bulan tidak boleh kosong',
+        ]"
+        hide-bottom-space
+        />
             <q-select emit-value map-options outlined dense  :modelValue="thn"
-        @update:modelValue="event => $emit('update:thn', event)" :options="optthn" label="Tahun" bg-color="white" class="col-4"/>
+        @update:modelValue="event => $emit('update:thn', event)" :options="optthn" label="Tahun" bg-color="white" class="col-4"
+        lazy-rules
+        :rules="[
+            val => val !== null && val !== '' || 'Tahun tidak boleh kosong',
+        ]"
+        hide-bottom-space
+        />
         </div>
-                <!-- <q-input
-                outlined
-                dense
-                label="Tanggal Lahir"
-                lazy-rules
-                v-model="user.tgllahir" mask="date" :rules="[(val) => (val && val.length > 0) || 'Tanggal Lahir tidak boleh kosong']"
-                class="q-mb-sm "
-                bg-color="white"
-                hide-bottom-space
-                hide-hint
-                placeholder="contoh (2001/20/08)"
-                >
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                        <q-date v-model="user.tgllahir">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="primary" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                  <template v-slot:hint>
-                  *) Pilih tanggal dengan mengklik icon disebelah kanan
-                  </template>
-                </q-input> -->
-                
-        
+        <div class="row q-mt-md" style="margin-bottom:-20px;">
+            <q-btn outline label="Sebelumnya" @click="$router.push({name:'cekemail'})" class="col q-mr-md btn-radius" style=" color:#707070;"
+                    size="12px" 
+                    no-caps/>
+            <q-btn color="primary" label="Berikutnya" type="submit" class="col btn-radius"
+            size="12px" 
+                    no-caps
+            />
+        </div>
+        </q-form>
     </div>
 </template>
 
 <script>
+import { debounce,useQuasar} from 'quasar'
+import { api } from 'boot/axios'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            failNotif () {
+                $q.notify({
+                message: 'tunggu waktu validasi email sampai selesai atau email tidak dapat digunakan',
+                type: 'negative',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     props:[
         'name',
         'email',
@@ -125,6 +148,7 @@ export default {
         'tgl',
         'bln',
         'thn',
+        'step'
     ],
     emits: ['update:tgl','update:bln','update:thn','update:name','update:email','update:nowa','update:tempat'],
     data(){
@@ -148,6 +172,16 @@ export default {
             stgl:'',
             sbln:'',
             sthn:'',
+            load:false,
+            error:false,
+            success:false,
+            bemail:''
+        }
+    },
+    created(){
+        this.debouncedGetAnswer = debounce(this.getAnswer, 1000)
+        if(this.email){
+            this.bemail = this.email
         }
     },
     mounted(){
@@ -156,23 +190,79 @@ export default {
         this.letterCapitalize()
     },
     computed:{
-        // nicks(){
-        //     let x = this.name.match(/(\w+\S*)/)
-        //     let random = ''
-        //     random += x[1]
-        //     for (let index = 0; index < 4; index++) {
-        //         random += Math.floor(Math.random() * (9-0 +1))
-        //     }
-        //     // this.$emit('update:nick',random)
-        //     return random
-        // }
+        valid(){
+            if(this.bemail.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                return true
+            }
+            return false
+        },
+    },
+    watch:{
+        bemail(val){
+            this.success = false
+            this.error = false
+            if(val !== '' && this.valid){
+                this.load = true
+                this.debouncedGetAnswer()
+            }
+        },
+        success(val){
+            let x = document.getElementsByClassName('email')
+            Array.from(x).forEach(function(n,index){
+                let m = n.parentNode.parentNode
+                if(val){
+                    m.classList.add("text-positive")
+                    
+                }else{
+                    m.classList.remove("text-positive")
+                }
+            })
+        },
+        error(val){
+            let x = document.getElementsByClassName('email')
+            Array.from(x).forEach(function(n,index){
+                let m = n.parentNode.parentNode
+                if(val){
+                    m.classList.add("text-negative")
+                    
+                }else{
+                    m.classList.remove("text-negative")
+                }
+            })
+        },
     },
     methods:{
+        getAnswer(){
+            if(this.bemail !== null && this.bemail !== ''){
+                if(this.valid){
+                    api.post('auth/checkEmailExist',{
+                    email : this.bemail
+                    })
+                    .then(()=>{
+                        this.success = true
+                        this.load = false
+                    })
+                    .catch(()=>{
+                        this.load = false
+                        this.error = true
+                    })
+                }
+            }else{
+                this.load = false
+            }
+        },
         validEmail(val){
             if(val.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
                 return true;
             }else{
                 return 'Email tidak valid';
+            }
+        },
+        existEmail(){
+            if(!this.error){
+                return true
+            }else{
+                return ''
             }
         },
         OptTgl(){
@@ -201,11 +291,27 @@ export default {
                     })
             })
             })
+        },
+        onSave(){
+                this.$refs.dform.validate()
+                .then(valid=>{
+                    if(valid){
+                        if(this.success){
+                            this.$emit('update:email',this.bemail)
+                            this.$emit('update:step',2)
+                        }else{
+                            this.failNotif()
+                        }
+                    }
+                })
+            
         }
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+.q-btn--outline::before{
+  border: 2px solid currentColor;
+}
 </style>

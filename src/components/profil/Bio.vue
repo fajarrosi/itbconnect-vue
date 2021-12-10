@@ -36,8 +36,9 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 Bergabung sejak {{databio.created}}
             </div>
             <div class="col-12 text-justify">
-                <span v-if="databio.bio">{{databio.bio}} </span>
-                <span v-else class="text-grey">Belum Ada Bio  </span>
+                <span v-if="databio.bio !== null">{{databio.bio}} </span>
+                <span v-else-if="databio.bio === null" class="text-grey">Belum Ada Biodata  </span>
+                <span v-else class="text-grey">Belum Ada Biodata  </span>
             </div>
         </div>
         

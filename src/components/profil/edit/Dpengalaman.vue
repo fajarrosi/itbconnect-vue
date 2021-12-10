@@ -1,12 +1,14 @@
 <template>
     <div>
-         <q-dialog :model-value="dpengalaman" @click="$emit('update:dpengalaman', $event.target.value)" @hide="$emit('update:dpengalaman',false)">
+         <q-dialog :model-value="dpengalaman" @click="$emit('update:dpengalaman', $event.target.value)" persistent>
             <q-card class="hide-scrollbar">
+                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
+                <q-scroll-area style="height: 80vh;">
                 <q-card-section>
                     <div class="q-mb-md text-edit" style="font-size:17px;">PENGALAMAN</div>
                 <div class="row q-mb-lg" v-for="(peng,k) in pengalaman" :key="k">
                     
-                    <div class="col-4 text-edit">Perusahaan*</div>
+                    <div class="col-4 text-edit">Perusahaan<span class="text-negative">*</span> </div>
                     <q-input
                     dense
                     outlined
@@ -15,9 +17,13 @@
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
+                    lazy-rules
+                    :rules="[
+                    (val) => (val && val.length > 0) || 'Perusahaan tidak boleh kosong',
+                    ]"
                     />
                     
-                    <div class="col-4 text-edit">Alamat (Kota)*</div>
+                    <div class="col-4 text-edit">Alamat (Kota)</div>
                     <q-input
                     dense
                     outlined
@@ -26,8 +32,9 @@
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
+                    
                     />
-                    <div class="col-4 text-edit">Tahun Aktif*</div>
+                    <div class="col-4 text-edit">Tahun Aktif </div>
                     <q-input
                         outlined
                         dense
@@ -84,7 +91,7 @@
                         </q-input>
                         <q-checkbox v-model="peng.is_work" label="Sampai Sekarang" class="col-12" size="xs" style="font-size:11px;" @click="sekarang(k)"/>
                     </div>
-                    <div class="col-4 text-edit">Posisi*</div>
+                    <div class="col-4 text-edit">Posisi<span class="text-negative">*</span></div>
                     <q-input
                     dense
                     outlined
@@ -93,6 +100,10 @@
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
+                    lazy-rules
+                    :rules="[
+                    (val) => (val && val.length > 0) || 'Posisi tidak boleh kosong',
+                    ]"
                     />
                     <q-btn class="col-12" color="primary" icon="close" label="Hapus Pengalaman" flat dense @click="remove(k)" no-caps  v-if="k >0" style="font-style:italic;"/>
                 </div>
@@ -101,10 +112,11 @@
                         <q-btn class="col-6" color="primary" icon="add" label="Tambah Pengalaman" flat dense @click="add" no-caps   style="font-style:italic;"/>
                     </div>
                 </q-card-section>
+                </q-scroll-area>
                 <q-card-actions align="center" class="q-mb-md">
                     <q-btn  no-caps label="Kembali" outline
-                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dpengalaman', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
+                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dpengalaman', false)" class="col-5" :disabled="disabled"/>
+                    <q-btn  no-caps label="Simpan" color="primary" type="submit"  class="col-5 btn-radius" :loading="load"
                 :disabled="disabled">
                         <template v-slot:loading>
                             <div class="row items-center">
@@ -113,20 +125,43 @@
                         </template>
                     </q-btn>
                 </q-card-actions>
+                </q-form>
             </q-card>
         </q-dialog>
     </div>
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            successNotif () {
+                $q.notify({
+                message: 'Pengalaman berhasil diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            failedNotif () {
+                $q.notify({
+                message: 'Pengalaman gagal diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     props:[
         'dpengalaman',
         'dpend',
         'userbaru',
-        'datapengalaman'
+        'datapengalaman',
+        'intro'
     ],
-    emits:['update:dpend','update:dpengalaman'],
     data(){
         return{
             pengalaman:[],
@@ -164,18 +199,33 @@ export default {
             this.pengalaman[val].end_year = ''
         },
         onSave(){
-            this.load = true
-            this.disabled = true
-            this.$store.dispatch('myprofil/updExp',this.pengalaman)
-            .then(()=>{
-                this.load = false
-                this.disabled = false
-                if (this.userbaru) {
-                    this.$emit('update:dpengalaman', false)
-                    this.$emit('update:dpend', true)
-                }else{
-                    this.$emit('update:dpengalaman', false)
-                }   
+            this.$refs.dform.validate()
+            .then(valid=>{
+                if(valid){
+                    this.load = true
+                    this.disabled = true
+                    this.$store.dispatch('myprofil/updExp',this.pengalaman)
+                    .then(()=>{
+                        this.load = false
+                        this.disabled = false
+                        if (this.userbaru) {
+                            this.$emit('update:dpengalaman', false)
+                            this.$emit('update:intro', false)
+                            this.$emit('update:dpend', true)
+                        }else{
+                            this.$emit('update:dpengalaman', false)
+                            this.$emit('update:intro', false)
+                        } 
+                        this.successNotif()  
+                    })
+                    .catch(()=>{
+                        this.load = false
+                        this.disabled = false
+                        this.$emit('update:dpengalaman', false)
+                        this.$emit('update:intro', false)
+                        this.failedNotif()
+                    })
+                }
             })
 
         },

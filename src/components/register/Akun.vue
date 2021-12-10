@@ -5,6 +5,7 @@
         Buat username dan password Anda
         </div>
         <hr class="line-cards q-my-md">
+        <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md q-mt-sm">
         <q-input
         outlined
         dense
@@ -57,18 +58,42 @@
             <q-icon :name="visibility2 ? 'visibility' : 'visibility_off' " @click="visibility2 = !visibility2"/>
             </template>
         </q-input>
+        <div class="col-12 row q-mt-md" style="margin-bottom:-20px;">
+                <q-btn outline label="Sebelumnya" @click="$emit('update:step',2)" class="col q-mr-md btn-radius" style=" color:#707070;"
+                        size="12px" 
+                        no-caps/>
+                <q-btn color="primary" label="Berikutnya" type="submit" class="col btn-radius"
+                size="12px" 
+                        no-caps
+                />
+            </div>
+        </q-form>
     </div>
 </template>
 
 <script>
 import { api } from 'boot/axios'
-import { debounce } from 'quasar'
+import { debounce,useQuasar } from 'quasar'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            failNotif () {
+                $q.notify({
+                message: 'tunggu waktu validasi username sampai selesai atau username tidak dapat digunakan',
+                type: 'negative',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     props:[
         'username',
         'password',
         'konfirmasi',
-        'usuccess'
+        'usuccess',
+        'step'
     ],
     data(){
         return{
@@ -83,6 +108,9 @@ export default {
     },
     created(){
         this.debouncedGetAnswer = debounce(this.getAnswer, 1000)
+        if(this.username){
+            this.dusername = this.username
+        }
     },
     watch:{
         dusername(val){
@@ -168,11 +196,26 @@ export default {
                 })
             }, 1000)
         })
+        },
+        onSave(){
+            this.$refs.dform.validate()
+            .then(valid=>{
+                if(valid){
+                    if(this.success){
+                        this.$emit('update:username',this.dusername)
+                            this.$emit('update:step',4)
+                    }else{
+                        this.failNotif()
+                    }
+                }
+            })
         }
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+.q-btn--outline::before{
+  border: 2px solid currentColor;
+}
 </style>

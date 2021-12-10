@@ -52,6 +52,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" >
 </template>
 
 <script>
+import {  mapActions } from "vuex"
 export default {
     props:[
         'dprofil',
@@ -62,8 +63,17 @@ export default {
         }
     },
     methods:{
+        ...mapActions("myprofil", ['getNegara','getProv','getAgama']),
+        async getData(){
+            this.getNegara()
+            this.getProv()
+            this.getAgama()
+            .then(()=>{
+                this.$emit('update:dprofil',true)
+            })
+        },
         ubah(){
-            this.$emit('update:dprofil',true)
+            this.getData()
         },
     }
 }

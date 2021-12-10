@@ -17,11 +17,14 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
         </div>
             <div class="title-section q-mt-md">Pengurus Daerah & IA Prodi</div>
             <div v-if="datapengda">
-                <div>{{datapengda.commisariat.name}}</div>
-                <div>{{datapengda.iaprodi.name}}</div>
+                <div v-if="datapengda.commisariat_id !== null">{{datapengda.commisariat.name}}</div>
+                <div v-if="datapengda.ia_prodi_id !== null">{{datapengda.iaprodi.name}}</div>
+                <div v-else>
+                    <div class="grey">Belum Ikut Pengurus Daerah & IA Prodi</div>
+                </div>
             </div>
             <div v-else>
-                <div class="grey">Tidak Ada</div>
+                <div class="grey">Belum Ikut Pengurus Daerah & IA Prodi</div>
             </div>
         <svg class="Line_85" viewBox="0 0 396 1">
             <path id="Line_85" d="M 0 0 L 396 0">
@@ -31,6 +34,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 </template>
 
 <script>
+import {  mapActions } from "vuex"
 export default {
     props:[
         'dminat',
@@ -44,8 +48,17 @@ export default {
         }
     },
     methods:{
+        ...mapActions("myprofil", ['getOrg','getPengda','getIaprodi']),
+        async getData(){
+            this.getOrg()
+            this.getPengda()
+            this.getIaprodi()
+            .then(()=>{
+                this.$emit('update:dminat',true)
+            })
+        },
         ubah(){
-            this.$emit('update:dminat',true)
+            this.getData()
         }
     }
 }

@@ -1,172 +1,97 @@
 <template>
-    <q-layout view="hHh lpR lfr" >
+      <q-layout view="hHh lpR lfr" >
+        <!-- <q-header  >
+            <div class="row justify-center logo">
+              <q-img
+                src="~assets/logo_header.png"
+                spinner-color="white"
+                style="width: 260px; height: 70px"
+                spinner-size="30px"
+                alt="ia-itb-logo"
+              />
+            </div>
+        </q-header> -->
         <q-page-container class="bg-secondary">
-            <q-page>
-                <div class="row justify-center hide-scrollbar" style="max-height:100vh;
-    overflow:auto;">
-                    <div class="auth-container ">
-                        <div class="row justify-center logo text-center">
-                            <div class="text-bold col-12" style="font-size:75px;color:#1368c2;margin-bottom:-25px;">CTD</div>
-                            <div class="text-grey col-12">Connecting The Dots</div>
-                        </div>
-                        <div class="d ">
-                            <div class="row justify-center" >
-                                <q-card flat class="auth-card col-12" style="max-width:354px;">
-                                    <q-card-section class="q-pb-none">
-                                    <div class="text-h5 text-bold text-primary">E-mail Anda</div>
-                                    <div class="text-subtitle2 q-mt-md text-justify">
-                                        Masukan alamat e-mail Anda
-                                    </div>
-                                    <hr class="line-cards q-my-md">
-                                        <q-input
-                                            outlined
-                                            dense
-                                            v-model="email"
-                                            label="Alamat E-mail"
-                                            lazy-rules
-                                            :rules="[
-                                            (val) => (val && val.length > 0) || 'Email tidak boleh kosong'
-                                            ]"
-                                            type="email"
-                                            class="q-mb-sm"
-                                            bg-color="white"
-                                            hide-bottom-space
-                                        />
-                                        <q-input
-                                            outlined
-                                            dense
-                                            v-model="email"
-                                            label="Alamat E-mail"
-                                            lazy-rules
-                                            :rules="[
-                                            (val) => (val && val.length > 0) || 'Email tidak boleh kosong'
-                                            ]"
-                                            type="email"
-                                            class="q-mb-sm"
-                                            bg-color="white"
-                                            hide-bottom-space
-                                        />
-                                        <q-input
-                                            outlined
-                                            dense
-                                            v-model="email"
-                                            label="Alamat E-mail"
-                                            lazy-rules
-                                            :rules="[
-                                            (val) => (val && val.length > 0) || 'Email tidak boleh kosong'
-                                            ]"
-                                            type="email"
-                                            class="q-mb-sm"
-                                            bg-color="white"
-                                            hide-bottom-space
-                                        />
-                                        <q-input
-                                            outlined
-                                            dense
-                                            v-model="email"
-                                            label="Alamat E-mail"
-                                            lazy-rules
-                                            :rules="[
-                                            (val) => (val && val.length > 0) || 'Email tidak boleh kosong'
-                                            ]"
-                                            type="email"
-                                            class="q-mb-sm"
-                                            bg-color="white"
-                                            hide-bottom-space
-                                        />
-                                        <q-input
-                                            outlined
-                                            dense
-                                            v-model="email"
-                                            label="Alamat E-mail"
-                                            lazy-rules
-                                            :rules="[
-                                            (val) => (val && val.length > 0) || 'Email tidak boleh kosong'
-                                            ]"
-                                            type="email"
-                                            class="q-mb-sm"
-                                            bg-color="white"
-                                            hide-bottom-space
-                                        />
-                                        <q-input
-                                            outlined
-                                            dense
-                                            v-model="email"
-                                            label="Alamat E-mail"
-                                            lazy-rules
-                                            :rules="[
-                                            (val) => (val && val.length > 0) || 'Email tidak boleh kosong'
-                                            ]"
-                                            type="email"
-                                            class="q-mb-sm"
-                                            bg-color="white"
-                                            hide-bottom-space
-                                        />
-                                        
-                                    </q-card-section>
-                                    <q-card-section class="q-py-none text-right">
-                                            <q-btn
-                                            label="Submit"
-                                            color="primary"
-                                            no-caps
-                                            style="padding-left:24px;padding-right:24px;" 
-                                            class="btn-radius"
-                                            />
-                                    </q-card-section>
-                                    <q-card-actions align="center" class=" q-pb-md q-pt-none" style="margin-top:11px;">
-                                        <span>Sudah memiliki akun? </span>
-                                        <q-btn flat no-caps class="text-primary text-bold" @click="$router.push('/login')">
-                                            Login Sekarang
-                                        </q-btn>
-                                    </q-card-actions>
-                                </q-card>
-                            </div>
-                        </div>
-                        
-                        <div class="row justify-center items-center ">
-                            <p class="q-mb-none q-mr-md copyright">ITBCONNECT @2021 by</p>
-                            <q-img
-                            src="~assets/ia-itb.png"
-                            spinner-color="white"
-                            style="width: 77px; height: 51px"
-                            spinner-size="30px"
-                            alt="ia-itb-logo"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </q-page>
+          <div class="row justify-center logo text-center">
+            <div class="text-bold col-12" style="font-size:75px;color:#1368c2;margin-bottom:-25px;">CTD</div>
+            <div class="text-grey col-12">Connecting The Dots</div>
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="146" height="70" viewBox="0 0 146 70">
+              <g id="Group_765" data-name="Group 765" transform="translate(6275 -195)">
+                <text id="CTD" transform="translate(-6247 245)" fill="#1368c2" font-size="47" font-weight="700" font-family="OpenSans, Open Sans"><tspan x="0" y="0">CTD</tspan></text>
+                <text id="Connecting_The_Dots" data-name="Connecting The Dots" transform="translate(-6202 261)" fill="#225faa" font-size="15" font-family="OpenSans, Open Sans"><tspan x="-72.583" y="0">Connecting The Dots</tspan></text>
+              </g>
+            </svg> -->
+          </div>
+          <div class="row justify-center">
+            <div class="base-container ">
+                <router-view></router-view>
+            </div>
+          </div>
+
+          <div class="row justify-center items-center q-pb-lg">
+            <p class="q-mb-none q-mr-md copyright">ITBCONNECT @2021 by</p>
+            <q-img
+              src="~assets/ia-itb.png"
+              spinner-color="white"
+              style="width: 77px; height: 51px"
+              spinner-size="30px"
+              alt="ia-itb-logo"
+            />
+          </div>
+
         </q-page-container>
-    </q-layout>
+        <!-- <q-footer elevated>
+          <div class="row bg-grey-2 justify-center">
+            <div class="base-container flex items-center justify-center">
+              <p class="q-mb-none q-mr-md copyright">ITBCONNECT @2021 by</p>
+              <q-img
+                src="~assets/ia-itb.png"
+                spinner-color="white"
+                style="width: 77px; height: 51px"
+                spinner-size="30px"
+                alt="ia-itb-logo"
+              />
+            </div>
+          </div>
+        </q-footer> -->
+      </q-layout>
 </template>
 
 <script>
-export default {
-    data(){
-        return{
-            email:''
-        }
-    }
-};
+export default {};
 </script>
 <style scoped>
-.auth-container{
-    width:100vw;
-    height:100vh;
-    
-    display:grid;
-    grid-template-rows:130px auto 60px;
-    padding: 16px;
-}
-@media(min-width: 768px){
-    .auth-container{
-        width:428px;
-        grid-template-rows:130px auto 80px;
-        padding:0;
-    }
-}
-.copyright {
-    color: #05386b;
-}
+/* .q-header{
+   background-color: $secondary;
+ } */
 
+/* .q-page-container .logo{
+  padding-top: 60px;
+} */
+
+.copyright {
+      color: #05386b;
+}
+/* .q-page-container {
+  .logo{
+    padding-top: 60px;
+  }
+  .q-card{
+    border-radius: 15px;
+    background-color: #EBEDED;
+  }
+  .copyright {
+      color: #05386b;
+    }
+} */
+
+ /* .q-footer{
+   .copyright {
+       color: #05386b;
+     }
+ } */
+/* .q-card__section, .q-card__actions{
+  padding-left: 20px;
+  padding-right: 20px;
+} */
 </style>

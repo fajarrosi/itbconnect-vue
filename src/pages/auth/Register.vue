@@ -1,7 +1,7 @@
 <template>
 <div>
-<q-page >
-    <q-card flat class="auth-card">
+<!-- <q-page > -->
+    <q-card flat class="auth-card col-12" style="max-width:354px;">
       <q-card-section>
             <q-stepper v-model="step" ref="stepper" color="primary" animated contracted flat inactive-color="white" 
             active-icon="primary"
@@ -10,21 +10,21 @@
                 :name="1"
                 :done="step > 1"
             >
-              <Bio v-model:name="user.name" v-model:email="user.email" v-model:nowa="user.nowa" v-model:tempat="user.tempat" v-model:tgl="user.tgl" v-model:thn="user.thn" v-model:bln="user.bln" />
+              <Bio v-model:name="user.name" v-model:email="user.email" v-model:nowa="user.nowa" v-model:tempat="user.tempat" v-model:tgl="user.tgl" v-model:thn="user.thn" v-model:bln="user.bln" v-model:step="step"/>
             </q-step>z
 
             <q-step
                 :name="2"
                 :done="step > 2"
             >
-            <Pend v-model:jenjang="user.jenjang" v-model:prodi="user.prodi" v-model:thnmasuk="user.tahunmasuk" v-model:thnkeluar="user.tahunkeluar" :optjenjang="optjenjang" :optprodi="optprodi"/>
+            <Pend v-model:jenjang="user.jenjang" v-model:prodi="user.prodi" v-model:thnmasuk="user.tahunmasuk" v-model:thnkeluar="user.tahunkeluar" :optjenjang="optjenjang" :optprodi="optprodi" v-model:step="step"/>
             </q-step>
 
             <q-step
                 :name="3"
                 :done="step > 3"
             >
-            <Akun v-model:username="user.username" v-model:password="user.password" v-model:usuccess="usuccess" v-model:konfirmasi="user.konfirmasi"/>
+            <Akun v-model:username="user.username" v-model:password="user.password" v-model:usuccess="usuccess" v-model:konfirmasi="user.konfirmasi" v-model:step="step"/>
             </q-step>
             
 
@@ -46,8 +46,8 @@
                     size="12px"
                     :disabled="btndisabled"
                 />
-                <q-btn
-                    v-if="step > 1 && step !== 4"
+                <!-- <q-btn
+                    v-if="step > 2 && step !== 4"
                     outline
                     
                     @click="$refs.stepper.previous()"
@@ -56,18 +56,7 @@
                     style=" color:#707070;"
                     size="12px"
                     no-caps
-                />
-                <q-btn
-                    v-if="step === 1"
-                    outline
-                    
-                    @click="$router.push('/cekemail')"
-                    label="Sebelumnya"
-                    class="q-mr-md col btn-radius"
-                    style=" color:#707070;"
-                    size="12px"
-                    no-caps
-                />
+                /> -->
                 <q-btn
                     v-if="step === 4"
                     @click="onSubmit"
@@ -86,8 +75,8 @@
                     </div>
                 </template>
                 </q-btn>
-                <q-btn
-                    v-else
+                <!-- <q-btn
+                    v-else-if="step > 2 && step !== 4"
                     @click="$refs.stepper.next()"
                     :color="valid ? 'primary' : 'grey'"
                     :disabled="!valid"
@@ -97,7 +86,7 @@
                     class="col btn-radius"
                     size="12px"
                     
-                />
+                /> -->
               
                 </q-stepper-navigation>
             </template>
@@ -105,8 +94,7 @@
       </q-card-section>
     </q-card>
     <DialogUser v-model:alumnus="alumnus" v-if="alumnus"/>
-   
-  </q-page>
+  <!-- </q-page> -->
 
   <dialog-leave v-model:dleave="dleave" v-if="dleave"/>
 </div>
@@ -312,7 +300,7 @@ export default {
 </script>
 <style scoped>
 .q-card{
-  margin-top:20px;
+  margin-top:30px;
 }
 .q-field--outlined :deep() .q-field__control {
   border-radius: 8px;
@@ -323,8 +311,10 @@ export default {
   margin-right:-24px;
 }
 .q-stepper :deep() .q-stepper__header{
-    margin-top:-100px;
-    /* margin-bottom: 50px; */
+    margin-top:-80px;
+  }
+.q-stepper :deep() .q-stepper__content{
+    margin-top:-20px;
   }
 
 .q-stepper__nav{

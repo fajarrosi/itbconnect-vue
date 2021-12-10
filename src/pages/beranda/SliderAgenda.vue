@@ -73,8 +73,8 @@ export default {
         }
     },
     mounted(){
+        // this.sekarang = '2021/11/02'
         this.sekarang = new Date()
-        // this.slider = date.formatDate(this.sekarang,'YYYY-MM-DD')
         this.$store.dispatch('getAgenda')
         .then(response=>{
             this.agenda = response
@@ -91,10 +91,20 @@ export default {
         })
     },
     computed:{
-        
         onkeys(){
-            return Object.keys(this.agendagroup)
-        }
+            let terbaru = {}
+            let tgl1 = date.formatDate(this.sekarang,'MM')
+            let hari = date.formatDate(this.sekarang,'DD')
+            Object.keys(this.agendagroup).forEach(key=>{
+                let a = date.formatDate(key,'MM')
+                let b = date.formatDate(key,'DD')
+                if(a === tgl1 && b >= hari){
+                    terbaru[key] = this.agendagroup[key]
+                }
+            })
+            return Object.keys(terbaru).reverse()
+        },
+        
     },
     methods:{
         eventTgl(val){
@@ -113,9 +123,9 @@ export default {
         },
         onShow(val){
             let terbaru = {}
-            let tgl1 = date.formatDate(val,'DD')
+            let tgl1 = date.formatDate(val,'DD MM')
             Object.keys(this.agendagroup).forEach(key=>{
-                let a = date.formatDate(key,'DD')
+                let a = date.formatDate(key,'DD MM')
                 if(a === tgl1){
                     terbaru[key] = this.agendagroup[key]
                 }

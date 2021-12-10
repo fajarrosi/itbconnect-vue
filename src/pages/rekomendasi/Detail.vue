@@ -39,9 +39,7 @@
                     <q-card-section class="q-pb-none" >
                         <organisasi />
                     </q-card-section>
-                    <q-card-section >
                         <bisnis/>
-                    </q-card-section>
                   </div>
           </q-card>
           <p class="text-bold q-mt-md q-mx-md text-17 q-mb-none" style="color:#155897;">Rekomendasi Lainnya</p>

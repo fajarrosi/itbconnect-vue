@@ -1,13 +1,16 @@
 <template>
     <div>
-        <q-dialog :model-value="dbio" @click="$emit('update:dbio', $event.target.value)" @hide="$emit('update:dbio',false)">
+        <q-dialog :model-value="dbio" @click="$emit('update:dbio', $event.target.value)" persistent>
             <q-card class="hide-scrollbar">
+                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
+                <q-scroll-area style="height: 80vh;">
                 <input type="file" @change="onHeaderSelected" style="display:none;" ref="hpupload"/>
                 <q-img :src="prevhp ? prevhp : require('assets/bg-akun.png')" width="418px" height="153px">
                     <div class="absolute-full text-subtitle2 flex flex-center" @click="$refs.hpupload.click()">
                         <img src="~assets/edit.png" alt="edit">
                     </div>
                 </q-img>
+                
                 <div class="row justify-center">
                     <input type="file" @change="onFileSelected" style="display:none;" ref="ppupload"/>
                     <!-- <q-avatar size="92px" style="margin-top:-50px;" v-if="databio.photoprofil">
@@ -26,7 +29,7 @@
                     </q-avatar>
                 </div>
             
-                <q-card-section class="row ">
+                <q-card-section class="row"  >
                     <div class="col-4 text-edit">Nama Lengkap</div>
                     <div class="col-8 ">{{databio.name}}</div>
                     <div class="col-4 text-edit">Alumni</div>
@@ -58,10 +61,14 @@
                     outlined
                     type="textarea"
                     v-model="bio"
-                    placeholder="Tuliskan secara singkat bio mu"
+                    placeholder="Tuliskan secara singkat biodata mu"
                     class="q-mb-md col-12"
                     bg-color="white"
                     hide-bottom-space
+                    lazy-rules
+                    :rules="[
+                        val => countword <= 150 || 'Biodata maksimal 150 kata',
+                    ]"
                     />
                     
                     <div class="col-2 text-edit">Minat</div>
@@ -113,10 +120,11 @@
                     hide-bottom-space
                     />
                 </q-card-section>
+                </q-scroll-area>
                 <q-card-actions align="center" class="q-mb-md">
                     <q-btn  no-caps label="Kembali" outline
-                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dbio', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
+                    style="color:#bfc0c0;" @click="$emit('update:dbio', false)" class="col-5 btn-radius" :disabled="disabled"/>
+                    <q-btn  no-caps label="Simpan" color="primary" type="submit" class="col-5 btn-radius" :loading="load"
                 :disabled="disabled">
                         <template v-slot:loading>
                             <div class="row items-center">
@@ -125,17 +133,42 @@
                         </template>
                     </q-btn>
                 </q-card-actions>
+                </q-form>
             </q-card>
+            
         </q-dialog>
     </div>
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            successNotif () {
+                $q.notify({
+                message: 'Biodata berhasil diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            failedNotif () {
+                $q.notify({
+                message: 'Biodata gagal diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     props:[
         'dbio',
         'dprofil',
         'userbaru',
+        'intro'
     ],
     data(){
         return{
@@ -173,15 +206,28 @@ export default {
         },
         dataorganisasi(){
             return this.$store.state.myprofil.dataorganisasi
+        },
+        countword(){
+            return this.bio.match(/\w+/g) ? this.bio.match(/\w+/g).length : 0
         }
     },
     mounted(){
         this.domisili = this.databio.domisili
-        this.bio = this.databio.bio
-        this.linkedin = this.databio.linkedin
-        this.ig = this.databio.ig
-        this.fb = this.databio.fb
-        this.tw = this.databio.twit
+        if(this.databio.bio !== null){
+            this.bio = this.databio.bio
+        }
+        if(this.databio.linkedin !== null){
+            this.linkedin = this.databio.linkedin
+        }
+        if(this.databio.ig !== null){
+            this.ig = this.databio.ig
+        }
+        if(this.databio.fb !== null){
+            this.fb = this.databio.fb
+        }
+        if(this.databio.twit !== null){
+            this.tw = this.databio.twit
+        }
         if(this.photoprofil){
             this.prevpp = this.photoprofil
         }
@@ -200,29 +246,43 @@ export default {
             this.prevhp = URL.createObjectURL(event.target.files[0])
         },
         onSave(){
-            this.load = true
-            this.disabled = true
-            let form = new FormData()
-            form.append('photo_profile',this.srcpp)
-            form.append('header_profile',this.srchp)
-            form.append('description',this.bio)
-            form.append('facebook_url',this.fb)
-            form.append('instagram_url',this.ig)
-            form.append('twitter_url',this.tw)
-            form.append('linkedin_url',this.linkedin)
-            this.$store.dispatch('myprofil/updBio',form)
-            .then(()=>{
-                this.load = false
-                this.disabled = false
-                if(this.userbaru){
-                    this.$emit('update:dbio', false)
-                    this.$emit('update:dprofil', true)
-                }else{
-                    this.$emit('update:dbio', false)
+            this.$refs.dform.validate()
+            .then(valid=>{
+                if(valid){
+                    this.load = true
+                    this.disabled = true
+                    let form = new FormData()
+                    form.append('photo_profile',this.srcpp)
+                    form.append('header_profile',this.srchp)
+                    form.append('description',this.bio)
+                    form.append('facebook_url',this.fb)
+                    form.append('instagram_url',this.ig)
+                    form.append('twitter_url',this.tw)
+                    form.append('linkedin_url',this.linkedin)
+                    this.$store.dispatch('myprofil/updBio',form)
+                    .then(()=>{
+                        this.load = false
+                        this.disabled = false
+                        if(this.userbaru){
+                            this.$emit('update:dbio', false)
+                            this.$emit('update:intro', false)
+                            this.$emit('update:dprofil', true)
+                        }else{
+                            this.$emit('update:dbio', false)
+                            this.$emit('update:intro', false)
+        
+                        }
+                        this.successNotif()
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                        this.load = false
+                        this.disabled = false
+                        this.$emit('update:dbio', false)
+                        this.$emit('update:intro', false)
+                        this.failedNotif()
+                    })
                 }
-            })
-            .catch(err=>{
-                console.log(err)
             })
         }
     }

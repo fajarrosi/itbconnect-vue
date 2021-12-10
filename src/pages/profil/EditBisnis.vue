@@ -3,7 +3,7 @@
         <q-page class="q-pb-lg q-px-lg relative-position">
             <div class="title-section q-my-md ">BISNIS DAN PEKERJAAN</div>
             <q-card class="my-card" flat>
-                <q-card-section class="q-pa-none bg-secondary">
+                <q-card-section class="q-pa-none bg-secondary" v-if="Object.keys(bisnis).length > 0">
                     <q-scroll-area style="height: 60vh;">
                         <div class="row justify-between container" v-for="(b,index) in bisnis" :key="index">
                             <div class="col-9 text-primary q-pa-sm left-side">
@@ -16,6 +16,9 @@
                         </div>
                     </q-scroll-area>
                 </q-card-section>
+                <q-card-section v-else class="row ">
+                    <div class="col text-center text-primary q-pa-sm left-even" style="font-size:15px;">Belum Ada Bisnis dan Pekerjaan</div>
+                </q-card-section>
             </q-card>
             <q-btn fab icon="add" color="primary" @click="onAdd" class="q-my-md btn-plus"/>
         </q-page>
@@ -26,7 +29,7 @@
 
 <script>
 import { useQuasar } from 'quasar'
-import { useStore } from 'vuex'
+import { useStore, mapActions } from 'vuex'
 export default {
     setup () {
         const $q = useQuasar()
@@ -68,6 +71,7 @@ export default {
         }
     },
     methods:{
+        ...mapActions("myprofil", ['getBisnisField']),
         onDelete(val){
             this.id = val
             this.ddelete = true
@@ -75,12 +79,18 @@ export default {
         onEdit(val){
             this.id = val
             this.edit = true
-            this.dbisnis = true
+            this.getBisnisField()
+            .then(()=>{
+                this.dbisnis = true
+            })
         },
         onAdd(){
             this.id = ''
             this.edit = false
-            this.dbisnis = true
+            this.getBisnisField()
+            .then(()=>{
+                this.dbisnis = true
+            })
         },
         onDeleting(){
             this.dload = true

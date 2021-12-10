@@ -34,20 +34,20 @@
                             <span class="text-15">Kabar Alumni</span>
                         </q-tab>
                         <q-tab name="ppia" no-caps>
-                            <span class="text-15">PP-IA</span>
+                            <span class="text-15">Seputar PP-IA</span>
                         </q-tab>
                         <q-tab name="lowker" no-caps>
-                            <span class="text-15">Lowker</span>
+                            <span class="text-15">Lowongan Kerja</span>
                         </q-tab>
-                        <q-tab name="project" no-caps>
-                            <span class="text-15">Info Projek</span>
+                        <!-- <q-tab name="project" no-caps>
+                            <span class="text-15">Info Proyek</span>
                         </q-tab>
                         <q-tab name="beasiswa"  no-caps>
                             <span class="text-15">Beasiswa</span>
                         </q-tab>
                         <q-tab name="etc" no-caps>
                             <span class="text-15">Lainnya</span>
-                        </q-tab>
+                        </q-tab> -->
                     </q-tabs>
                 </q-card-section>
             </q-card>

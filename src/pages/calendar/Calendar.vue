@@ -2,10 +2,10 @@
     <q-page class="q-py-md q-px-lg">
         <div v-if="valid">
             <div class="row justify-center header-calendar">
-                <div class="col-7 row items-center">
-                    <q-btn color="white" icon="arrow_back_ios" class="text-black arrow-btn-left" @click="prevMonth()"/>
-                    <span class="text-primary q-mx-md" style="font-size:18px;">{{tampil}}</span>
-                    <q-btn color="white" icon="arrow_forward_ios" class="text-black arrow-btn-right" @click="nextMonth()"/>
+                <div class="col-9 row items-center">
+                    <q-btn color="white" icon="arrow_back_ios" class="text-black col-2 arrow-btn-left" @click="prevMonth()"/>
+                    <span class="text-primary q-mx-md col-6" style="font-size:18px;">{{tampil}}</span>
+                    <q-btn color="white" icon="arrow_forward_ios" class="text-black col-2 arrow-btn-right" @click="nextMonth()"/>
                 </div>
             </div>
             <q-card flat>

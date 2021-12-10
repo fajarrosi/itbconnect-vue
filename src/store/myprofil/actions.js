@@ -14,6 +14,7 @@ export function getProfil(context){
             context.commit('setPendidikan',response.data.data)
             context.commit('setOrganisasi',response.data.data)
             context.commit('setBisnis',response.data.data)
+            context.dispatch('auth/updateUserVerified',response.data.data.is_verified, { root: true })
             resolve(response.data.data)
         })
         .catch(err=>{

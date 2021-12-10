@@ -1,6 +1,6 @@
 <template>
-  <q-page >
-    <q-card flat class="auth-card">
+  <!-- <q-page > -->
+    <q-card flat class="auth-card col-12" style="max-width:354px;">
         <q-card-section class="q-pb-none">
             
             <div class="row justify-center">
@@ -33,7 +33,7 @@
             </q-btn>
         </q-card-actions>
         </q-card>
-    </q-page>
+    <!-- </q-page> -->
 </template>
 
 <script>

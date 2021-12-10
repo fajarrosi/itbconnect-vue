@@ -1,6 +1,6 @@
 <template>
-  <q-page >
-    <q-card flat class="auth-card">
+  <!-- <q-page > -->
+    <q-card flat class="auth-card col-12" style="max-width:354px;">
         <q-card-section class="q-pb-none">
             <div class="text-h5 text-bold text-primary text-center">BERHASIL</div>
             <div class="row justify-center">
@@ -23,12 +23,18 @@
             </q-btn>
         </q-card-actions>
         </q-card>
-    </q-page>
+    <!-- </q-page> -->
 </template>
 
 <script>
 export default {
-   
+   beforeRouteLeave(to, from, next) {
+    if(to.name === 'register'){
+        next(false)
+    }else{
+        next()
+    }
+  },
 };
 </script>
 <style lang="scss">

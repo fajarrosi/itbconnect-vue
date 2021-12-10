@@ -1,7 +1,7 @@
 <template>
 <div>
-  <q-page>
-    <q-card flat class="auth-card">
+  <!-- <q-page> -->
+    <q-card flat class="auth-card col-12" style="max-width:354px;">
       <q-card-section>
         <q-stepper
           v-model="step"
@@ -47,6 +47,7 @@
                 @click="$refs.stepper.previous()"
                 label="Sebelumnya"
                 class="q-mr-sm col"
+                :disabled="btndisabled"
                 style="border-radius: 8px; color:#707070;"
                 size="12px"
                 no-caps
@@ -98,7 +99,7 @@
       </q-card-section>
     </q-card>
     <DialogIntro v-model:intro="intro" v-if="intro"/>
-  </q-page>
+  <!-- </q-page> -->
   <dialog-leave v-model:dleave="dleave" v-if="dleave" />
 </div>
   
@@ -342,7 +343,7 @@ export default {
 </script>
 <style scoped>
 .q-card{
-  margin-top:20px;
+  margin-top:30px;
 }
 .q-field--outlined :deep() .q-field__control {
   border-radius: 8px;
@@ -353,8 +354,11 @@ export default {
   margin-right:-24px;
 }
 .q-stepper :deep() .q-stepper__header{
-    margin-top:-100px;
+    margin-top:-80px;
     /* margin-bottom: 50px; */
+  }
+  .q-stepper :deep() .q-stepper__content{
+    margin-top:-20px;
   }
 
 .q-stepper__nav{

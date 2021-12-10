@@ -3,11 +3,11 @@
 .mobile, .base-container{
 	width:428px;
 }
-// @media (max-width: 427px){
-// 	.mobile, .base-container{
-// 		width:100vw;
-// 	}
-// }
+@media (max-width: 427px){
+	.mobile{
+		width:100vw;
+	}
+}
 // #909090
 .base-container{
         // background-color: $secondary;

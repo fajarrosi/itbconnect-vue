@@ -175,6 +175,10 @@ export function forgot(context,email){
     })
 }
 
+export function updateUserVerified(context,verified){
+    context.commit('updateUserVerified',verified)
+}
+
 
 
 

@@ -11,16 +11,16 @@
             <div class="row q-mx-md justify-between items-center">
                 <p class="text-bold q-mb-sm text-17" style="color:#155897;">Informasi Pribadi</p>
                 <div class="row">
-                    <q-btn round flat dense type="a" target="_blank" :href="databio.linkedin">
+                    <q-btn round flat dense type="a" target="_blank" :href="databio.linkedin" v-if="databio.linkedin">
                         <img src="images/linkedin-bluee.png" alt="linkedin">
                     </q-btn>
-                    <q-btn round flat dense type="a" target="_blank" :href="databio.ig">
+                    <q-btn round flat dense type="a" target="_blank" :href="databio.ig" v-if="databio.ig">
                         <img src="images/instagram-bluee.png" alt="ig">
                     </q-btn>
-                    <q-btn round flat dense type="a" target="_blank" :href="databio.fb">
+                    <q-btn round flat dense type="a" target="_blank" :href="databio.fb" v-if="databio.fb">
                         <img src="images/facebook-bluee.png" alt="fb">
                     </q-btn>
-                    <q-btn round flat dense type="a" target="_blank" :href="databio.twit">
+                    <q-btn round flat dense type="a" target="_blank" :href="databio.twit" v-if="databio.twit">
                         <img src="images/twitter-bluee.png" alt="twt">
                     </q-btn>
                 </div>
@@ -38,21 +38,18 @@
                 <q-card-section class="q-py-none">
                     <organisasi v-model:dminat="dminat" :dataorganisasi="dataorganisasi" :databio="databio" :datapengda="datapengda"/>
                 </q-card-section>
-                <q-card-section class="q-pt-none ">
-                    <bisnis />
-                </q-card-section>
+                <bisnis />
             </q-card>
         </div>
         <div v-else>
             <profilload />
         </div>
             <Dintro v-model:intro="intro" v-model:dbio="dbio" v-if="intro"/>
-            <Dbio v-model:dbio="dbio" v-model:dprofil="dprofil" v-model:userbaru="userbaru"  v-if="dbio"/>
-            <Dprofil v-model:dprofil="dprofil" v-model:userbaru="userbaru" v-model:dpengalaman="dpengalaman" :dataprofil="dataprofil" v-if="dprofil" :pnegara="negara" :pprov="prov" :pagama="agama"/>
-            <Dpengalaman v-model:dpengalaman="dpengalaman" v-model:dpend="dpend" v-model:userbaru="userbaru" :datapengalaman="datapengalaman" v-if="dpengalaman"/>
-            <Dpend v-model:dpend="dpend" v-model:dminat="dminat" v-model:userbaru="userbaru" :datapendidikan="datapendidikan" v-if="dpend" :jenjang="jenjang" :prodi="prodi"/>
-            <Dminat v-model:dminat="dminat" v-model:dbisnis="dbisnis" v-model:userbaru="userbaru" :dataorganisasi="dataorganisasi" v-if="dminat" :organization="organization" :pengda="pengda" :iaprodi="iaprodi" :datapengda="datapengda"/>
-            <Dbisnis v-model:dbisnis="dbisnis" v-model:userbaru="userbaru" v-if="dbisnis" :bisnisfield="bisnisfield"/>
+            <Dbio v-model:dbio="dbio" v-model:intro="intro" v-model:dprofil="dprofil" v-model:userbaru="userbaru"  v-if="dbio"/>
+            <Dprofil v-model:intro="intro" v-model:dprofil="dprofil" v-model:userbaru="userbaru" v-model:dpengalaman="dpengalaman" :dataprofil="dataprofil" v-if="dprofil" :pnegara="negara" :pprov="prov" :pagama="agama"/>
+            <Dpengalaman v-model:intro="intro" v-model:dpengalaman="dpengalaman" v-model:dpend="dpend" v-model:userbaru="userbaru" :datapengalaman="datapengalaman" v-if="dpengalaman"/>
+            <Dpend v-model:intro="intro" v-model:dpend="dpend" v-model:dminat="dminat" v-model:userbaru="userbaru" :datapendidikan="datapendidikan" v-if="dpend" :jenjang="jenjang" :prodi="prodi"/>
+            <Dminat v-model:intro="intro" v-model:dminat="dminat" v-model:dbisnis="dbisnis" v-model:userbaru="userbaru" :dataorganisasi="dataorganisasi" v-if="dminat" :organization="organization" :pengda="pengda" :iaprodi="iaprodi" :datapengda="datapengda"/>
     </q-page>
 </template>
 
@@ -63,9 +60,8 @@ import Dbio from 'components/profil/edit/Dbio.vue'
 import Dprofil from 'src/components/profil/edit/DProfile.vue'
 import Dpengalaman from 'components/profil/edit/Dpengalaman.vue'
 import Dminat from 'components/profil/edit/Dminat.vue'
-import Dbisnis from 'components/profil/edit/Dbisnis.vue'
 import Dpend from 'components/profil/edit/Dpend.vue'
-import {  mapState, mapActions } from "vuex";
+import {  mapState, mapActions } from "vuex"
 
 export default {
     components:{
@@ -74,7 +70,6 @@ export default {
         Dprofil,
         Dpengalaman,
         Dminat,
-        Dbisnis,
         Dpend,
         'bio' : require('components/profil/Bio.vue').default,
         'profil':require('components/profil/Profil.vue').default,
@@ -94,22 +89,12 @@ export default {
             dbisnis:false,
             dpend:false,
             userbaru:false,
+            valid:false
         }
     },
 
     methods:{
-        ...mapActions("myprofil", ["getProfil","getOrg","getPengda","getIaprodi",'getJenjang','getProdi','getNegara','getProv','getAgama','getBisnisField']),
-        async getData(){
-            this.getNegara()
-            this.getProv()
-            this.getAgama()
-            this.getJenjang()
-            this.getProdi()
-            this.getOrg()
-            this.getPengda()
-            this.getIaprodi()
-            this.getBisnisField()
-        }
+        ...mapActions("myprofil", ["getProfil"]),
     },
     computed:{
         ...mapState('myprofil',['databio','dataprofil','datapengalaman','datapendidikan','dataorganisasi','databisnis','organization','pengda','iaprodi','jenjang','prodi','negara','prov','agama','datapengda','bisnisfield']),
@@ -123,32 +108,33 @@ export default {
                 return ''
             }
         },
-        valid(){
-            if(Object.keys(this.databio).length > 0){
-                return true
-            }else {
-                return false
-            }
-        },
+        // valid(){
+        //     if(Object.keys(this.databio).length > 0){
+        //         return true
+        //     }else {
+        //         return false
+        //     }
+        // },
     },
-    watch:{
-        databio: function(){
-            if(Object.keys(this.databio).length > 0){
+    created(){
+        this.getProfil()
+            .then(()=>{
+                this.valid = true
                 if(!this.userVerified){
                     this.intro = true
                     this.userbaru = true
                 }
-            }
-        }
-    },
-    created(){
-        if(this.negara && this.prov && this.agama && this.jenjang && this.prodi && this.organization && this.pengda && this.iaprodi && this.bisnisfield){
-            // console.log('true')
-        }else{
-            this.getData()
-        }
+        })
+        // if(this.negara && this.prov && this.agama && this.jenjang && this.prodi && this.organization && this.pengda && this.iaprodi && this.bisnisfield){
+        //     // console.log('true')
+        // }else{
+        //     this.getData()
+        // }
 
     },
+    unmounted(){
+        this.$store.dispatch('myprofil/logout')
+    }
 }
 </script>
 

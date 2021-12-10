@@ -1,6 +1,6 @@
 <template>
-  <q-page >
-    <q-card flat class="auth-card">
+  <!-- <q-page > -->
+    <q-card flat class="auth-card col-12" style="max-width:354px;">
         <q-card-section class="q-pb-none">
             <div class="row justify-center">
                 <q-img
@@ -34,7 +34,7 @@
             </q-btn>
         </q-card-actions>
         </q-card>
-    </q-page>
+    <!-- </q-page> -->
 </template>
 
 <script>
@@ -145,7 +145,14 @@ export default {
                 console.log("error",error)
             })
         }
+    },
+    beforeRouteLeave(to, from, next) {
+    if(to.name === 'registerberhasil'){
+        next(false)
+    }else{
+        next()
     }
+    },
 };
 </script>
 <style scoped>

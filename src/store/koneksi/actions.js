@@ -72,6 +72,10 @@ export function MyConnection(context){
     })
 }
 
+export function deleteMyConnection(context){
+    context.commit('deleteMyConnection')
+}
+
 export function DeleteConnection(context,idfriend){
     return new Promise((resolve,reject)=>{
         let config = {

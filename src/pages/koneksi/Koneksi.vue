@@ -26,11 +26,11 @@
         <q-card class="q-mt-md q-mx-md btn-radius cursor-pointer q-hoverable relative-position" flat style="background:#9FC1EC;" @click="movePage" v-ripple>
             <q-card-section>
                 <div class="row ">
-                    <div class="q-mr-sm">
+                    <div class="q-mr-sm col">
                         <div class="text-h6" style="color:#225FAA; font-weight:500;">Cari Koneksi Baru</div>
                         <div class="text-subtitle2" style="color:#2E4766;">Klik Untuk Memulai</div>
                     </div>
-                    <img src="~assets/new-koneksi.png" alt="new">
+                    <img src="~assets/new-koneksi.png" alt="new" class="col">
                 </div>
             </q-card-section>
         </q-card>
@@ -224,6 +224,9 @@ export default {
         this.getData()
         this.$store.dispatch('myprofil/getProfil')
         this.$store.dispatch('myprofil/deleteall')
+    },
+    unmounted(){
+        this.$store.dispatch('koneksi/deleteMyConnection')
     }
 
 

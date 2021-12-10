@@ -1,135 +1,194 @@
 <template>
     <div>
-         <q-dialog :model-value="dpend" @click="$emit('update:dpend', $event.target.value)" @hide="$emit('update:dpend',false)">
+         <q-dialog :model-value="dpend" @click="$emit('update:dpend', $event.target.value)" persistent>
             <q-card class="hide-scrollbar">
-                <q-card-section>
-                    <div class="q-mb-md text-edit" style="font-size:17px;">PENDIDIKAN</div>
-                <div class="row q-mb-lg" v-for="(pend,k) in pendidikan" :key="k">
-                        <div class="col-4 text-edit">Jenjang*</div>
-                        <q-select  outlined dense v-model="pend.jenjang" emit-value map-options :options="optjenjang" label="Select     Jenjang Pendidikan" bg-color="white" class="q-mb-sm col-8" />
-                    <div class="col-4 text-edit">Universitas*</div>
-                    <q-select  outlined dense v-model="pend.univ" emit-value map-options :options="optuniv" label="Select Universitas" bg-color="white" class="q-mb-sm col-8" />
-                    <div class="col-11 q-ml-auto row" v-if="pend.univ === 2">
-                        <div class="col-4 text-edit">Univ Lainnya</div>
-                        <q-input
-                        dense
-                        outlined
-                        v-model="pend.univlain"
-                        placeholder="universitas lainnya"
-                        class="q-mb-sm col-8"
-                        bg-color="white"
+                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
+                    <q-scroll-area style="height: 80vh;">
+                    <q-card-section>
+                        <div class="q-mb-md text-edit" style="font-size:17px;">PENDIDIKAN</div>
+                    <div class="row q-mb-lg" v-for="(pend,k) in pendidikan" :key="k">
+                            <div class="col-4 text-edit">Jenjang<span class="text-negative">*</span></div>
+                            <q-select  outlined dense v-model="pend.jenjang" emit-value map-options :options="optjenjang" label="Select     Jenjang Pendidikan" bg-color="white" class="q-mb-sm col-8" lazy-rules hide-bottom-space
+                        :rules="[
+                            val => val !== null && val !== '' || 'Jenjang Pendidikan tidak boleh kosong',
+                        ]"/>
+                        <div class="col-4 text-edit">Universitas<span class="text-negative">*</span></div>
+                        <q-select  outlined dense v-model="pend.univ" emit-value map-options :options="optuniv" label="Select Universitas" bg-color="white" class="q-mb-sm col-8" 
+                        lazy-rules
+                        :rules="[
+                            val => val !== null && val !== '' || 'Universitas tidak boleh kosong',
+                        ]"
                         hide-bottom-space
                         />
-                        <div class="col-4 text-edit">Prodi </div>
-                        <q-input
-                        dense
-                        outlined
-                        v-model="pend.prodilain"
-                        placeholder="Prodi"
-                        class="q-mb-sm col-8"
-                        bg-color="white"
-                        hide-bottom-space
+                        <div class="col-11 q-ml-auto row" v-if="pend.univ === 2">
+                            <div class="col-4 text-edit">Universitas Lainnya<span class="text-negative">*</span></div>
+                            <q-input
+                            v-if="pend.univ === 2"
+                            dense
+                            outlined
+                            v-model="pend.univlain"
+                            placeholder="universitas lainnya"
+                            class="q-mb-sm col-8"
+                            bg-color="white"
+                            hide-bottom-space
+                            lazy-rules
+                            :rules="[
+                                (val) => (val && val.length > 0) || 'Universitas lainnya tidak boleh kosong',
+                            ]"
+                            />
+                            <div class="col-4 text-edit">Prodi<span class="text-negative">*</span> </div>
+                            <q-input
+                            v-if="pend.univ === 2"
+                            dense
+                            outlined
+                            v-model="pend.prodilain"
+                            placeholder="Prodi"
+                            class="q-mb-sm col-8"
+                            bg-color="white"
+                            hide-bottom-space
+                            lazy-rules
+                            :rules="[
+                                (val) => (val && val.length > 0) || 'Prodi tidak boleh kosong',
+                            ]"
+                            />
+                        </div>
+                        <div class="col-12 row" v-if="pend.univ === 1 ">
+                            <div class="col-4 text-edit">Prodi<span class="text-negative">*</span> </div>
+                            <q-select
+                            v-if="pend.univ === 1 "
+                            outlined dense v-model="pend.prodi" emit-value map-options :options="optprodi" label="Select Prodi" bg-color="white" class="q-mb-sm col-8" 
+                            lazy-rules
+                            :rules="[
+                                val => val !== null && val !== '' || 'Prodi tidak boleh kosong',
+                            ]"
+                            hide-bottom-space
                         />
+                        </div>
+                        <div class="col-4 text-edit">Tahun Masuk<span class="text-negative">*</span> </div>
+                        <q-input
+                            outlined
+                            dense
+                            v-model="pend.tahunmasuk" mask="####" 
+                            class="q-mb-sm col-8"
+                            bg-color="white"
+                            hide-bottom-space
+                            hide-hint
+                            placeholder="Tahun Masuk"
+                            bottom-slots
+                            lazy-rules
+                            :rules="[
+                            (val) => (val && val.length > 0) || 'Tahun Masuk tidak boleh kosong',
+                            ]"
+                            >
+                            <template v-slot:after>
+                                <q-icon name="event" class="cursor-pointer">
+                                <q-popup-proxy ref="tahunmasuk" transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="pend.tahunmasuk" minimal default-view="Years" emit-immediately mask="YYYY"
+                                    @update:model-value="checkValue"
+                                    >
+                                    <!-- <div class="row items-center justify-end">
+                                        <q-btn v-close-popup label="OK" color="primary" flat />
+                                    </div> -->
+                                    </q-date>
+                                </q-popup-proxy>
+                                </q-icon>
+                            </template>
+                            <template v-slot:hint>
+                            *) Pilih tanggal dengan mengklik icon disebelah kanan
+                            </template>
+                            </q-input>
+                        <div class="col-4 text-edit">Tahun Keluar<span class="text-negative">*</span> </div>
+                        <q-input
+                            outlined
+                            dense
+                            v-model="pend.tahunkeluar" mask="####" 
+                            class="q-mb-sm col-8"
+                            bg-color="white"
+                            hide-bottom-space
+                            hide-hint
+                            placeholder="Tahun Masuk"
+                            bottom-slots
+                            lazy-rules
+                            :rules="[
+                            (val) => (val && val.length > 0) || 'Tahun Keluar tidak boleh kosong',
+                            ]"
+                            >
+                            <template v-slot:after>
+                                <q-icon name="event" class="cursor-pointer">
+                                <q-popup-proxy ref="tahunkeluar" transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="pend.tahunkeluar" minimal default-view="Years" emit-immediately mask="YYYY"
+                                    @update:model-value="checkValue2"
+                                    >
+                                    <!-- <div class="row items-center justify-end">
+                                        <q-btn v-close-popup label="OK" color="primary" flat />
+                                    </div> -->
+                                    </q-date>
+                                </q-popup-proxy>
+                                </q-icon>
+                            </template>
+                            <template v-slot:hint>
+                            *) Pilih tanggal dengan mengklik icon disebelah kanan
+                            </template>
+                            </q-input>
+                        <q-btn class="col-12" color="primary" icon="close" label="Hapus Pendidikan" flat dense @click="remove(k)" no-caps  v-if="k >0" style="font-style:italic;"/>
                     </div>
-                    <div class="col-12 row" v-if="pend.univ === 1 ">
-                        <div class="col-4 text-edit">Prodi </div>
-                        <q-select  outlined dense v-model="pend.prodi" emit-value map-options :options="optprodi" label="Select Prodi" bg-color="white" class="q-mb-sm col-8" />
-                    </div>
-                    <div class="col-4 text-edit">Tahun Masuk </div>
-                    <q-input
-                        outlined
-                        dense
-                        lazy-rules
-                        v-model="pend.tahunmasuk" mask="####" 
-                        class="q-mb-sm col-8"
-                        bg-color="white"
-                        hide-bottom-space
-                        hide-hint
-                        placeholder="Tahun Masuk"
-                        bottom-slots
-                        >
-                        <template v-slot:after>
-                            <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy ref="tahunmasuk" transition-show="scale" transition-hide="scale">
-                                <q-date v-model="pend.tahunmasuk" minimal default-view="Years" emit-immediately mask="YYYY"
-                                @update:model-value="checkValue"
-                                >
-                                <!-- <div class="row items-center justify-end">
-                                    <q-btn v-close-popup label="OK" color="primary" flat />
-                                </div> -->
-                                </q-date>
-                            </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        <template v-slot:hint>
-                        *) Pilih tanggal dengan mengklik icon disebelah kanan
-                        </template>
-                        </q-input>
-                    <div class="col-4 text-edit">Tahun Keluar </div>
-                    <q-input
-                        outlined
-                        dense
-                        lazy-rules
-                        v-model="pend.tahunkeluar" mask="####" 
-                        class="q-mb-sm col-8"
-                        bg-color="white"
-                        hide-bottom-space
-                        hide-hint
-                        placeholder="Tahun Masuk"
-                        bottom-slots
-                        >
-                        <template v-slot:after>
-                            <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy ref="tahunkeluar" transition-show="scale" transition-hide="scale">
-                                <q-date v-model="pend.tahunkeluar" minimal default-view="Years" emit-immediately mask="YYYY"
-                                @update:model-value="checkValue2"
-                                >
-                                <!-- <div class="row items-center justify-end">
-                                    <q-btn v-close-popup label="OK" color="primary" flat />
-                                </div> -->
-                                </q-date>
-                            </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        <template v-slot:hint>
-                        *) Pilih tanggal dengan mengklik icon disebelah kanan
-                        </template>
-                        </q-input>
-                    <q-btn class="col-12" color="primary" icon="close" label="Hapus Pendidikan" flat dense @click="remove(k)" no-caps  v-if="k >0" style="font-style:italic;"/>
-                </div>
-                
-                    <div class="row q-mt-xs justify-center " >
-                        <q-btn class="col-6" color="primary" icon="add" label="Tambah Pendidikan" flat dense @click="add" no-caps   style="font-style:italic;"/>
-                    </div>
-                </q-card-section>
-                <q-card-actions align="center" class="q-mb-md">
-                    <q-btn  no-caps label="Kembali" outline
-                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dpend', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
-                :disabled="disabled">
-                        <template v-slot:loading>
-                            <div class="row items-center">
-                                <q-spinner-facebook />  
-                            </div>
-                        </template>
-                    </q-btn>
-                </q-card-actions>
+                    
+                        <div class="row q-mt-xs justify-center " >
+                            <q-btn class="col-6" color="primary" icon="add" label="Tambah Pendidikan" flat dense @click="add" no-caps   style="font-style:italic;"/>
+                        </div>
+                    </q-card-section>
+                    </q-scroll-area>
+                    <q-card-actions align="center" class="q-mb-md">
+                        <q-btn  no-caps label="Kembali" outline
+                        style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dpend', false)" class="col-5" :disabled="disabled"/>
+                        <q-btn  no-caps label="Simpan" color="primary" type="submit" class="col-5 btn-radius" :loading="load"
+                    :disabled="disabled">
+                            <template v-slot:loading>
+                                <div class="row items-center">
+                                    <q-spinner-facebook />  
+                                </div>
+                            </template>
+                        </q-btn>
+                    </q-card-actions>
+                </q-form>
             </q-card>
         </q-dialog>
     </div>
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            successNotif () {
+                $q.notify({
+                message: 'Pendidikan berhasil diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            failedNotif () {
+                $q.notify({
+                message: 'Pendidikan gagal diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     props:[
         'dpend',
         'userbaru',
         'dminat',
         'datapendidikan',
         'jenjang',
-        'prodi'
+        'prodi',
+        'intro'
     ],
-    emits:['update:dminat','update:dpend'],
     data(){
         return{
             optjenjang:[],
@@ -201,39 +260,55 @@ export default {
             this.pendidikan.splice(val,1)
         },
         onSave(){
-            this.load = true
-            this.disabled = true
-            this.pendidikan.forEach(el=>{
-                if(el.univ === 1){
-                    this.send.push({
-                        campus_name: 'ITB',
-                        education_id: el.jenjang,
-                        program_study: el.prodi,
-                        entry_year: el.tahunmasuk,
-                        graduated_year: el.tahunkeluar,
-                        is_itb: true
+            this.$refs.dform.validate()
+            .then(valid=>{
+                if(valid){
+
+                    this.load = true
+                    this.disabled = true
+                    this.pendidikan.forEach(el=>{
+                        if(el.univ === 1){
+                            this.send.push({
+                                campus_name: 'ITB',
+                                education_id: el.jenjang,
+                                program_study: el.prodi,
+                                entry_year: el.tahunmasuk,
+                                graduated_year: el.tahunkeluar,
+                                is_itb: true
+                            })
+                        }else{
+                            this.send.push({
+                                campus_name: el.univlain,
+                                education_id: el.jenjang,
+                                program_study: el.prodilain,
+                                entry_year: el.tahunmasuk,
+                                graduated_year: el.tahunkeluar,
+                                is_itb: false
+                            })
+                        }
                     })
-                }else{
-                    this.send.push({
-                        campus_name: el.univlain,
-                        education_id: el.jenjang,
-                        program_study: el.prodilain,
-                        entry_year: el.tahunmasuk,
-                        graduated_year: el.tahunkeluar,
-                        is_itb: false
+                    this.$store.dispatch('myprofil/updEdu',this.send)
+                    .then(()=>{
+                        this.load = false
+                        this.disabled = false
+                        if (this.userbaru) {
+                            this.$emit('update:dpend', false)
+                            this.$emit('update:intro', false)
+                            this.$emit('update:dminat', true)
+                        }else{
+                            this.$emit('update:dpend', false)
+                            this.$emit('update:intro', false)
+                        }   
+                        this.successNotif()
+                    })
+                    .catch(()=>{
+                        this.load = false
+                        this.disabled = false
+                        this.$emit('update:dpend', false)
+                        this.$emit('update:intro', false)
+                        this.failedNotif()
                     })
                 }
-            })
-            this.$store.dispatch('myprofil/updEdu',this.send)
-            .then(()=>{
-                this.load = false
-                this.disabled = false
-                if (this.userbaru) {
-                    this.$emit('update:dpend', false)
-                    this.$emit('update:dminat', true)
-                }else{
-                    this.$emit('update:dpend', false)
-                }   
             })
 
         },

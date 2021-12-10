@@ -1,7 +1,9 @@
 <template>
     <div class="dbisniss">
-        <q-dialog :model-value="dbisnis" @click="$emit('update:dbisnis', $event.target.value)" @hide="$emit('update:dbisnis',false)">
+        <q-dialog :model-value="dbisnis" @click="$emit('update:dbisnis', $event.target.value)" persistent>
             <q-card class="hide-scrollbar">
+                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
+                <q-scroll-area style="height: 80vh;">
                 <q-card-section>
                     <div class="row q-mt-md">
                             <input type="file" @change="onFileSelected($event)" class="col-12" ref="logoupload" style="display:none;"/>
@@ -33,8 +35,14 @@
                             bg-color="white"
                             hide-bottom-space
                             />
-                            <div class="col-3 text-edit">Bidang</div>
-                            <q-select  outlined dense v-model="bisnis.business_field_id" emit-value map-options :options="optbidang" label="Select Bidang Jasa" bg-color="white" class="q-mb-sm col-9" />
+                            <div class="col-3 text-edit">Bidang<span class="text-negative">*</span></div>
+                            <q-select  outlined dense v-model="bisnis.business_field_id" emit-value map-options :options="optbidang" label="Select Bidang Jasa" bg-color="white" class="q-mb-sm col-9"
+                            lazy-rules
+                            :rules="[
+                                val => val !== null && val !== '' || 'Bidang tidak boleh kosong',
+                            ]"
+                            hide-bottom-space
+                            />
                             <div class="col-3 text-edit">Lokasi</div>
                             <q-input
                             dense
@@ -135,11 +143,12 @@
                             </div>
                         </div>
                 </q-card-section>
+                </q-scroll-area >
                 <q-card-actions align="center" class="q-mb-md">
                         <q-btn  no-caps label="Kembali" outline
-                        style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dbisnis', false)" class="col-5"/>
-                        <q-btn  no-caps label="Simpan" @click="onSave" class="col-5" :loading="load"
-                :disabled="btndisabled" :color="valid ? 'primary' : 'grey'">
+                        style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dbisnis', false)" class="col-5" :disabled="disabled"/>
+                        <q-btn  no-caps label="Simpan" type="submit" class="col-5 btn-radius" :loading="load"
+                :disabled="disabled" color="primary">
                         <template v-slot:loading>
                             <div class="row items-center">
                                 <q-spinner-facebook />  
@@ -147,6 +156,7 @@
                         </template>
                     </q-btn>
                 </q-card-actions>
+                </q-form>
             </q-card>
         </q-dialog>
         <dialogdeletes v-model:ddelete="ddelete" v-if="ddelete" v-model:dload="dload" v-model:ddisabled="ddisabled"/>
@@ -167,7 +177,39 @@ export default {
                 position: 'top',
                 progress: true
                 })
-            }
+            },
+            successNotif () {
+                $q.notify({
+                message: 'Bisnis berhasil dibuat',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            failedNotif () {
+                $q.notify({
+                message: 'Bisnis gagal dibuat',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            successNotif2 () {
+                $q.notify({
+                message: 'Bisnis berhasil diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            failedNotif2 () {
+                $q.notify({
+                message: 'Bisnis gagal diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
         }
     },
     props:[
@@ -180,22 +222,7 @@ export default {
     },
     computed:{
         ...mapState('myprofil',['databisnis','bisnisfield']),
-        valid(){
-            if(this.bisnis.business_field_id){
-                return true
-            }else{
-                return false
-            }
-        },
-        btndisabled(){
-            if(this.valid){
-                if (this.disabled){
-                    return true
-                }
-                return false
-            }
-            return true
-        }
+        
     },
     data(){
         return{
@@ -341,34 +368,54 @@ export default {
             this.bisnis.produk[val].srcproduct = event.target.files[0]
         },
         onSave(){
-            this.load = true
-            this.disabled = true
-            let fd = new FormData()
-            fd.append('bisnis',JSON.stringify(this.bisnis))
-            fd.append('logo',this.bisnis.srclogo)
-            let srcproduk = this.bisnis.produk.map(x=> x.srcproduct)
-            for (let i = 0; i < srcproduk.length; i++) {
-                fd.append(`produk[${i}]`,srcproduk[i])
-            }
-            if(this.edit){ //update
-                let send = {
-                    id: this.id,
-                    data:fd
+            this.$refs.dform.validate()
+            .then(valid=>{
+                if(valid){
+                    this.load = true
+                    this.disabled = true
+                    let fd = new FormData()
+                    fd.append('bisnis',JSON.stringify(this.bisnis))
+                    fd.append('logo',this.bisnis.srclogo)
+                    let srcproduk = this.bisnis.produk.map(x=> x.srcproduct)
+                    for (let i = 0; i < srcproduk.length; i++) {
+                        fd.append(`produk[${i}]`,srcproduk[i])
+                    }
+                    if(this.edit){ //update
+                        let send = {
+                            id: this.id,
+                            data:fd
+                        }
+                        this.$store.dispatch('myprofil/updBisnis',send)
+                        .then(()=>{
+                            this.load = false
+                            this.disabled = false
+                            this.$emit('update:dbisnis', false)
+                            this.successNotif2()
+                        })
+                        .catch(()=>{
+                                this.load = false
+                                this.disabled = false
+                                this.$emit('update:dbisnis', false)
+                                this.failedNotif2()
+                        })
+                    }else{ //create new
+                        this.$store.dispatch('myprofil/createBisnis',fd)
+                        .then(()=>{
+                            this.load = false
+                            this.disabled = false
+                            this.$emit('update:dbisnis', false)
+                            this.successNotif()
+                        })
+                        .catch(()=>{
+                                this.load = false
+                                this.disabled = false
+                                this.$emit('update:dbisnis', false)
+                                this.failedNotif()
+                        })
+                    }
                 }
-                this.$store.dispatch('myprofil/updBisnis',send)
-                .then(()=>{
-                    this.load = false
-                    this.disabled = false
-                    this.$emit('update:dbisnis', false)
-                })
-            }else{ //create new
-                this.$store.dispatch('myprofil/createBisnis',fd)
-                .then(()=>{
-                    this.load = false
-                    this.disabled = false
-                    this.$emit('update:dbisnis', false)
-                })
-            }
+            })
+            
         },
         onDeleting(){
             this.dload = true

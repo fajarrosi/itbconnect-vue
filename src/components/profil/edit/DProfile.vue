@@ -1,10 +1,12 @@
 <template>
     <div>
-         <q-dialog :model-value="dprofil" @click="$emit('update:dprofil', $event.target.value)" @hide="$emit('update:dprofil',false)">
+         <q-dialog :model-value="dprofil" @click="$emit('update:dprofil', $event.target.value)" persistent>
             <q-card class="hide-scrollbar">
+                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
+                <q-scroll-area style="height: 80vh;">
                 <q-card-section class="row ">
                     <div class="col-12 text-edit" style="font-size:17px;">PROFIL</div>
-                    <div class="col-4 text-edit">Nama Panggilan*</div>
+                    <div class="col-4 text-edit">Nama Panggilan</div>
                     <q-input
                     dense
                     outlined
@@ -18,7 +20,7 @@
                         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                     })"
                     />
-                    <div class="col-4 text-edit">Tempat Lahir*</div>
+                    <div class="col-4 text-edit">Tempat Lahir<span class="text-negative">*</span></div>
                     <q-input
                     dense
                     outlined
@@ -27,16 +29,19 @@
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
+                    lazy-rules
+                    :rules="[
+                    (val) => (val && val.length > 0) || 'Tempat lahir tidak boleh kosong',
+                    ]"
                     @keyup="this.$data.tempat = $event.target.value.replace(/\w\S*/g,
                     function(txt) {
                         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                     })"
                     />
-                    <div class="col-4 text-edit">Tgl Lahir*</div>
+                    <div class="col-4 text-edit">Tgl Lahir<span class="text-negative">*</span></div>
                     <q-input
                         outlined
                         dense
-                        lazy-rules
                         v-model="tgl" mask="date" 
                         class="q-mb-sm col-8"
                         bg-color="white"
@@ -44,6 +49,10 @@
                         hide-hint
                         placeholder="Tgl Lahir"
                         bottom-slots
+                        lazy-rules
+                        :rules="[
+                        (val) => (val && val.length > 0) || 'Tanggal lahir tidak boleh kosong',
+                        ]"
                         >
                         <template v-slot:after>
                             <q-icon name="event" class="cursor-pointer">
@@ -62,22 +71,46 @@
                         </q-input>
                     <div class="col-12 row justify-between">
                         <div class="col-6">
-                            <div class="col-4 text-edit">Jenis Kelamin</div>
-                            <q-select  outlined dense v-model="jkelamin" :options="optjkelamin" bg-color="white" class="q-mb-sm col-8"/>
+                            <div class="col-4 text-edit">Jenis Kelamin<span class="text-negative">*</span></div>
+                            <q-select  outlined dense v-model="jkelamin" :options="optjkelamin" bg-color="white" class="q-mb-sm col-8" 
+                            lazy-rules
+                        :rules="[
+                            val => val !== null && val !== '' || 'Jenis kelamin tidak boleh kosong',
+                        ]"
+                        hide-bottom-space
+                            />
                         </div>
                         <div class="col-5">
-                            <div class="col-4 text-edit">Gol. Darah</div>
-                            <q-select  outlined dense v-model="goldar" :options="optgoldar" bg-color="white" class="q-mb-sm col-8"/>
+                            <div class="col-4 text-edit">Gol. Darah<span class="text-negative">*</span></div>
+                            <q-select  outlined dense v-model="goldar" :options="optgoldar" bg-color="white" class="q-mb-sm col-8"
+                            lazy-rules
+                        :rules="[
+                            val => val !== null && val !== '' || 'Gol.Darah tidak boleh kosong',
+                        ]"
+                        hide-bottom-space
+                            />
                         </div>
                     </div>
                     <div class="col-12 row justify-between">
                         <div class="col-6">
-                            <div class="col-4 text-edit">Status</div>
-                            <q-select  outlined dense v-model="status" :options="optstatus" bg-color="white" class="q-mb-sm col-8"/>
+                            <div class="col-4 text-edit">Status<span class="text-negative">*</span></div>
+                            <q-select  outlined dense v-model="status" :options="optstatus" bg-color="white" class="q-mb-sm col-8"
+                            lazy-rules
+                        :rules="[
+                            val => val !== null && val !== '' || 'Status tidak boleh kosong',
+                        ]"
+                        hide-bottom-space
+                            />
                         </div>
                         <div class="col-5">
-                            <div class="col-4 text-edit">Agama</div>
-                            <q-select  outlined dense v-model="agama" :options="optagama" bg-color="white" class="q-mb-sm col-8"/>
+                            <div class="col-4 text-edit">Agama<span class="text-negative">*</span></div>
+                            <q-select  outlined dense v-model="agama" :options="optagama" bg-color="white" class="q-mb-sm col-8"
+                            lazy-rules
+                        :rules="[
+                            val => val !== null && val !== '' || 'Agama tidak boleh kosong',
+                        ]"
+                        hide-bottom-space
+                            />
                         </div>
                     </div>
                     <div class="col-4 text-edit">Kewarganegaraan</div>
@@ -86,10 +119,6 @@
                         dense
                         v-model="kewarganegaraan"
                         label="Kewarganegaraan"
-                        lazy-rules
-                        :rules="[
-                        (val) => (val && val.length > 0) || 'Kewarganegaraan tidak boleh kosong',
-                        ]"
                         class="q-mb-sm col-8"
                         bg-color="white"
                         hide-bottom-space
@@ -98,19 +127,33 @@
                         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                     })"
                         />
-                    <div class="col-3 text-edit">Alamat*</div>
+                    <div class="col-3 text-edit">Alamat<span class="text-negative">*</span></div>
                     <div class="col-9 row">
                         <q-radio v-model="dalam" val="1" label="Dalam Negeri" class="col"/>
                         <q-radio v-model="dalam" val="2" label="Luar Negeri" class="col"/>
                     </div>
                     <div v-if="dalam === '1'" class="col-11 row" style="margin-left:auto;">
-                        <div class="col-4 text-edit">Provinsi</div>
-                        <q-select  outlined dense v-model="prov" :options="optprov" label="Provinsi" bg-color="white" class="q-mb-sm col-8"/>
+                        <div class="col-4 text-edit">Provinsi<span class="text-negative">*</span></div>
+                        <q-select  outlined dense v-model="prov" :options="optprov" label="Provinsi" bg-color="white" class="q-mb-sm col-8"
+                        lazy-rules
+                        :rules="[
+                            val => val !== null && val !== '' || 'Provinsi tidak boleh kosong',
+                        ]"
+                        v-if="dalam === '1'"
+                        hide-bottom-space
+                        />
                         <div class="col-12 row" v-if="kotashow">
-                            <div class="col-4 text-edit">Kota/Kabupaten</div>
-                            <q-select  outlined dense v-model="kota" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm col-8"/>
+                            <div class="col-4 text-edit">Kota/Kabupaten<span class="text-negative">*</span></div>
+                            <q-select  outlined dense v-model="kota" :options="optkota" label="Kota / Kabupaten" bg-color="white" class="q-mb-sm col-8"
+                            v-if="dalam === '1'"
+                            lazy-rules
+                        :rules="[
+                            val => val !== null && val !== '' || 'Kota tidak boleh kosong',
+                        ]"
+                        hide-bottom-space
+                            />
                         </div>
-                            <div class="col-4 text-edit">Alamat</div>
+                            <div class="col-4 text-edit">Alamat<span class="text-negative">*</span></div>
                         <q-input
                         outlined
                         dense
@@ -123,16 +166,24 @@
                         class="q-mb-sm col-8"
                         bg-color="white"
                         hide-bottom-space
+                        v-if="dalam === '1'"
                         />
                     </div>
                     <div v-if="dalam === '2'" class="col-11 row" style="margin-left:auto;">
-                        <div class="col-4 text-edit">Negara</div>
-                        <q-select  outlined dense v-model="negara" :options="optnegara" label="Negara" bg-color="white" class="q-mb-sm col-8"/>
-                            <div class="col-4 text-edit">Alamat</div>
+                        <div class="col-4 text-edit">Negara<span class="text-negative">*</span></div>
+                        <q-select  outlined dense v-model="negara" :options="optnegara" label="Negara" bg-color="white" class="q-mb-sm col-8"
+                        lazy-rules
+                        :rules="[
+                            val => val !== null && val !== '' || 'Negara tidak boleh kosong',
+                        ]"
+                        v-if="dalam === '2'"
+                        hide-bottom-space
+                        />
+                            <div class="col-4 text-edit">Alamat<span class="text-negative">*</span></div>
                         <q-input
                         outlined
                         dense
-                        v-model="alamat" 
+                        v-model="alamatluar" 
                         label="Alamat Domisili"
                         lazy-rules
                         :rules="[
@@ -141,6 +192,7 @@
                         class="q-mb-sm col-8"
                         bg-color="white"
                         hide-bottom-space
+                        v-if="dalam === '2'"
                         />
                     </div>
                     <div class="col-3 text-edit">NIM</div>
@@ -154,17 +206,32 @@
                     hide-bottom-space
                     maxlength="24"
                     />
-                    <div class="col-3 text-edit">Email*</div>
-                    <q-input
-                    dense
-                    outlined
-                    v-model="email"
-                    placeholder="Email"
-                    class="q-mb-sm col-9"
-                    bg-color="white"
-                    hide-bottom-space
-                    />
-                    <div class="col-3 text-edit">No. Telepon*</div>
+                    <div class="col-3 text-edit">Email<span class="text-negative">*</span></div>
+                    <div class="col-9 row q-mb-sm">
+                        <q-input
+                        dense
+                        outlined
+                        v-model="email"
+                        placeholder="Email"
+                        class=" col-12"
+                        bg-color="white"
+                        hide-bottom-space
+                        lazy-rules
+                        :loading="eload"
+                        :rules="[
+                        (val) => (val && val.length > 0) || 'Email tidak boleh kosong',val => validEmail(val), val=>  existEmail()
+                        ]"
+                        input-class="email"
+                        >
+                        <template v-slot:append>
+                            <q-avatar color="positive" text-color="white" icon="done"  v-if="esuccess"/>
+                            <!-- <q-icon name="error"  v-if="error" class="text-negative"/> -->
+                        </template>
+                        </q-input>
+                        <span style="font-size:11px;padding-left:10px;" class="col-12 text-positive" v-if="esuccess">Email dapat digunakan</span>
+                        <!-- <span style="font-size:11px;padding-left:10px;" class="col-12 text-negative" v-if="error">Email tidak dapat digunakan karena email sudah terdaftar</span> -->
+                    </div>
+                    <div class="col-3 text-edit">No. Telepon<span class="text-negative">*</span></div>
                     <q-input
                     dense
                     outlined
@@ -174,15 +241,21 @@
                     bg-color="white"
                     hide-bottom-space
                     maxlength="12"
+                    mask="############"
+                    lazy-rules
+                    :rules="[
+                    (val) => (val && val.length > 0) || 'No telepon tidak boleh kosong',
+                    ]"
                     />
                     <div class="col-12 text-grey-7 q-mt-xs" >
                         Untuk privasi Alamat, edit di Pengaturan&Privasi 
                     </div>
                 </q-card-section>
+                </q-scroll-area>
                 <q-card-actions align="center" class="q-mb-md">
                     <q-btn  no-caps label="Kembali" outline
-                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dprofil', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5" :loading="load"
+                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dprofil', false)" class="col-5" :disabled="disabled"/>
+                    <q-btn  no-caps label="Simpan" color="primary" type="submit" class="col-5 btn-radius" :loading="load"
                 :disabled="disabled">
                         <template v-slot:loading>
                             <div class="row items-center">
@@ -191,6 +264,7 @@
                         </template>
                     </q-btn>
                 </q-card-actions>
+                </q-form>
             </q-card>
         </q-dialog>
     </div>
@@ -198,7 +272,37 @@
 
 <script>
 import { api } from 'boot/axios'
+import { debounce,useQuasar } from 'quasar'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            failNotif () {
+                $q.notify({
+                message: 'tunggu waktu validasi email sampai selesai',
+                type: 'negative',
+                position: 'top',
+                progress: true
+                })
+            },
+            successNotif () {
+                $q.notify({
+                message: 'Profil berhasil diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            failedNotif () {
+                $q.notify({
+                message: 'Profil gagal diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     props:[
         'dprofil',
         'dpengalaman',
@@ -206,9 +310,10 @@ export default {
         'dataprofil',
         'pnegara',
         'pprov',
-        'pagama'
+        'pagama',
+        'intro'
     ],
-    emits:['update:dpengalaman','update:dprofil'],
+    // emits:['update:dpengalaman','update:dprofil'],
     data(){
         return{
             optstatus:[
@@ -264,12 +369,18 @@ export default {
         kota:'',
         negara:'',
         alamat:'',
+        alamatluar:'',
         kotashow:false,
         load:false,
         disabled:false,
+        eload:false,
+        esuccess:false,
+        error:false,
+        first:false
         }
     },
     created(){
+        this.debouncedGetAnswer = debounce(this.getAnswer, 1000)
         this.pagama.forEach(el=>{
             let opt = {}
             opt.label = el.name
@@ -295,7 +406,7 @@ export default {
         if(this.dataprofil.prov){
             this.prov = this.optprov.find((opt)=> opt.value === this.dataprofil.prov)
         }
-        if(this.dataprofil.negara){
+        if(this.dataprofil.negara !== 78){
             this.negara = this.optnegara.find((opt)=> opt.value === this.dataprofil.negara)
         }
     },
@@ -320,122 +431,189 @@ export default {
             // this.getProv()
         }else{
             this.dalam = '2'
-            this.alamat = this.dataprofil.domisili
+                this.alamatluar = this.dataprofil.domisili
             // this.getNegara()
         }
+    },
+    computed:{
+        valid(){
+            if(this.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                return true
+            }
+            return false
+        },
     },
     watch:{
         prov: function(val){
             this.optkota = []
             this.kotashow = false
             this.kota = ''
-            api.get(`complex/city/${val.value}`)
-            .then((response)=>{
-            response.data.data.forEach(element => {
-            let opt ={}
-            opt.label = element.name
-            opt.value = element.id
-            this.optkota.push(opt)
-            this.kotashow = true
-            })
-            if(this.dataprofil.city){
-                this.kota = this.optkota.find((opt)=> opt.value === this.dataprofil.city)
+            if(val){
+                api.get(`complex/city/${val.value}`)
+                .then((response)=>{
+                    response.data.data.forEach(element => {
+                    let opt ={}
+                    opt.label = element.name
+                    opt.value = element.id
+                    this.optkota.push(opt)
+                    this.kotashow = true
+                    })
+                    if(this.dataprofil.city){
+                        this.kota = this.optkota.find((opt)=> opt.value === this.dataprofil.city)
+                    }
+                })
+                .catch((error)=> console.log("error",error))
             }
-        })
-        .catch((error)=> console.log("error",error))
-        }
-    },
-    methods:{
-        onSave(){
-            this.load = true
-            this.disabled = true
-            let sendData = {}
-            sendData.nickname = this.nama
-            sendData.pob= this.tempat
-            sendData.dob = this.tgl.replace(/\//gi,'-')
-            if(this.jkelamin.label === 'Laki-laki'){
-                sendData.gender = 'male'
-            }else{
-                sendData.gender = 'female'
-            }
-            sendData.blood = this.goldar.value
-            if(this.status.value === '1'){
-                sendData.marriage = 'yes'
-            }else{
-                sendData.marriage = 'no'
-            }
-            sendData.religion_id = this.agama.value
-            sendData.citizenship = this.kewarganegaraan
-            if(this.dalam === '1'){
-                sendData.province_id = this.prov.value
-                sendData.cities_id = this.kota.value
-                sendData.country_id = 78
-            }else{
-                sendData.country_id = this.negara.value
-            }
-            sendData.address = this.alamat
-            sendData.nim = this.nim
-            
-            sendData.email = this.email
-            sendData.telephone = this.nowa
-            this.$store.dispatch('myprofil/updProfil',sendData)
-            .then(response=>{
-                this.load = false
-                this.disabled = false
-                if(this.userbaru){
-                    this.$emit('update:dprofil',false)
-                    this.$emit('update:dpengalaman',true)
+        },
+        email(val){
+            this.esuccess = false
+            this.error = false
+            if(val !== this.dataprofil.email && val !== null && val !== ''){
+                this.first = false
+                if(this.valid){
+                    this.eload = true
+                    this.debouncedGetAnswer()
                 }else{
-                    this.$emit('update:dprofil',false)
+                    this.eload = false
+                }
+            }else if(val === this.dataprofil.email){
+                this.first = true
+            }
+        },
+        esuccess(val){
+            let x = document.getElementsByClassName('email')
+            Array.from(x).forEach(function(n,index){
+                let m = n.parentNode.parentNode
+                if(val){
+                    m.classList.add("text-positive")
+                    
+                }else{
+                    m.classList.remove("text-positive")
                 }
             })
-            .catch(err=>{
-                console.log("error",err)
+        },
+        error(val){
+            let x = document.getElementsByClassName('email')
+            Array.from(x).forEach(function(n,index){
+                let m = n.parentNode.parentNode
+                if(val){
+                    m.classList.add("text-negative")
+                    
+                }else{
+                    m.classList.remove("text-negative")
+                }
             })
         },
-        // async getReligion(){
-        //     return await api.get('complex/religion')
-        // .then(response=>{
-        //     response.data.data.forEach(el=>{
-        //         let opt = {}
-        //         opt.label = el.name
-        //         opt.value = el.id
-        //         this.optagama.push(opt)
-        //     })
-        //     if(this.dataprofil.religion){
-        //         this.agama = this.optagama.find((ag)=>ag.label.includes(this.dataprofil.religion))
-        //     }
-        // })
+    },
+    methods:{
+        getAnswer(){
+            if(this.email !== this.dataprofil.email && this.email !== null && this.email !== ''){
+                if(this.valid){
+                    api.post('auth/checkEmailExist',{
+                    email : this.email
+                    })
+                    .then(()=>{
+                        this.esuccess = true
+                        this.eload = false
+                    })
+                    .catch(()=>{
+                        this.eload = false
+                        this.error = true
+                    })
+                }
+            }else{
+                this.eload = false
+            }
+        },
+        existEmail(){
+            if(!this.error){
+                return true
+            }else{
+                return 'Email tidak dapat digunakan karena email sudah terdaftar'
+            }
+        },
+        validEmail(val){
+            if(val.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                return true;
+            }else{
+                return 'Email tidak valid';
+            }
+        },
+        onSave(){
+            if(this.first){
+                this.onSaving()
+            }
+            else if(this.esuccess){
+                this.onSaving()
+            }else{
+                this.failNotif()
+            }
 
-        // },
-        // async getProv(){
-        //     return await api.get('complex/province')
-        //     .then((response)=>{
-        //         response.data.data.forEach(element => {
-        //         let opt ={}
-        //         opt.label = element.name
-        //         opt.value = element.id
-        //         this.optprov.push(opt)
-        //         })
-        //         if(this.dataprofil.prov){
-        //             this.prov = this.optprov.find((opt)=> opt.value === this.dataprofil.prov)
-        //         }
-        //     })
-        //     .catch((error)=> console.log("error",error))
-        // },
-        // async getNegara(){
-        //     return await api.get('complex/country')
-        //     .then((response)=>{
-        //         response.data.data.forEach(element => {
-        //         let opt ={}
-        //         opt.label = element.country_name
-        //         opt.value = element.id
-        //         this.optnegara.push(opt)
-        //         })
-        //         this.negara = this.optnegara.find((opt)=> opt.value === this.dataprofil.negara)
-        //     })
-        //     .catch((error)=> console.log("error",error))
-        // },
+        },
+        onSaving(){
+            this.$refs.dform.validate()
+                .then(valid=>{
+                    if(valid){
+                        this.load = true
+                        this.disabled = true
+                        let sendData = {}
+                        sendData.nickname = this.nama
+                        sendData.pob= this.tempat
+                        sendData.dob = this.tgl.replace(/\//gi,'-')
+                        if(this.jkelamin.label === 'Laki-laki'){
+                            sendData.gender = 'male'
+                        }else{
+                            sendData.gender = 'female'
+                        }
+                        sendData.blood = this.goldar.value
+                        if(this.status.value === '1'){
+                            sendData.marriage = 'yes'
+                        }else{
+                            sendData.marriage = 'no'
+                        }
+                        sendData.religion_id = this.agama.value
+                        sendData.citizenship = this.kewarganegaraan
+                        if(this.dalam === '1'){
+                            sendData.province_id = this.prov.value
+                            sendData.cities_id = this.kota.value
+                            sendData.country_id = 78
+                            sendData.address = this.alamat
+                        }else{
+                            sendData.province_id = null
+                            sendData.cities_id = null
+                            sendData.address = this.alamatluar
+                            sendData.country_id = this.negara.value
+                        }
+                        sendData.nim = this.nim
+                        
+                        sendData.email = this.email
+                        sendData.telephone = this.nowa
+                        this.$store.dispatch('myprofil/updProfil',sendData)
+                        .then(response=>{
+                            this.load = false
+                            this.disabled = false
+                            if(this.userbaru){
+                                this.$emit('update:dprofil',false)
+                                this.$emit('update:intro',false)
+                                this.$emit('update:dpengalaman',true)
+                            }else{
+                                this.$emit('update:intro',false)
+                                this.$emit('update:dprofil',false)
+                            }
+                                this.successNotif()
+                        })
+                        .catch(err=>{
+                            this.load = false
+                            this.disabled = false
+                            this.$emit('update:intro',false)
+                            this.$emit('update:dprofil',false)
+                            this.failedNotif()
+                            console.log("error",err)
+                        })
+                    }
+                })
+        }
+     
     }
 }
 </script>

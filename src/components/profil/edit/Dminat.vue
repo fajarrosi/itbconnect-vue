@@ -1,7 +1,8 @@
 <template>
     <div>
-        <q-dialog :model-value="dminat" @click="$emit('update:dminat', $event.target.value)" @hide="$emit('update:dminat',false)">
+        <q-dialog :model-value="dminat" @click="$emit('update:dminat', $event.target.value)" persistent>
             <q-card class="hide-scrollbar">
+                <q-scroll-area style="height: 80vh;">
                 <q-card-section>
                         <div class="q-mb-md text-edit" style="font-size:17px;">MINAT & ORGANISASI*</div>
                         <q-select  outlined dense v-for="(inp,k) in minat" :key="k" v-model="inp.selectedorg" emit-value map-options :options="optorganisasi" label="Minat & Organisasi" bg-color="white" class="q-mb-sm">
@@ -16,11 +17,12 @@
                     <q-select  outlined dense v-model="selectedpengda" emit-value map-options :options="optpengda" label="IA Pengurus Daerah" bg-color="white" class="q-mb-sm" />
                     <q-select  outlined dense v-model="selectediaprodi" emit-value map-options :options="optprodi" label="IA Prodi" bg-color="white" class="q-mb-sm" />
                 </q-card-section>
+                </q-scroll-area>
                 <q-card-actions align="center" class="q-mb-md" >
                     <q-btn  no-caps label="Kembali" outline
-                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dminat', false)" class="col-5"/>
-                    <q-btn  no-caps label="Simpan" :color="valid ? 'primary' : 'grey'" @click="onSave" class="col-5" :loading="load"
-                :disabled="disabled">
+                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dminat', false)" class="col-5" :disabled="btndisabled"/>
+                    <q-btn  no-caps label="Simpan" color="primary" @click="onSave" class="col-5 btn-radius" :loading="load" :disabled="btndisabled"
+                >
                         <template v-slot:loading>
                             <div class="row items-center">
                                 <q-spinner-facebook />  
@@ -34,7 +36,29 @@
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            successNotif () {
+                $q.notify({
+                message: 'Organisasi berhasil diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            failedNotif () {
+                $q.notify({
+                message: 'Organisasi gagal diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     props:[
         'dminat',
         'dbisnis',
@@ -43,7 +67,8 @@ export default {
         'organization',
         'pengda',
         'iaprodi',
-        'datapengda'
+        'datapengda',
+        'intro'
     ],
     emits:[
         'update:dminat',
@@ -76,8 +101,12 @@ export default {
             })
         })
         if(this.datapengda){
-            this.selectedpengda = this.datapengda.commisariat.id
-            this.selectediaprodi = this.datapengda.iaprodi.id
+            if(this.datapengda.commisariat_id !== null){
+                this.selectedpengda = this.datapengda.commisariat.id
+            }
+            if(this.datapengda.ia_prodi_id !== null){
+                this.selectediaprodi = this.datapengda.iaprodi.id
+            }
         }
     },
     data(){
@@ -103,7 +132,7 @@ export default {
         },
         onSave(){
             this.load = true
-            this.disabled = true
+            this.btndisabled = true
             let org = this.minat.map(a=> a.selectedorg)
             this.$store.dispatch('myprofil/updOrg',{
                 commisariat_id : this.selectedpengda,
@@ -112,34 +141,26 @@ export default {
             })
             .then(()=>{
                 this.load = false
-                this.disabled = false
+                this.btndisabled = false
                 if (this.userbaru) {
                     this.$emit('update:dminat', false)
+                    this.$emit('update:intro', false)
                     this.$router.push({name:'editbisnis'})
                 }else{
                     this.$emit('update:dminat', false)
-                }   
+                    this.$emit('update:intro', false)
+                } 
+                this.successNotif()  
+            })
+            .catch(()=>{
+                this.load = false
+                this.btndisabled = false
+                this.$emit('update:dminat', false)
+                this.$emit('update:intro', false)
+                this.failedNotif()
             })
         },
     },
-    computed:{
-        valid(){
-            if(this.selectedpengda && this.selectediaprodi){
-                return true
-            }else{
-                return false
-            }
-        },
-        disabled(){
-            if(this.valid){
-                if (this.btndisabled){
-                    return true
-                }
-                return false
-            }
-            return true
-        }
-    }
 }
 </script>
 

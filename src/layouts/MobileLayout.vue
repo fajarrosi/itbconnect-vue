@@ -47,11 +47,11 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-ripple @click="$router.push({name:'calendar'})">
+              <q-item clickable v-ripple @click="$router.push({name:'kalender'})">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/calendar.png" alt="calendar">
-                    <div class="text-black q-ml-sm">Calendar</div>
+                    <div class="text-black q-ml-sm">Kalender</div>
                   </div>
                 </q-item-section>
               </q-item>
@@ -63,7 +63,7 @@
                   </div>
                 </q-item-section>
               </q-item> -->
-              <q-item clickable v-ripple @click="$router.push({name:'setting&Privasi'})">
+              <q-item clickable v-ripple @click="$router.push({name:'Pengaturan & Privasi'})">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/privasi.png" alt="privasi">
@@ -192,7 +192,6 @@ export default {
     Logout(){
       this.$store.dispatch('auth/logout')
       this.$router.push({name: 'login'})
-      this.$store.dispatch('myprofil/logout')
     }
   },
   created(){

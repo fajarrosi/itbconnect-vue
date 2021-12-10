@@ -33,9 +33,9 @@ const routes = [
       {path:'/otp',name:'otp', component: () => import('pages/auth/Otp.vue')},
       {path:'/forgot', component: () => import('pages/auth/Forgot.vue')},
       {path:'/forgot2', component: () => import('pages/auth/Forgot2.vue')},
-      {path:'/register', component: () => import('pages/auth/Register.vue')},
+      {path:'/register',name:'register', component: () => import('pages/auth/Register.vue')},
       {path:'/regissuccess',name:'registerberhasil', component: () => import('pages/auth/RegisSucc.vue')},
-      {path:'/registered', component: () => import('pages/auth/Register2.vue')},
+      {path:'/registered',name:'registered', component: () => import('pages/auth/Register2.vue')},
     ]
   },
 
@@ -100,7 +100,7 @@ const routes = [
           detail:true
         },
       },
-      {path:'calendar',name:'calendar',component:()=>import('pages/calendar/Calendar.vue'),
+      {path:'calendar',name:'kalender',component:()=>import('pages/calendar/Calendar.vue'),
         meta:{
           nofooter:true,
           userverified:true,
@@ -134,7 +134,7 @@ const routes = [
           headerback:true
         }
       },
-      {path:'pengaturan',name:'setting&Privasi',component:()=>import('pages/pengaturan/Pengaturan.vue'),
+      {path:'pengaturan',name:'Pengaturan & Privasi',component:()=>import('pages/pengaturan/Pengaturan.vue'),
         meta:{
           nofooter:true,
           userverified:true,
@@ -149,14 +149,7 @@ const routes = [
       },
     ]
   },
-  {
-    path:'/testlayout',
-    component: () => import('layouts/FirstLayout.vue'),
-    children:[
-      {path:'/logins', component: () => import('pages/auth/Login.vue')},
-    ]
-    
-  },
+  
   // Always leave this as last one,
   // but you can also remove it
   {

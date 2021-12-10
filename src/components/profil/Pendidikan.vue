@@ -26,6 +26,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 </template>
 
 <script>
+import {  mapActions } from "vuex"
 export default {
     props:[
         'dpend',
@@ -36,8 +37,16 @@ export default {
         }
     },
     methods:{
+        ...mapActions("myprofil", ['getJenjang','getProdi']),
+        async getData(){
+            this.getJenjang()
+            this.getProdi()
+            .then(()=>{
+                this.$emit('update:dpend',true)
+            })
+        },
         ubah(){
-            this.$emit('update:dpend',true)
+            this.getData()
         }
     }
 }

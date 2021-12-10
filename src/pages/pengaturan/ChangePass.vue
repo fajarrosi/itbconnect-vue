@@ -144,9 +144,6 @@ export default {
             .catch(()=>{
                 this.load = false
                 this.error = true
-                console.log("load",this.load)
-                console.log("error",this.error)
-
             })
         },
         onSubmit(){
