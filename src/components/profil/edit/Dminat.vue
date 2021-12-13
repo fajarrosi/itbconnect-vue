@@ -95,11 +95,17 @@ export default {
         })
     },
     mounted(){
-        this.dataorganisasi.forEach(el=>{
-            this.minat.push({
-                selectedorg : el.organization_id
+        if(this.dataorganisasi.length > 0 ){
+            this.dataorganisasi.forEach(el=>{
+                this.minat.push({
+                    selectedorg : el.organization_id
+                })
             })
-        })
+        }else{
+            this.minat.push({
+                selectedorg:''
+            })
+        }
         if(this.datapengda){
             if(this.datapengda.commisariat_id !== null){
                 this.selectedpengda = this.datapengda.commisariat.id

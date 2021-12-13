@@ -5,7 +5,7 @@
             Mohon isikan biodata Anda dengan benar
         </div>
         <hr class="line-cards q-my-md">
-        <p class="text-caption text-bold">Pekerjaan Terakhir</p>
+        <p class="text-caption text-bold">Pekerjaan Terakhir<span class="text-negative">*</span></p>
         <q-input
             outlined
             dense

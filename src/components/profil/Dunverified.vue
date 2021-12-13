@@ -1,22 +1,22 @@
 <template>
     <div> 
-        <q-dialog :model-value="intro" @click="$emit('update:intro', $event.target.value)" persistent transition-show="scale" transition-hide="scale">
+        <q-dialog :model-value="unverified" @click="$emit('update:unverified', $event.target.value)" persistent transition-show="scale" transition-hide="scale">
             <q-card>
                 <q-card-section>
                 <div class="row justify-center">
                     <p class="text-center q-mt-md text-primary text-bold col-12" style="font-size:18px;">
-                        Isi Profile Dahulu
+                        Dalam Proses Verifikasi
                     </p>
                 <q-img
-                    src="~assets/no-data.png"
+                    src="~assets/unverified.png"
                     spinner-color="primary"
                     style="width: 118px; height: 112px;"
                     spinner-size="82px"
                 />
                     <p class="text-center q-mt-md text-grey-8 text-bold col-12" style="font-size:14px;">
-                        Anda tidak bisa mengakses halaman lain sebelum melengkapi data diri Anda 
+                        Mohon sabar menunggu. Silahkan lengkapi data untuk mempermudah kami melakukan verifikasi.
                     </p>
-                    <q-btn label="Edit Profil" color="primary" style="border-radius: 8px;" no-caps @click="edit" class="col-4"/>
+                    <q-btn label="Tutup" color="primary" style="border-radius: 8px;" no-caps @click="edit" class="col-4"/>
                 </div>
                 </q-card-section>
             </q-card>
@@ -27,14 +27,11 @@
 <script>
 export default {
     props:[
-        'intro',
-        'dbio'
+        'unverified',
     ],
-    emits:['update:intro','update:dbio'],
     methods:{
         edit(){
-            this.$emit('update:intro', false)
-            this.$emit('update:dbio',true)
+            this.$emit('update:unverified', false)
         }
     }
 }

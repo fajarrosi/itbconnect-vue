@@ -2,7 +2,7 @@
     <q-page class="q-pb-lg">
 
         <div v-if="valid">
-            <q-img :src="headerphoto ? headerphoto : require('assets/bg-akun.png')" alt="background-account" width="428px" height="153px"/>
+            <q-img :src="headerphoto ? headerphoto : require('assets/bg-akun.png')" alt="background-account"  height="153px"/>
             <q-card flat class="q-mb-md q-mx-md card-radius" style="margin-top:-40px;" >
                 <q-card-section>
                     <bio v-model:dbio="dbio"/>
@@ -29,15 +29,19 @@
                 <q-card-section class="q-pb-none">
                     <profil v-model:dprofil="dprofil" :dataprofil="dataprofil" />
                 </q-card-section>
+                <q-separator spaced style="background:#CCDBDC;" />
                 <q-card-section class="q-py-none">
                     <pengalaman v-model:dpengalaman="dpengalaman" :datapengalaman="datapengalaman" :databio="databio"/>
                 </q-card-section>
+                <q-separator spaced style="background:#CCDBDC;" />
                 <q-card-section class="q-py-none">
                     <pendidikan v-model:dpend="dpend" :datapendidikan="datapendidikan" :databio="databio"/>
                 </q-card-section>
+                <q-separator spaced style="background:#CCDBDC;" />
                 <q-card-section class="q-py-none">
                     <organisasi v-model:dminat="dminat" :dataorganisasi="dataorganisasi" :databio="databio" :datapengda="datapengda"/>
                 </q-card-section>
+                <q-separator spaced style="background:#CCDBDC;" />
                 <bisnis />
             </q-card>
         </div>
@@ -108,13 +112,6 @@ export default {
                 return ''
             }
         },
-        // valid(){
-        //     if(Object.keys(this.databio).length > 0){
-        //         return true
-        //     }else {
-        //         return false
-        //     }
-        // },
     },
     created(){
         this.getProfil()
@@ -125,16 +122,7 @@ export default {
                     this.userbaru = true
                 }
         })
-        // if(this.negara && this.prov && this.agama && this.jenjang && this.prodi && this.organization && this.pengda && this.iaprodi && this.bisnisfield){
-        //     // console.log('true')
-        // }else{
-        //     this.getData()
-        // }
-
     },
-    unmounted(){
-        this.$store.dispatch('myprofil/logout')
-    }
 }
 </script>
 

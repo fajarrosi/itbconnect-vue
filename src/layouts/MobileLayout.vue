@@ -39,7 +39,7 @@
         >
           <q-scroll-area style="height: calc(100% - 170px); margin-top: 170px; border-right: 1px solid #ddd">
             <q-list padding>
-              <q-item clickable v-ripple @click="$router.push({name:'notifikasi'})">
+              <q-item clickable v-ripple @click="onVerified('notifikasi')">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/notifikasi.png" alt="notifikasi">
@@ -47,7 +47,7 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-ripple @click="$router.push({name:'kalender'})">
+              <q-item clickable v-ripple @click="onVerified('kalender')">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/calendar.png" alt="calendar">
@@ -63,7 +63,7 @@
                   </div>
                 </q-item-section>
               </q-item> -->
-              <q-item clickable v-ripple @click="$router.push({name:'Pengaturan & Privasi'})">
+              <q-item clickable v-ripple @click="onVerified('Pengaturan & Privasi')">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/privasi.png" alt="privasi">
@@ -122,17 +122,17 @@
     <q-footer v-if="!$route.meta.nofooter">
       <div class="row justify-center bg-grey-2">
         <div class="mobile bg-white row text-center text-black" style="box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.25);">
-            <div class="col q-py-sm footer-menu "  @click="$router.replace({name:'beranda'})">
+            <div class="col q-py-sm footer-menu "  @click="onVerified('beranda')">
                 <img src="~assets/beranda-on.png" alt="beranda-on" v-if="$route.name.includes('beranda')">
                 <img src="~assets/beranda-off.png" alt="beranda-off" v-else>
                 <div class="text-caption" :class="$route.name.includes('beranda') ? 'text-primary' : 'text-black'">Beranda</div>
             </div>
-            <div class="col q-py-sm footer-menu "  @click="$router.replace({name:'koneksi'})">
+            <div class="col q-py-sm footer-menu "  @click="onVerified('koneksi')">
                 <img src="~assets/koneksi-on.png" alt="koneksi-on" v-if="$route.fullPath.includes('/koneksi')">
               <img src="~assets/koneksi-off.png" alt="koneksi-off" v-else>
                 <div class="text-caption" :class="$route.fullPath.includes('/koneksi') ? 'text-primary' : 'text-black'">Koneksi</div>
             </div>
-            <div class="col q-py-sm footer-menu "  @click="$router.replace({name:'berita'})">
+            <div class="col q-py-sm footer-menu "  @click="onVerified('berita')">
               <img src="~assets/berita-on.png" alt="berita-on" v-if="$route.fullPath.includes('/berita')">
               <img src="~assets/berita-off.png" alt="berita-off" v-else>
               <div class="text-caption" :class="$route.fullPath.includes('/berita') ? 'text-primary' : 'text-black'">Berita</div>
@@ -145,7 +145,7 @@
         </div>
       </div>
     </q-footer>
-    
+    <d-unverified v-if="unverified" v-model:unverified="unverified" />
   </q-layout>
 </template>
 
@@ -153,6 +153,14 @@
 import {  mapState, mapActions } from "vuex";
 import { ref } from 'vue'
 export default {
+  components:{
+    'd-unverified' : require('components/profil/Dunverified.vue').default
+  },
+  data(){
+    return{
+      unverified:false
+    }
+  },
   setup () {
     const drawer = ref(false)
 
@@ -192,13 +200,19 @@ export default {
     Logout(){
       this.$store.dispatch('auth/logout')
       this.$router.push({name: 'login'})
+    },
+    onVerified(routerName){
+      if(this.$store.getters['auth/isVerifieduser']){
+        this.$router.push({name:routerName})
+      }else{
+        this.unverified = true
+      }
     }
   },
   created(){
     if(!this.databio && !this.dataprofil && !this.datapengalaman && !this.datapendidikan && !this.dataorganisasi){
       this.getData()
     }
-   
   }
 }
 </script>

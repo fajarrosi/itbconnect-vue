@@ -67,10 +67,7 @@
                 <div class="col-4">No. Telepon</div>
                 <div class="col-6">: {{dataprofil.telephone}}</div>
             </div>
-            <svg class="Line_85" viewBox="0 0 396 1">
-                <path id="Line_85" d="M 0 0 L 396 0">
-                </path>
-            </svg>
+            
         </div>
     </div>
 </template>

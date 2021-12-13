@@ -221,13 +221,14 @@ export default {
         }
     },
     created(){
+        this.$store.dispatch('koneksi/deleteMyConnection')
         this.getData()
         this.$store.dispatch('myprofil/getProfil')
         this.$store.dispatch('myprofil/deleteall')
     },
-    unmounted(){
-        this.$store.dispatch('koneksi/deleteMyConnection')
-    }
+    // unmounted(){
+    //     this.$store.dispatch('koneksi/deleteMyConnection')
+    // }
 
 
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <div class="text-h5 text-bold text-primary">USER LOGIN</div>
         <div class="text-subtitle2 q-mt-md text-justify">
         Buat username dan password Anda

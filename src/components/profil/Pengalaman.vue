@@ -15,10 +15,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                     </li>
                 </ul>
             </div>
-            <svg class="Line_85" viewBox="0 0 396 1">
-                <path id="Line_85" d="M 0 0 L 396 0">
-                </path>
-            </svg>
+            
     </div>
 </template>
 

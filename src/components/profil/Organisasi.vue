@@ -15,21 +15,21 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 </li>
             </ul>
         </div>
+        <div v-else>
+            <div class="grey">Belum ada Organisasi </div>
+        </div>
             <div class="title-section q-mt-md">Pengurus Daerah & IA Prodi</div>
             <div v-if="datapengda">
                 <div v-if="datapengda.commisariat_id !== null">{{datapengda.commisariat.name}}</div>
                 <div v-if="datapengda.ia_prodi_id !== null">{{datapengda.iaprodi.name}}</div>
                 <div v-else>
-                    <div class="grey">Belum Ikut Pengurus Daerah & IA Prodi</div>
+                    <div class="grey">Belum ada Pengurus Daerah & IA Prodi</div>
                 </div>
             </div>
             <div v-else>
-                <div class="grey">Belum Ikut Pengurus Daerah & IA Prodi</div>
+                <div class="grey">Belum ada Pengurus Daerah & IA Prodi</div>
             </div>
-        <svg class="Line_85" viewBox="0 0 396 1">
-            <path id="Line_85" d="M 0 0 L 396 0">
-            </path>
-        </svg>
+        
     </div>
 </template>
 

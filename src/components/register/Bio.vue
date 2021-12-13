@@ -82,7 +82,7 @@
         input-class="qname"
         />
         <div class="text-subtitle2">
-        Tanggal Lahir
+        Tanggal Lahir<span class="text-negative">*</span>
         </div>
         <div class="row q-my-sm justify-between">
             <q-select emit-value map-options outlined dense  :modelValue="tgl"

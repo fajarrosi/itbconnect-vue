@@ -11,7 +11,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
             </q-btn>
         </div>
         <div class="row">
-            <div class="col-9  text-primary text-h6" style="font-weight:600;">{{databio.name}}</div>
+            <div class="col-9  text-primary text-h6" style="font-weight:600;">{{databio.name}} <span style="font-size:9px;color:#F47226;" v-if="!$store.getters['auth/isVerifieduser']">(Dalam Verifikasi)</span> </div>
             <div class="col-9 q-mb-sm text-primary">Jurusan {{databio.prodi}}, {{databio.tahunmasuk}}</div>
             <div class="col-9 ">{{databio.jabatan}} {{databio.perusahaan}}</div>
         </div>

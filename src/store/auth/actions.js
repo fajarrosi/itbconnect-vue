@@ -122,9 +122,11 @@ export function register2(context,data){
             form.append('cities_id',data.user.kota.value)
         }
         form.append('address',data.user.alamat)
-        let org = data.org.map(a=> a.org)
-        for (var i = 0; i < org.length; i++) {
-            form.append(`organization_id[${i}]`, org[i]);
+        if(data.org){
+            let org = data.org.map(a=> a.org)
+            for (var i = 0; i < org.length; i++) {
+                form.append(`organization_id[${i}]`, org[i]);
+            }
         }
         let config = {
             headers : {

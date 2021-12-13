@@ -2,11 +2,6 @@
     <div class="bisnis-profil"> 
         <q-card-section class="row justify-between q-pt-none">
             <div class="title-section">BISNIS DAN PEKERJAAN</div>
-            <q-btn flat dense style="color:rgba(25,135,191,1);
-font-size: 12px;padding-top:0;" no-caps @click="ubah">
-                <div>Ubah</div>
-                <q-icon name="edit" size="15px"/>
-            </q-btn>
         </q-card-section>
         <div v-if="Object.keys(bisnis).length > 0">
             <div v-for="(b,index) in bisnis" :key="index">
@@ -39,7 +34,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 <q-card-section v-if="b.produk[0].prevlogo === '' && b.produk[0].deskripsi === ''">
                     Belum ada produk
                 </q-card-section>
-                <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" />
+                <q-separator spaced style="background:#CCDBDC;" />
             </div>
         </div>
 

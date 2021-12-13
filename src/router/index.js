@@ -37,9 +37,6 @@ export default route(function ( { store /*ssrContext*/ } ) {
           next()
         }else if(store.getters['auth/isVerifiedemail']){
           next({name: 'profil'})
-          // store.dispatch('myprofil/getProfil')
-          // .then(()=>{
-          // })
         } else{
           next({name:'registerberhasil'})
         }

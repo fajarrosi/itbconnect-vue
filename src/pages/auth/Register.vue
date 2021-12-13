@@ -1,7 +1,7 @@
 <template>
 <div>
 <!-- <q-page > -->
-    <q-card flat class="auth-card col-12" style="max-width:354px;">
+    <q-card flat class="auth-card col-12" style="max-width:354px;min-width:300px;">
       <q-card-section>
             <q-stepper v-model="step" ref="stepper" color="primary" animated contracted flat inactive-color="white" 
             active-icon="primary"
@@ -163,18 +163,7 @@ export default {
       return this.$store.state.auth.alumni
     },
     valid(){
-      if(this.step === 1){
-        // jika valid maka primary tidak maka grey
-        if(this.user.name && this.user.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) && this.user.nowa && this.user.tempat && this.user.tgl && this.user.bln && this.user.thn){
-          return true
-        }
-          return false
-      }else if(this.step === 2){
-        if(this.user.jenjang && this.user.prodi && (this.user.tahunmasuk.length >= 4) && (this.user.tahunkeluar.length >= 4)){
-          return true
-        }
-        return false
-      }else if(this.step === 3){
+      if(this.step === 3){
         if(this.usuccess && this.user.password && (this.user.konfirmasi === this.user.password)){
           return true
         }

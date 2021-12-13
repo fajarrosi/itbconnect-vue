@@ -1,7 +1,7 @@
 <template>
     <q-page class="q-pb-lg">
       <div v-if="valid">
-          <img src="~assets/bg-akun.png" alt="background-account">
+          <q-img :src="headerphoto ? headerphoto : require('assets/bg-akun.png')" alt="background-account"  height="153px"/>
           <q-card flat class="q-mb-md q-mx-md card-radius" style="margin-top:-40px;" >
               <q-card-section>
                   <bio/>
@@ -10,16 +10,16 @@
           <div class="row q-mx-md justify-between items-center">
               <p class="text-bold q-mb-sm text-17" style="color:#155897;">Informasi Pribadi</p>
               <div class="row" v-if="is_friend">
-                  <q-btn round flat dense type="a" target="_blank" :href="databio.linkedin" >
+                  <q-btn round flat dense type="a" target="_blank" :href="databio.linkedin" v-if="databio.linkedin">
                       <img src="images/linkedin-bluee.png" alt="linkedin">
                   </q-btn>
-                  <q-btn round flat dense type="a" target="_blank" :href="databio.ig" >
+                  <q-btn round flat dense type="a" target="_blank" :href="databio.ig" v-if="databio.ig">
                       <img src="images/instagram-bluee.png" alt="ig">
                   </q-btn>
-                  <q-btn round flat dense type="a" target="_blank" :href="databio.fb" >
+                  <q-btn round flat dense type="a" target="_blank" :href="databio.fb" v-if="databio.fb">
                       <img src="images/facebook-bluee.png" alt="fb">
                   </q-btn>
-                  <q-btn round flat dense type="a" target="_blank" :href="databio.twit" >
+                  <q-btn round flat dense type="a" target="_blank" :href="databio.twit" v-if="databio.twit">
                       <img src="images/twitter-bluee.png" alt="twt">
                   </q-btn>
               </div>
@@ -29,16 +29,20 @@
                   <q-card-section class="q-pb-none">
                       <profil v-model:request="request"/>
                   </q-card-section>
+                  <q-separator spaced style=" background:#CCDBDC;" />
                   <div v-if="is_friend">
-                    <q-card-section class="q-pb-none" >
+                    <q-card-section class="q-py-none" >
                         <pengalaman />
                     </q-card-section>
-                    <q-card-section class="q-pb-none" >
+                    <q-separator spaced style=" background:#CCDBDC;" />
+                    <q-card-section class="q-py-none" >
                         <pendidikan />
                     </q-card-section>
-                    <q-card-section class="q-pb-none" >
+                    <q-separator spaced style=" background:#CCDBDC;" />
+                    <q-card-section class="q-py-none" >
                         <organisasi />
                     </q-card-section>
+                    <q-separator spaced style=" background:#CCDBDC;" />
                         <bisnis/>
                   </div>
           </q-card>
@@ -67,6 +71,13 @@ export default {
     },
     computed:{
         ...mapState('rekomendasi',['databio','is_friend']),
+        headerphoto(){
+            if(this.$store.state.rekomendasi.databio.headerprofil){
+                return this.header + this.$store.state.rekomendasi.databio.headerprofil
+            }else{
+                return ''
+            }
+        },
     },
     data(){
         return{

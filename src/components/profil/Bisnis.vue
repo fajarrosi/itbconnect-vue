@@ -39,7 +39,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                 <q-card-section v-if="b.produk[0].prevlogo === '' && b.produk[0].deskripsi === ''">
                     Belum ada produk
                 </q-card-section>
-                <q-separator spaced style="border:1px solid #CCDBDC; background:#CCDBDC;" />
+                <q-separator spaced style="background:#CCDBDC;" />
             </div>
         </div>
 

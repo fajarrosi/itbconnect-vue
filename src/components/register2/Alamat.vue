@@ -5,7 +5,7 @@
             Mohon isikan biodata Anda dengan benar
         </div>
         <hr class="line-cards q-my-md">
-        <p class="text-caption text-bold">Alamat Domisili</p>
+        <p class="text-caption text-bold">Alamat Domisili <span class="text-negative">*</span></p>
         <q-select  outlined dense :modelValue="dalam" @update:modelValue="event => $emit('update:dalam',event)" :options="optdomisili" label="Dalam Negeri / Luar Negeri" bg-color="white" class="q-mb-sm"/>
         <div v-if="dalam.value === '1'">
             <q-select  outlined dense :modelValue="prov" @update:modelValue="event => $emit('update:prov',event)" :options="optprovinsi" label="Provinsi" bg-color="white" class="q-mb-sm"/>
@@ -73,24 +73,6 @@ export default {
         'optnegara',
         'kotashow'
     ],
-    // watch:{
-    //     prov: function(val){
-    //         this.optkota = []
-    //         this.kotashow = false
-    //         api.get(`complex/city/${val.value}`)
-    //         .then((response)=>{
-    //         response.data.data.forEach(element => {
-    //         let opt ={}
-    //         opt.label = element.name
-    //         opt.value = element.id
-    //         this.optkota.push(opt)
-    //         this.kotashow = true
-    //         });
-    //     })
-    //     .catch((error)=> console.log("error",error))
-    //         console.log("val",val.value)
-    //     }
-    // }
 }
 </script>
 

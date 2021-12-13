@@ -115,7 +115,9 @@ export default {
             this.debouncedGetAnswer()
         }
     },
-    created: function () {
+    created(){
+        this.$store.dispatch('koneksi/deleteMyConnection')
+        this.$store.dispatch('koneksi/MyConnection')
         this.debouncedGetAnswer = debounce(this.onSearch, 1000)
     },
     methods:{

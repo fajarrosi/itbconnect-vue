@@ -75,6 +75,18 @@
                 class="col"
               />
               <q-btn
+              flat
+              color="grey-8"
+              label="Lewati"
+              class="col"
+              size="12px"
+              dense
+              no-caps
+              :disabled="btndisabled"
+              v-if="step === 4"
+              @click="onSkip"
+              />
+              <q-btn
                 v-if="step === 4"
                 @click="onSubmit"
                 :color="valid ? 'primary' : 'grey'"
@@ -292,35 +304,26 @@ export default {
     remove(val){
         this.inputs.splice(val,1)
     },
-    onSubmit(){
-      this.load = true
-      this.btndisabled = true
-      if(this.user.dalam.value === '2'){
-          this.$store.dispatch('auth/register2',{
-          user: this.user,
-          org: this.inputs
-          })
-          .then(response=>{
-            this.load = false
-            this.btndisabled = false
-            // this.$router.push({name:'profil'})
-            if(response.status === 200){
-              this.$router.push({name:'profil'})
-            }else{
-              console.log("response",response)
-            }
-          })
-          .catch((error)=>{
-            this.load = false
-            this.btndisabled = false
-            console.log("error",error)
-          })
-      }else{
-        this.$store.dispatch('auth/register2',{
-          user: this.user,
-          prov: this.prov,
-          org: this.inputs
-        })
+    luarNegeri(user){
+      this.$store.dispatch('auth/register2',user)
+      .then(response=>{
+        this.load = false
+        this.btndisabled = false
+        // this.$router.push({name:'profil'})
+        if(response.status === 200){
+          this.$router.push({name:'profil'})
+        }else{
+          console.log("response",response)
+        }
+      })
+      .catch((error)=>{
+        this.load = false
+        this.btndisabled = false
+        console.log("error",error)
+      })
+    },
+    dalamNegeri(user){
+      this.$store.dispatch('auth/register2',user)
         .then(response=>{
           this.load = false
           this.btndisabled = false
@@ -335,6 +338,38 @@ export default {
           this.btndisabled = false
           console.log("error",error)
         })
+    },
+    onSkip(){ 
+      this.btndisabled = true
+      if(this.user.dalam.value === '2'){
+        let users = {
+          user: this.user
+        }
+        this.luarNegeri(users)
+      }else{
+        let users = {
+          user: this.user,
+          prov: this.prov,
+        }
+        this.dalamNegeri(users)
+      }
+    },
+    onSubmit(){
+      this.load = true
+      this.btndisabled = true
+      if(this.user.dalam.value === '2'){
+          let users = {
+            user: this.user,
+            org: this.inputs
+          }
+          this.luarNegeri(users)
+      }else{
+        let users = {
+          user: this.user,
+          prov: this.prov,
+          org: this.inputs
+        }
+        this.dalamNegeri(users)
       }
       
     }
