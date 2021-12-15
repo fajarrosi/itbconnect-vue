@@ -81,117 +81,117 @@ export default {
     data(){
         return{
             sekarang:'',
-            events:[
-                {
-                    evdate:'2021/10/01',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem1',
-                    evspeaker:'Dr.Lorem1'
-                },
-                {
-                    evdate:'2021/10/03',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem2',
-                    evspeaker:'Dr.Lorem2'
-                },
-                {
-                    evdate:'2021/10/12',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem5',
-                    evspeaker:'Dr.Lorem5'
-                },
-                {
-                    evdate:'2021/10/12',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem3',
-                    evspeaker:'Dr.Lorem3'
-                },
-                {
-                    evdate:'2021/10/12',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem99',
-                    evspeaker:'Dr.Lorem99'
-                },
-                {
-                    evdate:'2021/09/12',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem6',
-                    evspeaker:'Dr.Lorem6'
-                },
-                {
-                    evdate:'2021/10/15',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem7',
-                    evspeaker:'Dr.Lorem7'
-                },
-                {
-                    evdate:'2021/10/15',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem7',
-                    evspeaker:'Dr.Lorem7'
-                },
-                {
-                    evdate:'2021/10/15',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem7',
-                    evspeaker:'Dr.Lorem7'
-                },
-                {
-                    evdate:'2021/10/01',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem1',
-                    evspeaker:'Dr.Lorem1'
-                },
-                {
-                    evdate:'2021/10/03',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem2',
-                    evspeaker:'Dr.Lorem2'
-                },
-                {
-                    evdate:'2021/10/12',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem5',
-                    evspeaker:'Dr.Lorem5'
-                },
-                {
-                    evdate:'2021/10/12',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem3',
-                    evspeaker:'Dr.Lorem3'
-                },
-                {
-                    evdate:'2021/10/12',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem99',
-                    evspeaker:'Dr.Lorem99'
-                },
-                {
-                    evdate:'2021/09/12',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem6',
-                    evspeaker:'Dr.Lorem6'
-                },
-                {
-                    evdate:'2021/10/15',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem7',
-                    evspeaker:'Dr.Lorem7'
-                },
-                {
-                    evdate:'2021/10/15',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem7',
-                    evspeaker:'Dr.Lorem7'
-                },
-                {
-                    evdate:'2021/10/15',
-                    evtime:'13:00 - 15:00',
-                    evtitle:'Seminar lorem7',
-                    evspeaker:'Dr.Lorem7'
-                },
-            ],
-            eventschange:'',
+            // events:[
+            //     {
+            //         evdate:'2021/10/01',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem1',
+            //         evspeaker:'Dr.Lorem1'
+            //     },
+            //     {
+            //         evdate:'2021/10/03',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem2',
+            //         evspeaker:'Dr.Lorem2'
+            //     },
+            //     {
+            //         evdate:'2021/10/12',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem5',
+            //         evspeaker:'Dr.Lorem5'
+            //     },
+            //     {
+            //         evdate:'2021/10/12',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem3',
+            //         evspeaker:'Dr.Lorem3'
+            //     },
+            //     {
+            //         evdate:'2021/10/12',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem99',
+            //         evspeaker:'Dr.Lorem99'
+            //     },
+            //     {
+            //         evdate:'2021/09/12',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem6',
+            //         evspeaker:'Dr.Lorem6'
+            //     },
+            //     {
+            //         evdate:'2021/10/15',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem7',
+            //         evspeaker:'Dr.Lorem7'
+            //     },
+            //     {
+            //         evdate:'2021/10/15',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem7',
+            //         evspeaker:'Dr.Lorem7'
+            //     },
+            //     {
+            //         evdate:'2021/10/15',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem7',
+            //         evspeaker:'Dr.Lorem7'
+            //     },
+            //     {
+            //         evdate:'2021/10/01',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem1',
+            //         evspeaker:'Dr.Lorem1'
+            //     },
+            //     {
+            //         evdate:'2021/10/03',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem2',
+            //         evspeaker:'Dr.Lorem2'
+            //     },
+            //     {
+            //         evdate:'2021/10/12',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem5',
+            //         evspeaker:'Dr.Lorem5'
+            //     },
+            //     {
+            //         evdate:'2021/10/12',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem3',
+            //         evspeaker:'Dr.Lorem3'
+            //     },
+            //     {
+            //         evdate:'2021/10/12',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem99',
+            //         evspeaker:'Dr.Lorem99'
+            //     },
+            //     {
+            //         evdate:'2021/09/12',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem6',
+            //         evspeaker:'Dr.Lorem6'
+            //     },
+            //     {
+            //         evdate:'2021/10/15',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem7',
+            //         evspeaker:'Dr.Lorem7'
+            //     },
+            //     {
+            //         evdate:'2021/10/15',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem7',
+            //         evspeaker:'Dr.Lorem7'
+            //     },
+            //     {
+            //         evdate:'2021/10/15',
+            //         evtime:'13:00 - 15:00',
+            //         evtitle:'Seminar lorem7',
+            //         evspeaker:'Dr.Lorem7'
+            //     },
+            // ],
+            // eventschange:'',
             agenda:'',
             agendagroup:'',
             valid:false
@@ -199,7 +199,7 @@ export default {
     },
     mounted(){
         this.sekarang = new Date()
-        this.eventschange = groupBy(this.events,'evdate')
+        // this.eventschange = groupBy(this.events,'evdate')
         this.$store.dispatch('getAgenda')
         .then(response=>{
             this.agenda = response
@@ -222,17 +222,17 @@ export default {
             })
             return formatNow
         },
-        onShow(){
-            let terbaru = {}
-            let tgl1 = date.formatDate(this.sekarang,'YYYY/MM')
-            Object.keys(this.eventschange).forEach(key=>{
-                let a = date.formatDate(key,'YYYY/MM')
-                if(a === tgl1){
-                    terbaru[key] = this.eventschange[key]
-                }
-            })
-            return terbaru
-        },
+        // onShow(){
+        //     let terbaru = {}
+        //     let tgl1 = date.formatDate(this.sekarang,'YYYY/MM')
+        //     Object.keys(this.eventschange).forEach(key=>{
+        //         let a = date.formatDate(key,'YYYY/MM')
+        //         if(a === tgl1){
+        //             terbaru[key] = this.eventschange[key]
+        //         }
+        //     })
+        //     return terbaru
+        // },
         onShows(){
             let terbaru = {}
             let tgl1 = date.formatDate(this.sekarang,'YYYY-MM')

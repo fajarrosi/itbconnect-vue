@@ -7,8 +7,8 @@
                 <span class="text-15">Seluruh data akan hilang jika Anda meninggalkan halaman ini</span>
             </q-card-section>
             <q-card-actions align="right">
-                <q-btn flat label="Ya" color="primary" @click="Leave" no-caps /> 
                 <q-btn flat label="Tidak" color="primary" @click="$emit('update:dleave',false)" no-caps/>
+                <q-btn flat label="Ya" color="primary" @click="Leave" no-caps /> 
             </q-card-actions>
         </q-card>
     </q-dialog>

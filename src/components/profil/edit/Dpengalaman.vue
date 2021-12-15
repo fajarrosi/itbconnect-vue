@@ -1,131 +1,134 @@
 <template>
     <div>
-         <q-dialog :model-value="dpengalaman" @click="$emit('update:dpengalaman', $event.target.value)" persistent>
+         <q-dialog :model-value="dpengalaman" @click="$emit('update:dpengalaman', $event.target.value)" persistent full-height>
             <q-card class="hide-scrollbar">
-                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
-                <q-scroll-area style="height: 80vh;">
-                <q-card-section>
-                    <div class="q-mb-md text-edit" style="font-size:17px;">PENGALAMAN</div>
-                <div class="row q-mb-lg" v-for="(peng,k) in pengalaman" :key="k">
-                    
-                    <div class="col-4 text-edit">Perusahaan<span class="text-negative">*</span> </div>
-                    <q-input
-                    dense
-                    outlined
-                    v-model="peng.company_name"
-                    placeholder="Perusahaan"
-                    class="q-mb-sm col-8"
-                    bg-color="white"
-                    hide-bottom-space
-                    lazy-rules
-                    :rules="[
-                    (val) => (val && val.length > 0) || 'Perusahaan tidak boleh kosong',
-                    ]"
-                    />
-                    
-                    <div class="col-4 text-edit">Alamat (Kota)</div>
-                    <q-input
-                    dense
-                    outlined
-                    v-model="peng.location"
-                    placeholder="Alamat perusahaan"
-                    class="q-mb-sm col-8"
-                    bg-color="white"
-                    hide-bottom-space
-                    
-                    />
-                    <div class="col-4 text-edit">Tahun Aktif </div>
-                    <q-input
-                        outlined
-                        dense
-                        lazy-rules
-                        v-model="peng.starting_year" mask="####" 
-                        class="q-mb-sm col-4"
-                        bg-color="white"
-                        hide-bottom-space
-                        hide-hint
-                        placeholder="Thn Masuk"
-                        bottom-slots
-                        >
-                    <template v-slot:after>
-                        <q-icon name="event" class="cursor-pointer">
-                        <q-popup-proxy ref="tahunmasuk" transition-show="scale" transition-hide="scale">
-                            <q-date v-model="peng.starting_year" minimal default-view="Years" emit-immediately mask="YYYY"
-                            @update:model-value="checkValue"
-                            >
-                            <!-- <div class="row items-center justify-end">
-                                <q-btn v-close-popup label="OK" color="primary" flat />
-                            </div> -->
-                            </q-date>
-                        </q-popup-proxy>
-                        </q-icon>
-                    </template>
-                    </q-input>
-                    <div class="col-4 row">
-                        <q-input
-                        outlined
-                        dense
-                        lazy-rules
-                        v-model="peng.end_year" mask="####" 
-                        class="q-mb-none col-12"
-                        bg-color="white"
-                        hide-bottom-space
-                        hide-hint
-                        placeholder="Thn Keluar"
-                        bottom-slots
-                        :disable="peng.is_work"
-                        >
-                        <template v-slot:after>
-                            <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy ref="tahunkeluar" transition-show="scale" transition-hide="scale">
-                                <q-date v-model="peng.end_year" minimal default-view="Years" emit-immediately mask="YYYY"
-                                @update:model-value="checkValue2" :disable="peng.is_work"
-                                >
-                                <!-- <div class="row items-center justify-end">
-                                    <q-btn v-close-popup label="OK" color="primary" flat />
-                                </div> -->
-                                </q-date>
-                            </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                        </q-input>
-                        <q-checkbox v-model="peng.is_work" label="Sampai Sekarang" class="col-12" size="xs" style="font-size:11px;" @click="sekarang(k)"/>
-                    </div>
-                    <div class="col-4 text-edit">Posisi<span class="text-negative">*</span></div>
-                    <q-input
-                    dense
-                    outlined
-                    v-model="peng.position"
-                    placeholder="Posisi"
-                    class="q-mb-sm col-8"
-                    bg-color="white"
-                    hide-bottom-space
-                    lazy-rules
-                    :rules="[
-                    (val) => (val && val.length > 0) || 'Posisi tidak boleh kosong',
-                    ]"
-                    />
-                    <q-btn class="col-12" color="primary" icon="close" label="Hapus Pengalaman" flat dense @click="remove(k)" no-caps  v-if="k >0" style="font-style:italic;"/>
-                </div>
-                
-                    <div class="row q-mt-xs justify-center " >
-                        <q-btn class="col-6" color="primary" icon="add" label="Tambah Pengalaman" flat dense @click="add" no-caps   style="font-style:italic;"/>
-                    </div>
-                </q-card-section>
-                </q-scroll-area>
-                <q-card-actions align="center" class="q-mb-md">
-                    <q-btn  no-caps label="Kembali" outline
-                    style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dpengalaman', false)" class="col-5" :disabled="disabled"/>
-                    <q-btn  no-caps label="Simpan" color="primary" type="submit"  class="col-5 btn-radius" :loading="load"
-                :disabled="disabled">
-                        <template v-slot:loading>
-                            <div class="row items-center">
-                                <q-spinner-facebook />  
+                    <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md" style="height:100%;">
+                    <div class="card-grid">
+                        <q-scroll-area class="fit">
+                            <q-card-section>
+                                <div class="q-mb-md text-edit" style="font-size:17px;">PENGALAMAN</div>
+                            <div class="row q-mb-lg" v-for="(peng,k) in pengalaman" :key="k">
+                                
+                                <div class="col-4 text-edit">Perusahaan<span class="text-negative">*</span> </div>
+                                <q-input
+                                dense
+                                outlined
+                                v-model="peng.company_name"
+                                placeholder="Perusahaan"
+                                class="q-mb-sm col-8"
+                                bg-color="white"
+                                hide-bottom-space
+                                lazy-rules
+                                :rules="[
+                                (val) => (val && val.length > 0) || 'Perusahaan tidak boleh kosong',
+                                ]"
+                                />
+                                
+                                <div class="col-4 text-edit">Alamat (Kota)</div>
+                                <q-input
+                                dense
+                                outlined
+                                v-model="peng.location"
+                                placeholder="Alamat perusahaan"
+                                class="q-mb-sm col-8"
+                                bg-color="white"
+                                hide-bottom-space
+                                
+                                />
+                                <div class="col-4 text-edit">Tahun Aktif </div>
+                                <q-input
+                                    outlined
+                                    dense
+                                    lazy-rules
+                                    v-model="peng.starting_year" mask="####" 
+                                    class="q-mb-sm col-4"
+                                    bg-color="white"
+                                    hide-bottom-space
+                                    hide-hint
+                                    placeholder="Thn Masuk"
+                                    bottom-slots
+                                    >
+                                <template v-slot:after>
+                                    <q-icon name="event" class="cursor-pointer">
+                                    <q-popup-proxy ref="tahunmasuk" transition-show="scale" transition-hide="scale">
+                                        <q-date v-model="peng.starting_year" minimal default-view="Years" emit-immediately mask="YYYY"
+                                        @update:model-value="checkValue"
+                                        >
+                                        <!-- <div class="row items-center justify-end">
+                                            <q-btn v-close-popup label="OK" color="primary" flat />
+                                        </div> -->
+                                        </q-date>
+                                    </q-popup-proxy>
+                                    </q-icon>
+                                </template>
+                                </q-input>
+                                <div class="col-4 row">
+                                    <q-input
+                                    outlined
+                                    dense
+                                    lazy-rules
+                                    v-model="peng.end_year" mask="####" 
+                                    class="q-mb-none col-12"
+                                    bg-color="white"
+                                    hide-bottom-space
+                                    hide-hint
+                                    placeholder="Thn Keluar"
+                                    bottom-slots
+                                    :disable="peng.is_work"
+                                    >
+                                    <template v-slot:after>
+                                        <q-icon name="event" class="cursor-pointer">
+                                        <q-popup-proxy ref="tahunkeluar" transition-show="scale" transition-hide="scale">
+                                            <q-date v-model="peng.end_year" minimal default-view="Years" emit-immediately mask="YYYY"
+                                            @update:model-value="checkValue2" :disable="peng.is_work"
+                                            >
+                                            <!-- <div class="row items-center justify-end">
+                                                <q-btn v-close-popup label="OK" color="primary" flat />
+                                            </div> -->
+                                            </q-date>
+                                        </q-popup-proxy>
+                                        </q-icon>
+                                    </template>
+                                    </q-input>
+                                    <q-checkbox v-model="peng.is_work" label="Sampai Sekarang" class="col-12" size="xs" style="font-size:11px;" @click="sekarang(k)"/>
+                                </div>
+                                <div class="col-4 text-edit">Posisi<span class="text-negative">*</span></div>
+                                <q-input
+                                dense
+                                outlined
+                                v-model="peng.position"
+                                placeholder="Posisi"
+                                class="q-mb-sm col-8"
+                                bg-color="white"
+                                hide-bottom-space
+                                lazy-rules
+                                :rules="[
+                                (val) => (val && val.length > 0) || 'Posisi tidak boleh kosong',
+                                ]"
+                                />
+                                <q-btn class="col-12" color="primary" icon="close" label="Hapus Pengalaman" flat dense @click="remove(k)" no-caps  v-if="k >0" style="font-style:italic;"/>
                             </div>
-                        </template>
-                    </q-btn>
-                </q-card-actions>
-                </q-form>
+                
+                            <div class="row q-mt-xs justify-center " >
+                                <q-btn class="col-6" color="primary" icon="add" label="Tambah Pengalaman" flat dense @click="add" no-caps   style="font-style:italic;"/>
+                            </div>
+                        </q-card-section>
+                        </q-scroll-area>
+                        <q-card-actions align="center" class="q-mb-md">
+                            <q-btn  no-caps label="Kembali" outline
+                            style="border-radius: 8px;color:#bfc0c0;" @click="$emit('update:dpengalaman', false)" class="col-5" :disabled="disabled"/>
+                            <q-btn  no-caps label="Simpan" color="primary" type="submit"  class="col-5 btn-radius" :loading="load"
+                        :disabled="disabled">
+                                <template v-slot:loading>
+                                    <div class="row items-center">
+                                        <q-spinner-facebook />  
+                                    </div>
+                                </template>
+                            </q-btn>
+                        </q-card-actions>
+                        
+                    </div>
+                    </q-form>
             </q-card>
         </q-dialog>
     </div>
@@ -244,6 +247,7 @@ export default {
 </script>
 
 <style scoped>
+
 .q-btn--outline::before{
     border: 2px solid currentColor;
 }

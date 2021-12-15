@@ -1,9 +1,10 @@
 <template>
     <div>
-         <q-dialog :model-value="dpend" @click="$emit('update:dpend', $event.target.value)" persistent>
+         <q-dialog :model-value="dpend" @click="$emit('update:dpend', $event.target.value)" persistent full-height>
             <q-card class="hide-scrollbar">
-                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
-                    <q-scroll-area style="height: 80vh;">
+                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md" style="height:100%;">
+                   <div class="card-grid">
+                        <q-scroll-area class="fit">
                     <q-card-section>
                         <div class="q-mb-md text-edit" style="font-size:17px;">PENDIDIKAN</div>
                     <div class="row q-mb-lg" v-for="(pend,k) in pendidikan" :key="k">
@@ -77,7 +78,7 @@
                             bottom-slots
                             lazy-rules
                             :rules="[
-                            (val) => (val && val.length > 0) || 'Tahun Masuk tidak boleh kosong',
+                            (val) => (val && val.length > 0) || 'Tahun Masuk tidak boleh kosong', val=> minimal(val)
                             ]"
                             >
                             <template v-slot:after>
@@ -110,7 +111,7 @@
                             bottom-slots
                             lazy-rules
                             :rules="[
-                            (val) => (val && val.length > 0) || 'Tahun Keluar tidak boleh kosong',
+                            (val) => (val && val.length > 0) || 'Tahun Keluar tidak boleh kosong', val => maksimal(val)
                             ]"
                             >
                             <template v-slot:after>
@@ -150,6 +151,7 @@
                             </template>
                         </q-btn>
                     </q-card-actions>
+                    </div>
                 </q-form>
             </q-card>
         </q-dialog>
@@ -157,7 +159,7 @@
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
+import { useQuasar,date } from 'quasar'
 export default {
     setup(){
         const $q = useQuasar()
@@ -255,6 +257,21 @@ export default {
                 tahunmasuk:'',
                 tahunkeluar:'',
             })
+        },
+        minimal(val){
+            if(val >= 1928){
+                return true
+            }else{
+                return 'Minimal tahun masuk 1928'
+            }
+        },
+        maksimal(val){
+            let sekarang = date.formatDate(new Date(),'YYYY')
+            if(val <= sekarang){
+                return true
+            }else{
+                return 'Maksimal tahun keluar ' + sekarang
+            }
         },
         remove(val){
             this.pendidikan.splice(val,1)

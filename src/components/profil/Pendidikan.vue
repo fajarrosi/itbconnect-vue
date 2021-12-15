@@ -31,19 +31,38 @@ export default {
     computed:{
         datapendidikan(){
             return this.$store.state.myprofil.datapendidikan
+        },
+        valid(){
+            if(this.jenjang && this.prodi){
+                return true
+            }else{
+                return false
+            }
+        }
+    },
+    data(){
+        return{
+            jenjang:false,
+            prodi:false
         }
     },
     methods:{
         ...mapActions("myprofil", ['getJenjang','getProdi']),
         async getData(){
-            this.getJenjang()
-            this.getProdi()
-            .then(()=>{
+            let a = this.getJenjang()
+            let b = this.getProdi()
+            Promise.all([a,b]).then(() =>{
+                this.jenjang = true
+                this.prodi = true
                 this.$emit('update:dpend',true)
             })
         },
         ubah(){
-            this.getData()
+            if(this.valid){
+                this.$emit('update:dpend',true)
+            }else{
+                this.getData()
+            }
         }
     }
 }

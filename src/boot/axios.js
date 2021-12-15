@@ -9,6 +9,7 @@ import axios from 'axios'
 // for each client)
 // https://be.itbconnect.org/api
 // http://127.0.0.1:8000/api
+// 37.44.244.134 
 const api = axios.create({ baseURL: 'http://127.0.0.1:8000/api' })
 
 

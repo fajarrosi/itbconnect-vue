@@ -3,7 +3,7 @@
     <q-card class="rekomen-card card-radius cursor-pointer" @click="$router.push(`/detail-user/${rekomendasi.id}`)">
         <!-- <div v-ripple class="cursor-pointer q-hoverable relative-position" > -->
             <q-img
-                :src="profilimage ? profilimage : require('assets/akun23.png')"
+                :src="profilimage ? profilimage : require('assets/account_circle.svg')"
                 spinner-color="primary"
                 spinner-size="82px"
                 height="130px"

@@ -22,7 +22,21 @@
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
 export default {
+     setup(){
+        const $q = useQuasar()
+        return {
+            showNotif () {
+                $q.notify({
+                message: 'Koneksi Berhasil Dihapus',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     props:[
         'dmore','detail'
     ],
@@ -51,6 +65,7 @@ export default {
                 this.dload = false
                 this.ddisabled = false
                 this.ddelete = false
+                this.showNotif()
             })
         }
     }

@@ -6,8 +6,8 @@
                 <span class="text-15">Apakah Anda Yakin ingin menghapus Data ini?</span>
             </q-card-section>
             <q-card-actions align="right">
-                <q-btn flat label="Batal" color="primary" @click="$emit('update:ddelete',false)" no-caps :disabled="ddisabled"/>
-                <q-btn flat label="Hapus" color="primary" @click="onDelete" :loading="dload"
+                <q-btn flat label="batal" color="primary" @click="$emit('update:ddelete',false)" no-caps :disabled="ddisabled"/>
+                <q-btn flat label="hapus" color="primary" @click="onDelete" :loading="dload"
             :disabled="ddisabled" no-caps> 
                     <template v-slot:loading>
                         <div class="row justify-between">

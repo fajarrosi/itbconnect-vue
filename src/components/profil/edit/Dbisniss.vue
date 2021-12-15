@@ -1,9 +1,10 @@
 <template>
     <div class="dbisniss">
-        <q-dialog :model-value="dbisnis" @click="$emit('update:dbisnis', $event.target.value)" persistent>
+        <q-dialog :model-value="dbisnis" @click="$emit('update:dbisnis', $event.target.value)" persistent full-height>
             <q-card class="hide-scrollbar">
-                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
-                <q-scroll-area style="height: 80vh;">
+                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md" style="height:100%;">
+                <div class="card-grid">
+                        <q-scroll-area class="fit">
                 <q-card-section>
                     <div class="row q-mt-md">
                             <input type="file" @change="onFileSelected($event)" class="col-12" ref="logoupload" style="display:none;"/>
@@ -156,6 +157,7 @@
                         </template>
                     </q-btn>
                 </q-card-actions>
+                </div>
                 </q-form>
             </q-card>
         </q-dialog>
@@ -205,6 +207,14 @@ export default {
             failedNotif2 () {
                 $q.notify({
                 message: 'Bisnis gagal diperbarui',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            deleteNotif () {
+                $q.notify({
+                message: 'produk bisnis berhasil dihapus',
                 type: 'positive',
                 position: 'top',
                 progress: true
@@ -427,6 +437,7 @@ export default {
                     this.dload = false
                     this.ddisabled = false
                     this.ddelete = false
+                    this.deleteNotif()
                 })
             }else{
                 setTimeout(() => {
@@ -434,8 +445,10 @@ export default {
                     this.dload = false
                     this.ddisabled = false
                     this.ddelete = false
+                    this.deleteNotif()
                 }, 1000);
             }
+            
         }
     }
 }

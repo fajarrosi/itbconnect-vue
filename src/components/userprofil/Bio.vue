@@ -2,7 +2,7 @@
     <div>
         <div class="row justify-between">
             <q-avatar size="92px" style="margin-top:-70px;">
-                <q-img :src="photoprofil ? photoprofil : require('assets/akun23.png')" width="92px" height="92px" />
+                <q-img :src="photoprofil ? photoprofil : require('assets/account_circle.svg')" width="92px" height="92px" />
             </q-avatar>
             <q-btn color="primary" label="Kirim Pesan" v-if="databio.connect" dense no-caps class="btn-radius text-13 q-px-md"/>
         </div>
@@ -33,8 +33,8 @@
             </div>
             <div class="col-12 text-justify">
                 <span v-if="databio.bio !== null">{{databio.bio}} </span>
-                <span v-else-if="databio.bio === null" class="text-grey">Belum Ada Biodata  </span>
-                <span v-else class="text-grey">Belum Ada Biodata  </span>
+                <span v-else-if="databio.bio === null" class="text-grey">Belum ada biodata  </span>
+                <span v-else class="text-grey">Belum ada biodata  </span>
             </div>
         </div>
         

@@ -85,13 +85,13 @@
             <div class="row justify-center">
 
               <q-avatar size="70px" class="q-mb-sm q-mt-md">
-                <q-img :src="photoprofil ? photoprofil : require('assets/akun23.png')" alt="photoprofilakun" width="70px" height="70px"/>
+                <q-img :src="photoprofil ? photoprofil : require('assets/account_circle.svg')" alt="photoprofilakun" width="70px" height="70px"/>
               </q-avatar>
-              <div class="text-weight-bold col-12 text-white text-center">{{completename}}</div>
-              <div class="col-12 text-white text-center">@{{username}}</div>
+              <div class="text-weight-bold col-12 text-white text-center">{{user.complete_name}}</div>
+              <div class="col-12 text-white text-center">@{{user.username}}</div>
               <div class="col-5 text-white text-center row items-center justify-center">
                     <img src="~assets/link.png" alt="place" style="display:inline-block;filter: brightness(0) invert(1);">
-                    <p class="q-my-none q-ml-sm">{{databio.friend}}</p>
+                    <p class="q-my-none q-ml-sm">{{user.total_connect}}</p>
               </div>
 
             </div>
@@ -150,7 +150,6 @@
 </template>
 
 <script>
-import {  mapState, mapActions } from "vuex";
 import { ref } from 'vue'
 export default {
   components:{
@@ -176,27 +175,21 @@ export default {
         }
         return val.replace(/^./, val[0].toUpperCase())
       },
-      completename(){
-        return this.$store.state.auth.user.complete_name
-      },
-      username(){
-        return this.$store.state.auth.user.username
+      user(){
+        return this.$store.state.auth.user
       },
       photoprofil(){
-        if(this.$store.state.myprofil.databio.photoprofil){
-          return this.profil + this.$store.state.myprofil.databio.photoprofil
-        }else{
-          return ''
+        if(this.user){
+          if(this.user.profile.photo_profile){
+            return this.profil + this.user.profile.photo_profile
+          }else{
+            return ''
+          }
         }
+        return ''
       },
-      ...mapState('myprofil',['databio','dataprofil','datapengalaman','datapendidikan','dataorganisasi','databisnis']),
-     
   },
   methods:{
-    ...mapActions("myprofil", ["getProfil"]),
-    async getData(){
-        this.getProfil()
-      },
     Logout(){
       this.$store.dispatch('auth/logout')
       this.$router.push({name: 'login'})
@@ -209,11 +202,6 @@ export default {
       }
     }
   },
-  created(){
-    if(!this.databio && !this.dataprofil && !this.datapengalaman && !this.datapendidikan && !this.dataorganisasi){
-      this.getData()
-    }
-  }
 }
 </script>
 <style lang="scss">

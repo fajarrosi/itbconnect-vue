@@ -33,7 +33,7 @@
         <q-input outlined bottom-slots  :modelValue="password"
         @update:modelValue="event => $emit('update:password', event)" :type="visibility ? 'password' : 'text' " placeholder="Password (8 - 12) karakter" 
         lazy-rules
-        maxlength="12"
+        maxlength="25"
         label="Password"
         dense
         :rules="[val => val.length >= 8 || 'Password minimal 8 karakter']"
@@ -48,7 +48,7 @@
         <q-input outlined bottom-slots  :modelValue="konfirmasi" placeholder="Input Ulang Password"
         @update:modelValue="event => $emit('update:konfirmasi', event)" :type="visibility2 ? 'password' : 'text' " label="Konfirmasi Password" 
         lazy-rules
-        maxlength="12"
+        maxlength="25"
         dense
         :rules="[ val => val && val.length >= 8 || 'konfirmasi password minimal 8 karakter', val => konfirmasipw(val)]"
         bg-color="white"

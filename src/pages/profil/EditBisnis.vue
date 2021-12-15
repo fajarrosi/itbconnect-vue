@@ -17,7 +17,7 @@
                     </q-scroll-area>
                 </q-card-section>
                 <q-card-section v-else class="row ">
-                    <div class="col text-center text-primary q-pa-sm left-even" style="font-size:15px;">Belum Ada Bisnis dan Pekerjaan</div>
+                    <div class="col text-center text-primary q-pa-sm left-even" style="font-size:15px;">Belum ada bisnis dan pekerjaan</div>
                 </q-card-section>
             </q-card>
             <q-btn fab icon="add" color="primary" @click="onAdd" class="q-my-md btn-plus"/>
@@ -33,23 +33,16 @@ import { useStore, mapActions } from 'vuex'
 export default {
     setup () {
         const $q = useQuasar()
-        const store = useStore()
-        function confirm (val) {
-        $q.dialog({
-            title: 'Hapus Data',
-            message: 'Apakah Anda Yakin ingin menghapus Data ini ?',
-            cancel: true,
-            persistent: true
-        }).onOk(() => {
-            store.dispatch('myprofil/delBisnis',val)
-        }).onCancel(() => {
-            // console.log('>>>> Cancel',val)
-        }).onDismiss(() => {
-            // console.log('I am triggered on both OK and Cancel')
-        })
+        return { 
+            deleteNotif () {
+                $q.notify({
+                message: 'bisnis berhasil dihapus',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            }, 
         }
-
-        return { confirm }
     },
     components:{
         'dbisniss' : require('components/profil/edit/Dbisniss.vue').default,
@@ -100,6 +93,7 @@ export default {
                 this.dload = false
                 this.ddisabled = false
                 this.ddelete = false
+                this.deleteNotif ()
             })
         }
     }

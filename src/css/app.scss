@@ -3,8 +3,14 @@
 .mobile, .base-container{
 	width:428px;
 }
+.dialog-card{
+	width:418px;
+}
 @media (max-width: 427px){
 	.mobile{
+		width:100vw;
+	}
+	.dialog-card{
 		width:100vw;
 	}
 }
@@ -40,21 +46,7 @@
 	color: rgba(25,135,191,1);
 	letter-spacing: 0.05px;
 }
-.Line_85 {
-	width: 396px;
-	height: 1px;
-	transform: matrix(1,0,0,1,0,0);
-    margin-left:-16px;
-}
-#Line_85 {
-	fill: transparent;
-	stroke: rgba(204,219,220,1);
-	stroke-width: 1px;
-	stroke-linejoin: miter;
-	stroke-linecap: butt;
-	stroke-miterlimit: 4;
-	shape-rendering: auto;
-}
+
 
 .q-field--outlined .q-field__control{
     border-radius: 8px;
@@ -92,3 +84,11 @@
 .card-radius{
 	border-radius:10px;
 }
+
+.card-grid{
+    height: 100%;
+    display:grid;
+    grid-template-rows: auto 60px;
+}
+
+

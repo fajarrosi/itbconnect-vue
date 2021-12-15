@@ -1,11 +1,12 @@
 <template>
     <div>
-        <q-dialog :model-value="dbio" @click="$emit('update:dbio', $event.target.value)" persistent>
-            <q-card class="hide-scrollbar">
-                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md">
-                <q-scroll-area style="height: 80vh;">
+        <q-dialog :model-value="dbio" @click="$emit('update:dbio', $event.target.value)" persistent full-height>
+            <q-card class="hide-scrollbar dialog-card">
+                <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md" style="height:100%;">
+                <div class="card-grid">
+                        <q-scroll-area class="fit">
                 <input type="file" @change="onHeaderSelected" style="display:none;" ref="hpupload"/>
-                <q-img :src="prevhp ? prevhp : require('assets/bg-akun.png')" width="418px" height="153px">
+                <q-img :src="prevhp ? prevhp : require('assets/bg-akun.png')"  height="153px">
                     <div class="absolute-full text-subtitle2 flex flex-center" @click="$refs.hpupload.click()">
                         <img src="~assets/edit.png" alt="edit">
                     </div>
@@ -21,7 +22,7 @@
                         </q-img>
                     </q-avatar> -->
                     <q-avatar size="92px" style="margin-top:-50px;">
-                        <q-img :src="prevpp ? prevpp : require('assets/akun23.png')" width="92px" height="92px">
+                        <q-img :src="prevpp ? prevpp : require('assets/account_circle.svg')" width="92px" height="92px">
                             <div class="absolute-full text-subtitle2 flex flex-center" @click="$refs.ppupload.click()">
                                 <img src="~assets/edit.png" alt="edit">
                             </div>
@@ -73,9 +74,19 @@
                     
                     <div class="col-2 text-edit">Minat</div>
                     <div class="col-10">
-                        <q-btn color="secondary q-mr-sm q-mt-sm" outline no-caps v-for="(org,index) in dataorganisasi" :key="index">
-                            <div class="text-grey-8">{{org.organization.name}}</div>
-                        </q-btn>
+                        <div v-if="dataorganisasi.length > 0">
+                                <div v-if="dataorganisasi[0].organization_id !== null">
+                                    <q-btn color="secondary q-mr-sm q-mt-sm" outline no-caps v-for="(org,index) in dataorganisasi" :key="index">
+                                        <div class="text-grey-8">{{org.organization.name}}</div>
+                                    </q-btn>
+                                </div>
+                                <div v-else>
+                                    <div class="grey">Belum ada organisasi </div>
+                                </div>
+                        </div>
+                        <div v-else>
+                            <div class="grey">Belum ada organisasi </div>
+                        </div>
                     </div>
                     <div class="col-12 text-grey-7 q-mt-xs" >Untuk edit di Organisasi</div>
                     <div class="col-12 text-edit q-mt-md q-mb-sm" style="font-size:17px;">TAUTAN</div>
@@ -84,41 +95,62 @@
                     dense
                     outlined
                     v-model="linkedin"
-                    placeholder="linkedin"
+                    placeholder="ex:https://www.linkedin.com/in/john-doe"
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
-                    />
+                    bottom-slots
+                    >
+                    <template v-slot:hint>
+                        *) Isi dengan menggunakan https://www.linkedin.com/in/
+                    </template>
+                    </q-input>
+                    
                     <div class="col-4 text-edit">Instagram</div>
                     <q-input
                     dense
                     outlined
                     v-model="ig"
-                    placeholder="instagram"
+                    placeholder="ex:https://www.instagram.com/johndoe"
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
-                    />
+                    bottom-slots
+                    >
+                    <template v-slot:hint>
+                        *) Isi dengan menggunakan https://www.instagram.com/
+                    </template>
+                    </q-input>
                     <div class="col-4 text-edit">Facebook</div>
                     <q-input
                     dense
                     outlined
                     v-model="fb"
-                    placeholder="facebook"
+                    placeholder="ex:https://www.facebook.com/johndoe"
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
-                    />
+                    bottom-slots
+                    >
+                    <template v-slot:hint>
+                        *) Isi dengan menggunakan https://www.facebook.com/
+                    </template>
+                    </q-input>
                     <div class="col-4 text-edit">Twitter</div>
                     <q-input
                     dense
                     outlined
                     v-model="tw"
-                    placeholder="twitter"
+                    placeholder="ex:https://www.twitter.com/johndoe"
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
-                    />
+                    bottom-slots
+                    >
+                    <template v-slot:hint>
+                        *) Isi dengan menggunakan https://www.twitter.com/
+                    </template>
+                    </q-input>
                 </q-card-section>
                 </q-scroll-area>
                 <q-card-actions align="center" class="q-mb-md">
@@ -133,6 +165,7 @@
                         </template>
                     </q-btn>
                 </q-card-actions>
+                </div>
                 </q-form>
             </q-card>
             
@@ -294,7 +327,6 @@ export default {
     border: 2px solid currentColor;
 }
 .q-card{
-    width: 418px;
     border-radius:10px;
 }
 .q-field--dense .q-field__bottom{

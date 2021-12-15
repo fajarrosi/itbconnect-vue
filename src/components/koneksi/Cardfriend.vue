@@ -4,7 +4,7 @@
         <div class="row items-center ">
             <div class="col-2 text-center">
                 <q-avatar size="60px">
-                    <img :src="profilimage(koneksi.profile) ? profilimage(koneksi.profile) : require('assets/akun23.png')" >
+                    <img :src="profilimage(koneksi.profile) ? profilimage(koneksi.profile) : require('assets/account_circle.svg')" >
                 </q-avatar>
             </div>
             <div class="col-8 q-pl-sm">

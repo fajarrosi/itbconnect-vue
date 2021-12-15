@@ -45,7 +45,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 
         <div v-else>
             <q-card-section class="q-pt-none">
-                Belum Ada Bisnis dan Pekerjaan
+                Belum ada bisnis dan pekerjaan
             </q-card-section>
             
         </div>

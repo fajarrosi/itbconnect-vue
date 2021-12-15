@@ -1,13 +1,14 @@
 <template>
     <div>
-        <q-dialog :model-value="dminat" @click="$emit('update:dminat', $event.target.value)" persistent>
+        <q-dialog :model-value="dminat" @click="$emit('update:dminat', $event.target.value)" persistent full-height>
             <q-card class="hide-scrollbar">
-                <q-scroll-area style="height: 80vh;">
+                <div class="card-grid">
+                        <q-scroll-area class="fit">
                 <q-card-section>
                         <div class="q-mb-md text-edit" style="font-size:17px;">MINAT & ORGANISASI*</div>
                         <q-select  outlined dense v-for="(inp,k) in minat" :key="k" v-model="inp.selectedorg" emit-value map-options :options="optorganisasi" label="Minat & Organisasi" bg-color="white" class="q-mb-sm">
                             <template v-slot:after>
-                                <q-btn round dense flat icon="close" v-if="k >0" @click="remove(k)"/>
+                                <q-btn round dense flat icon="close"  @click="remove(k)"/>
                             </template>
                         </q-select>
                         <div class="row q-mt-xs justify-center " >
@@ -30,6 +31,7 @@
                         </template>
                     </q-btn>
                 </q-card-actions>
+                </div>
             </q-card>
         </q-dialog>
     </div>
@@ -139,7 +141,12 @@ export default {
         onSave(){
             this.load = true
             this.btndisabled = true
-            let org = this.minat.map(a=> a.selectedorg)
+            let org = ''
+            if(this.minat.length > 0 ){
+                org = this.minat.map(a=> a.selectedorg)
+            }else{
+                org =[''] 
+            }
             this.$store.dispatch('myprofil/updOrg',{
                 commisariat_id : this.selectedpengda,
                 ia_prodi_id : this.selectediaprodi,

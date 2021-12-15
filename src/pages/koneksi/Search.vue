@@ -61,7 +61,7 @@
 
             <div class="row q-px-md bg-white" v-show="result" ref="hasil">
                 <div class="text-17 text-bold col-12 q-mb-md" style="color:#505050;">Hasil Pencarian</div>
-                <div v-if="dataresult.length > 0">
+                <div v-if="dataresult.length > 0" class="col-12">
                     <rekomendasihorizontal v-for="(res,index) in dataresult" :key="index" :rekomendasi="res"/>
                 </div>
                 <div v-else>

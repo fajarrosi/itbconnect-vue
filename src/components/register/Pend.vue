@@ -33,7 +33,7 @@
             label="Tahun Masuk"
             lazy-rules
             :rules="[
-            (val) => (val && val.length > 0) || 'Tahun masuk tidak boleh kosong', val => val.length >= 4 || 'Tahun masuk harus 4 digit'
+            (val) => (val && val.length > 0) || 'Tahun masuk tidak boleh kosong', val => val.length >= 4 || 'Tahun masuk harus 4 digit', val=> minimal(val)
             ]"
             bg-color="white"
             class="col-6"
@@ -48,7 +48,7 @@
             label="Tahun Keluar"
             lazy-rules
             :rules="[
-            (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',val => val.length >= 4 || 'Tahun keluar harus 4 digit'
+            (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',val => val.length >= 4 || 'Tahun keluar harus 4 digit',val=>maksimal(val)
             ]"
             bg-color="white"
             class="col-5"
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { date } from 'quasar'
 // import { api } from 'boot/axios'
 export default {
     // setup(){
@@ -117,7 +118,22 @@ export default {
                     this.$emit('update:step',3)
                 }
             })
-        }
+        },
+        minimal(val){
+            if(val >= 1928){
+                return true
+            }else{
+                return 'Minimal tahun masuk 1928'
+            }
+        },
+        maksimal(val){
+            let sekarang = date.formatDate(new Date(),'YYYY')
+            if(val <= sekarang){
+                return true
+            }else{
+                return 'Maksimal tahun keluar ' + sekarang
+            }
+        },
     }
 }
 </script>

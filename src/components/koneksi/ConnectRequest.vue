@@ -5,7 +5,7 @@
                     <span class="q-focus-helper"></span>
                     <div class="col-2 text-center">
                         <q-avatar size="60px">
-                            <img :src="profilimage(req) ? profilimage(req) : require('assets/akun23.png')" >
+                            <img :src="profilimage(req) ? profilimage(req) : require('assets/account_circle.svg')" >
                         </q-avatar>
                     </div>
                     <div class="col-7 q-pl-sm row">
@@ -31,7 +31,7 @@ export default {
                 $q.notify({
                 message: 'Permintaan Berhasil Diterima',
                 type: 'positive',
-                position: 'bottom',
+                position: 'top',
                 progress: true
                 })
             },
@@ -39,7 +39,7 @@ export default {
                 $q.notify({
                 message: 'Permintaan Berhasil Ditolak. ',
                 type: 'positive',
-                position: 'bottom',
+                position: 'top',
                 progress: true
                 })
             }

@@ -35,7 +35,7 @@
             </div>
             
         </div>
-        <div :class="isfriend ? '' : 'blur'">
+        <div v-if="isfriend">
             <div class="row " >
                 <div class="col-4">Jenis Kelamin</div>
                 <div class="col-3" v-if="dataprofil.gender === 'male'">: Laki-laki</div>
@@ -51,7 +51,8 @@
                 <div class="col-2">: {{dataprofil.religion}}</div>
             </div>
             <div class="row ">
-                <div class="col-4">Kewarganegaraan</div>
+                <div class="col-4" style="overflow-wrap: break-word;
+  word-wrap: break-word;">Kewarganegaraan</div>
                 <div class="col-6">: {{dataprofil.citizenship}}</div>
             </div>
             <div class="row ">
@@ -59,13 +60,45 @@
                 <div class="col-4" v-else>Alamat Luar Negeri</div>
                 <div class="col-8 text-justify">: {{dataprofil.domisili}}</div>
             </div>
-            <div class="row ">
+            <!-- <div class="row ">
                 <div class="col-4">Email</div>
                 <div class="col-6">: {{dataprofil.email}}</div>
             </div>
             <div class="row ">
                 <div class="col-4">No. Telepon</div>
                 <div class="col-6">: {{dataprofil.telephone}}</div>
+            </div> -->
+            
+        </div>
+        <div class="blur" v-else>
+            <div class="row " >
+                <div class="col-4">Jenis Kelamin</div>
+                <div class="col-3">: Laki-laki</div>
+                <div class="col-3">Gol. Darah</div>
+                <div class="col-2">: O</div>
+            </div>
+            <div class="row ">
+                <div class="col-4">Status</div>
+                <div class="col-3">: Menikah</div>
+                <div class="col-3">Agama</div>
+                <div class="col-2">: Islam</div>
+            </div>
+            <div class="row ">
+                <div class="col-4" style="overflow-wrap: break-word;
+  word-wrap: break-word;">Kewarganegaraan</div>
+                <div class="col-6">: Indonesia</div>
+            </div>
+            <div class="row ">
+                <div class="col-4" >Alamat Dalam Negeri</div>
+                <div class="col-8 text-justify">: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, quod? </div>
+            </div>
+            <div class="row ">
+                <div class="col-4">Email</div>
+                <div class="col-6">: lorem</div>
+            </div>
+            <div class="row ">
+                <div class="col-4">No. Telepon</div>
+                <div class="col-6">: lorewr</div>
             </div>
             
         </div>

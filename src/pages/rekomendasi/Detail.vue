@@ -10,18 +10,18 @@
           <div class="row q-mx-md justify-between items-center">
               <p class="text-bold q-mb-sm text-17" style="color:#155897;">Informasi Pribadi</p>
               <div class="row" v-if="is_friend">
-                  <q-btn round flat dense type="a" target="_blank" :href="databio.linkedin" v-if="databio.linkedin">
-                      <img src="images/linkedin-bluee.png" alt="linkedin">
-                  </q-btn>
-                  <q-btn round flat dense type="a" target="_blank" :href="databio.ig" v-if="databio.ig">
-                      <img src="images/instagram-bluee.png" alt="ig">
-                  </q-btn>
-                  <q-btn round flat dense type="a" target="_blank" :href="databio.fb" v-if="databio.fb">
-                      <img src="images/facebook-bluee.png" alt="fb">
-                  </q-btn>
-                  <q-btn round flat dense type="a" target="_blank" :href="databio.twit" v-if="databio.twit">
-                      <img src="images/twitter-bluee.png" alt="twt">
-                  </q-btn>
+                    <q-btn round flat dense type="a" target="_blank" :href="databio.linkedin" v-if="databio.linkedin">
+                        <img src="images/linkedin-bluee.png" alt="linkedin">
+                    </q-btn>
+                    <q-btn round flat dense type="a" target="_blank" :href="databio.ig" v-if="databio.ig">
+                        <img src="images/instagram-bluee.png" alt="ig">
+                    </q-btn>
+                    <q-btn round flat dense type="a" target="_blank" :href="databio.fb" v-if="databio.fb">
+                        <img src="images/facebook-bluee.png" alt="fb">
+                    </q-btn>
+                    <q-btn round flat dense type="a" target="_blank" :href="databio.twit" v-if="databio.twit">
+                        <img src="images/twitter-bluee.png" alt="twt">
+                    </q-btn>
               </div>
           </div>
           <q-card flat class="q-mx-md card-radius">

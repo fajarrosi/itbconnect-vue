@@ -9,25 +9,39 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
             </q-btn>
         </div>
         <div v-if="dataorganisasi.length > 0">
-            <ul style="padding-left:0;list-style:none;" class="q-my-none ">
-                <li v-for="organisasi in dataorganisasi" :key="organisasi.id">
-                    {{organisasi.organization.name}}
-                </li>
-            </ul>
+            <div v-if="dataorganisasi[0].organization_id !== null">
+                <ul style="padding-left:0;list-style:none;" class="q-my-none ">
+                    <li v-for="organisasi in dataorganisasi" :key="organisasi.id">
+                        {{organisasi.organization.name}}
+                    </li>
+                </ul>
+            </div>
+            <div v-else>
+                <div class="grey">Belum ada organisasi </div>
+            </div>
         </div>
         <div v-else>
-            <div class="grey">Belum ada Organisasi </div>
+            <div class="grey">Belum ada organisasi </div>
         </div>
             <div class="title-section q-mt-md">Pengurus Daerah & IA Prodi</div>
             <div v-if="datapengda">
-                <div v-if="datapengda.commisariat_id !== null">{{datapengda.commisariat.name}}</div>
-                <div v-if="datapengda.ia_prodi_id !== null">{{datapengda.iaprodi.name}}</div>
-                <div v-else>
-                    <div class="grey">Belum ada Pengurus Daerah & IA Prodi</div>
+                <div v-if="(datapengda.commisariat_id === null) && (datapengda.ia_prodi_id === null)">
+                    <div class="grey">Belum ada pengurus daerah & IA prodi </div>
                 </div>
+                <div v-else>
+                    <div v-if="datapengda.commisariat_id !== null">{{datapengda.commisariat.name}}</div>
+                    <div v-else>
+                        <div class="grey">Belum ada pengurus daerah </div>
+                    </div>
+                    <div v-if="datapengda.ia_prodi_id !== null">{{datapengda.iaprodi.name}}</div>
+                    <div v-else>
+                        <div class="grey">Belum ada IA prodi</div>
+                    </div>
+                </div>
+
             </div>
             <div v-else>
-                <div class="grey">Belum ada Pengurus Daerah & IA Prodi</div>
+                <div class="grey">Belum ada pengurus daerah & IA prodi</div>
             </div>
         
     </div>
@@ -45,20 +59,41 @@ export default {
         },
         dataorganisasi(){
             return this.$store.state.myprofil.dataorganisasi
+        },
+        valid(){
+            if(this.organisasi && this.iaprodi && this.pengda){
+                return true
+            }else{
+                return false
+            }
+        }
+    },
+    data(){
+        return{
+            organisasi: false,
+            pengda: false,
+            iaprodi:false
         }
     },
     methods:{
         ...mapActions("myprofil", ['getOrg','getPengda','getIaprodi']),
         async getData(){
-            this.getOrg()
-            this.getPengda()
-            this.getIaprodi()
-            .then(()=>{
+            let a = this.getOrg()
+            let b = this.getPengda()
+            let c = this.getIaprodi()
+            Promise.all([a,b,c]).then(() =>{
+                this.organisasi = true
+                this.pengda = true
+                this.iaprodi = true
                 this.$emit('update:dminat',true)
             })
         },
         ubah(){
-            this.getData()
+            if(this.valid){
+                this.$emit('update:dminat',true)
+            }else{
+                this.getData()
+            }
         }
     }
 }

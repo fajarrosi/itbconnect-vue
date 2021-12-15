@@ -2,6 +2,7 @@
     <q-page class="q-pb-lg">
 
         <div v-if="valid">
+
             <q-img :src="headerphoto ? headerphoto : require('assets/bg-akun.png')" alt="background-account"  height="153px"/>
             <q-card flat class="q-mb-md q-mx-md card-radius" style="margin-top:-40px;" >
                 <q-card-section>
@@ -23,7 +24,7 @@
                     <q-btn round flat dense type="a" target="_blank" :href="databio.twit" v-if="databio.twit">
                         <img src="images/twitter-bluee.png" alt="twt">
                     </q-btn>
-                </div>
+              </div>
             </div>
             <q-card flat class="q-mx-md card-radius">
                 <q-card-section class="q-pb-none">

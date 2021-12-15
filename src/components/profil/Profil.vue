@@ -28,7 +28,8 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" >
                 <div class="col-2">: {{dataprofil.religion}}</div>
             </div>
             <div class="row ">
-                <div class="col-4">Kewarganegaraan</div>
+                <div class="col-4" style="overflow-wrap: break-word;
+  word-wrap: break-word;">Kewarganegaraan</div>
                 <div class="col-6">: {{dataprofil.citizenship}}</div>
             </div>
             <div class="row ">
@@ -36,14 +37,14 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" >
                 <div class="col-4" v-else>Alamat Luar Negeri</div>
                 <div class="col-8 text-justify">: {{dataprofil.domisili}}</div>
             </div>
-            <div class="row ">
+            <!-- <div class="row ">
                 <div class="col-4">Email</div>
                 <div class="col-6">: {{dataprofil.email}}</div>
             </div>
             <div class="row ">
                 <div class="col-4">No. Telepon</div>
                 <div class="col-6">: {{dataprofil.telephone}}</div>
-            </div>
+            </div> -->
     </div>
 </template>
 
@@ -56,20 +57,44 @@ export default {
     computed:{
         dataprofil(){
             return this.$store.state.myprofil.dataprofil
+        },
+        valid(){
+            // if(this.negara && this.prov && this.agama){
+            //     this.$emit('update:dprofil',true)
+            //     return true
+            // }else{
+            //     return false
+            // }
+            return (this.negara && this.prov && this.agama) ? true : false
+        }
+    },
+    data(){
+        return{
+            negara:false,
+            prov:false,
+            agama:false
         }
     },
     methods:{
         ...mapActions("myprofil", ['getNegara','getProv','getAgama']),
         async getData(){
-            this.getNegara()
-            this.getProv()
-            this.getAgama()
-            .then(()=>{
+            let a = this.getNegara()
+            let b = this.getProv()
+            let c = this.getAgama()
+            Promise.all([a,b,c]).then(() =>{
+                this.negara = true
+                this.prov = true
+                this.agama = true
                 this.$emit('update:dprofil',true)
             })
+
         },
         ubah(){
-            this.getData()
+            if(this.valid){
+                this.$emit('update:dprofil',true)
+            }else{
+                this.getData()
+            }
         },
     }
 }

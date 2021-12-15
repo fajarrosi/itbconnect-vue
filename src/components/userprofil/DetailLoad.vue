@@ -59,10 +59,7 @@
                         <q-skeleton  class="q-mt-sm col-6" />
                         <q-skeleton  class="q-mt-sm col-5" />
                 </div>
-                <svg class="Line_85" viewBox="0 0 396 1">
-                    <path id="Line_85" d="M 0 0 L 396 0">
-                    </path>
-                </svg>
+               <q-separator spaced style="background:#CCDBDC;" />
             </q-card-section>
             <q-card-section class="q-py-none">
                 <div class="row justify-between items-center">
@@ -77,10 +74,7 @@
                         <q-skeleton  class="q-mt-sm col-6" />
                         <q-skeleton  class="q-mt-sm col-5" />
                 </div>
-                <svg class="Line_85" viewBox="0 0 396 1">
-                    <path id="Line_85" d="M 0 0 L 396 0">
-                    </path>
-                </svg>
+               <q-separator spaced style="background:#CCDBDC;" />
             </q-card-section>
             <q-card-section class="q-py-none">
                 <div class="row justify-between items-center">
@@ -95,10 +89,7 @@
                         <q-skeleton  class="q-mt-sm col-6" />
                         <q-skeleton  class="q-mt-sm col-5" />
                 </div>
-                <svg class="Line_85" viewBox="0 0 396 1">
-                    <path id="Line_85" d="M 0 0 L 396 0">
-                    </path>
-                </svg>
+               <q-separator spaced style="background:#CCDBDC;" />
             </q-card-section>
             <q-card-section class="q-py-none">
                 <div class="row justify-between items-center">
@@ -113,10 +104,7 @@
                         <q-skeleton  class="q-mt-sm col-6" />
                         <q-skeleton  class="q-mt-sm col-5" />
                 </div>
-                <svg class="Line_85" viewBox="0 0 396 1">
-                    <path id="Line_85" d="M 0 0 L 396 0">
-                    </path>
-                </svg>
+               <q-separator spaced style="background:#CCDBDC;" />
             </q-card-section>
             <q-card-section class="q-pt-none">
                 <div class="row justify-between items-center">
@@ -131,10 +119,7 @@
                         <q-skeleton  class="q-mt-sm col-6" />
                         <q-skeleton  class="q-mt-sm col-5" />
                 </div>
-                <svg class="Line_85" viewBox="0 0 396 1">
-                    <path id="Line_85" d="M 0 0 L 396 0">
-                    </path>
-                </svg>
+               <q-separator spaced style="background:#CCDBDC;" />
             </q-card-section>
         </q-card>
 

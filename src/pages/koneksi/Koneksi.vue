@@ -34,7 +34,7 @@
                 </div>
             </q-card-section>
         </q-card>
-        <q-card class="q-mt-md" flat>
+        <q-card class="q-mt-md" flat style="border-radius:0;">
             <q-card-section>
                 <div class="text-primary text-h6 text-bold q-mb-sm">Ajakan</div>
 
@@ -55,7 +55,7 @@
             </q-card-section>
 
         </q-card>
-        <q-card class="q-mt-md" flat ref="koneksianda">
+        <q-card class="q-mt-md" flat ref="koneksianda" style="border-radius:0;">
             <q-card-section>
                 <div class="row">
                     <div class="text-primary text-h6 text-bold q-mb-sm col-5">Koneksi Anda</div>
@@ -92,7 +92,7 @@
                 </div>
             </q-card-section>
         </q-card>
-        <q-card class="q-mt-md" flat>
+        <q-card class="q-mt-md" flat style="border-radius:0;">
             <q-card-section>
                 <div class="text-primary text-h6 text-bold q-mb-sm">Rekomendasi</div>
                 <div v-if="rekomvalid">

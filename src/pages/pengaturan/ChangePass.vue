@@ -14,7 +14,7 @@
                         bg-color="white"
                         hide-bottom-space
                         :type="visibility ? 'password' : 'text' "
-                        maxlength="12"
+                        maxlength="25"
                         :loading="load"
                         :rules="[ val => val && val.length >= 8 || 'password minimal 8 karakter']"
                         input-class="password"
@@ -38,7 +38,7 @@
                     bg-color="white"
                     hide-bottom-space
                     :type="visibility2 ? 'password' : 'text' "
-                    maxlength="12"
+                    maxlength="25"
                     :disable="newpass"
                     :rules="[ val => val && val.length >= 8 || 'password baru minimal 8 karakter']"
                 >
@@ -56,7 +56,7 @@
                     bg-color="white"
                     hide-bottom-space
                     :type="visibility3 ? 'password' : 'text' "
-                    maxlength="12"
+                    maxlength="25"
                     :disable="newpass"
                     :rules="[ val => val && val.length >= 8 || 'konfirmasi password baru minimal 8 karakter', val => konfirmasipw(val)]"
                 >
@@ -66,14 +66,14 @@
                 </q-input>
             </q-card-section>
             <q-card-actions align="right">
-                <q-btn flat label="Submit" :color="valid ? 'primary' : 'grey'" no-caps :disabled="disabled" @click="onSubmit" :loading="btnload">
+                <q-btn flat label="Batal" color="primary" no-caps @click="$emit('update:dpassword',false)" :disabled="btndisabled"/>
+                <q-btn flat label="Simpan" :color="valid ? 'primary' : 'grey'" no-caps :disabled="disabled" @click="onSubmit" :loading="btnload">
                     <template v-slot:loading>
                         <div class="row items-center">
                             <q-spinner-facebook />  
                         </div>
                     </template>
                 </q-btn>
-                <q-btn flat label="Batal" color="primary" v-close-popup no-caps />
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -232,7 +232,7 @@ export default {
 
 <style scoped>
 .q-card{
-    width: 418px;
+    max-width: 418px;
     border-radius:10px;
 }
 </style>

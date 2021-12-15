@@ -40,7 +40,7 @@
 
         <div v-else>
             <q-card-section class="q-pt-none">
-                Belum Ada Bisnis dan Pekerjaan
+                Belum ada bisnis dan pekerjaan
             </q-card-section>
             
         </div>
