@@ -9,7 +9,7 @@
             transition-next="slide-left"
             swipeable
             animated
-            arrows
+            :arrows="onkeys.length > 1 ? true : false"
             control-color="black"
             height="80px"
             class="bg-white text-black no-shadow rounded-borders q-ma-md"
@@ -94,15 +94,13 @@ export default {
         onkeys(){
             let terbaru = {}
             let tgl1 = date.formatDate(this.sekarang,'MM')
-            let hari = date.formatDate(this.sekarang,'DD')
             Object.keys(this.agendagroup).forEach(key=>{
                 let a = date.formatDate(key,'MM')
-                let b = date.formatDate(key,'DD')
-                if(a === tgl1 && b >= hari){
+                if(a === tgl1){
                     terbaru[key] = this.agendagroup[key]
                 }
             })
-            return Object.keys(terbaru).reverse()
+            return Object.keys(terbaru).sort()
         },
         
     },

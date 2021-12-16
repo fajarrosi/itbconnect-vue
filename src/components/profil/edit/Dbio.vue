@@ -95,14 +95,14 @@
                     dense
                     outlined
                     v-model="linkedin"
-                    placeholder="ex:https://www.linkedin.com/in/john-doe"
+                    placeholder="ex:john-doe"
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
                     bottom-slots
                     >
                     <template v-slot:hint>
-                        *) Isi dengan menggunakan https://www.linkedin.com/in/
+                        *) Isi langsung username tanpa menggunakan https://www.linkedin.com/in/
                     </template>
                     </q-input>
                     
@@ -111,14 +111,14 @@
                     dense
                     outlined
                     v-model="ig"
-                    placeholder="ex:https://www.instagram.com/johndoe"
+                    placeholder="ex:johndoe"
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
                     bottom-slots
                     >
                     <template v-slot:hint>
-                        *) Isi dengan menggunakan https://www.instagram.com/
+                        *) Isi langsung username tanpa menggunakan https://www.instagram.com/
                     </template>
                     </q-input>
                     <div class="col-4 text-edit">Facebook</div>
@@ -126,14 +126,14 @@
                     dense
                     outlined
                     v-model="fb"
-                    placeholder="ex:https://www.facebook.com/johndoe"
+                    placeholder="ex:johndoe"
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
                     bottom-slots
                     >
                     <template v-slot:hint>
-                        *) Isi dengan menggunakan https://www.facebook.com/
+                        *) Isi langsung username tanpa menggunakan https://www.facebook.com/
                     </template>
                     </q-input>
                     <div class="col-4 text-edit">Twitter</div>
@@ -141,14 +141,14 @@
                     dense
                     outlined
                     v-model="tw"
-                    placeholder="ex:https://www.twitter.com/johndoe"
+                    placeholder="ex:johndoe"
                     class="q-mb-sm col-8"
                     bg-color="white"
                     hide-bottom-space
                     bottom-slots
                     >
                     <template v-slot:hint>
-                        *) Isi dengan menggunakan https://www.twitter.com/
+                        *) Isi langsung username tanpa menggunakan https://www.twitter.com/
                     </template>
                     </q-input>
                 </q-card-section>

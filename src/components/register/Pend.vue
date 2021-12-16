@@ -36,9 +36,14 @@
             (val) => (val && val.length > 0) || 'Tahun masuk tidak boleh kosong', val => val.length >= 4 || 'Tahun masuk harus 4 digit', val=> minimal(val)
             ]"
             bg-color="white"
-            class="col-6"
+            class="col-5"
             hide-bottom-space
-            />
+            bottom-slots
+            >
+            <template v-slot:hint>
+                *) Minimal tahun 1928
+            </template>
+            </q-input>
             <q-input
             outlined
             dense
@@ -51,9 +56,14 @@
             (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',val => val.length >= 4 || 'Tahun keluar harus 4 digit',val=>maksimal(val)
             ]"
             bg-color="white"
-            class="col-5"
+            class="col-6"
             hide-bottom-space
-            />
+            bottom-slots
+            >
+            <template v-slot:hint>
+                *) Maksimal tahun {{sekarang}}
+            </template>
+            </q-input>
             <div class="col-12 row q-mt-md" style="margin-bottom:-20px;">
                 <q-btn outline label="Sebelumnya" @click="$emit('update:step',1)" class="col q-mr-md btn-radius" style=" color:#707070;"
                         size="12px" 
@@ -109,9 +119,16 @@ export default {
         'optprodi',
         'step'
     ],
+    data(){
+        return{
+            sekarang:''
+        }
+    },
+    mounted(){
+        this.sekarang = date.formatDate(new Date(),'YYYY')
+    },
     methods:{
         onSave(){
-            console.log("submitklik")
             this.$refs.dform.validate()
             .then(valid=>{
                 if(valid){
@@ -127,11 +144,10 @@ export default {
             }
         },
         maksimal(val){
-            let sekarang = date.formatDate(new Date(),'YYYY')
-            if(val <= sekarang){
+            if(val <= this.sekarang){
                 return true
             }else{
-                return 'Maksimal tahun keluar ' + sekarang
+                return 'Maksimal tahun keluar ' + this.sekarang
             }
         },
     }

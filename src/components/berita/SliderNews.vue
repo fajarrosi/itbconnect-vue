@@ -5,11 +5,11 @@
         v-model="slider"
         swipeable
         animated
-        height="150px"
         class="no-shadow"
         infinite
         v-if="valid"
         autoplay
+        style="max-height:150px;"
     >
     <!-- <template v-slot:navigation-icon="{ active, btnProps, onClick }">
         <q-btn v-if="active" size="5px" :icon="btnProps.icon" color="white" flat round dense @click="onClick" />
@@ -26,7 +26,7 @@
         </q-img>
     </q-carousel-slide> -->
         <q-carousel-slide :name="index+1" class="column no-wrap q-pa-none "  v-for="(n,index) in news" :key="index">
-            <q-img :src="newsimage(n) ? newsimage(n) : require('assets/berita.png')" alt="berita-img">
+            <q-img :src="newsimage(n) ? newsimage(n) : require('assets/berita.png')" alt="berita-img" style="min-height:150px;">
                 <div class="absolute-bottom text-subtitle1">
                     <div class="row">
                         <div class="text-subtitle1 ellipsis col-8" v-if="index === 0">{{n.title}}</div>

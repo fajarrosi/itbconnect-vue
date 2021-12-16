@@ -1,5 +1,5 @@
 <template>
-<div class="q-pr-sm" style="width:150px;height:322px;" >
+<div class="q-pr-sm item-rekomendasi" >
     <q-card class="rekomen-card card-radius cursor-pointer" @click="$router.push(`/detail-user/${rekomendasi.id}`)">
         <!-- <div v-ripple class="cursor-pointer q-hoverable relative-position" > -->
             <q-img
@@ -7,7 +7,7 @@
                 spinner-color="primary"
                 spinner-size="82px"
                 height="130px"
-                width="142px"
+                style="max-width:142px;"
                 :draggable="false"
             />
             <!-- <img src="" style="height:130px;" > -->
@@ -99,4 +99,14 @@ export default {
     /* cursor:pointer; */
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12);
 }
+
+.item-rekomendasi{
+    width:150px;
+    height:322px;
+}
+// @media(min-width:418px){
+//     .item-rekomendasi{
+//         width:150px;
+//     }
+// }
 </style>

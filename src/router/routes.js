@@ -100,7 +100,7 @@ const routes = [
           detail:true
         },
       },
-      {path:'calendar',name:'kalender',component:()=>import('pages/calendar/Calendar.vue'),
+      {path:'kalender',name:'kalender',component:()=>import('pages/calendar/Calendar.vue'),
         meta:{
           nofooter:true,
           userverified:true,

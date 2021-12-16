@@ -12,18 +12,19 @@
                 <q-card-section class="q-pa-none bg-secondary" >
                     <!-- <q-scroll-area style="height: 65vh;"> -->
                     <div class="row" v-if="Object.keys(onShows).length === 0">
-                        <div class="col text-center text-primary q-pa-sm left-even" style="font-size:20px;">Belum Ada Agenda</div>
+                        <div class="col text-center text-primary q-pa-sm left-even" style="font-size:20px;">Belum ada agenda</div>
                     </div>
                     <div class="row justify-between container" v-for="(n,key) in onShows" :key="key">
                         <div class="col-2 text-center text-primary q-pa-sm left-side" style="font-size:20px;">
-                            {{eventTgl(key)}}
+                            {{eventTgl(n)}}
                         </div >
                         <div class="col-10 text-primary q-pa-sm right-side" >
-                            <div v-for="(item, i) in n" :key="i" :class="i > 0  ? 'q-mt-md' : ''" class="row">
-                                <div class="text-15 col-12">{{item.dari[0]}} - {{item.sampai[0]}}</div>
-                                <div class="text-15 col-12">{{item.title}}</div>
-                                <div class="text-15 col-12 ellipsis-2-lines">{{item.description}}</div>
-                            
+                            <div v-for="(item, i) in onShow(n)" :key="i"  class="row">
+                                <div v-for="(x,ind) in item" :key="ind" class="row items-center col-12" :class="ind > 0  ? 'q-mt-md' : ''">
+                                    <div class="col-12">{{x.dari[0]}} - {{x.sampai[0]}}</div>
+                                    <div class="col-12">{{x.title}}</div>
+                                    <div class="col-12 ellipsis-2-lines">{{x.description}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -222,17 +223,6 @@ export default {
             })
             return formatNow
         },
-        // onShow(){
-        //     let terbaru = {}
-        //     let tgl1 = date.formatDate(this.sekarang,'YYYY/MM')
-        //     Object.keys(this.eventschange).forEach(key=>{
-        //         let a = date.formatDate(key,'YYYY/MM')
-        //         if(a === tgl1){
-        //             terbaru[key] = this.eventschange[key]
-        //         }
-        //     })
-        //     return terbaru
-        // },
         onShows(){
             let terbaru = {}
             let tgl1 = date.formatDate(this.sekarang,'YYYY-MM')
@@ -242,7 +232,7 @@ export default {
                     terbaru[key] = this.agendagroup[key]
                 }
             })
-            return terbaru
+            return Object.keys(terbaru).sort()
         },
     },
     methods:{
@@ -254,6 +244,17 @@ export default {
         },
         eventTgl(val){
             return date.formatDate(val,'DD')
+        },
+        onShow(val){
+            let terbaru = {}
+            let tgl1 = date.formatDate(val,'DD MM')
+            Object.keys(this.agendagroup).forEach(key=>{
+                let a = date.formatDate(key,'DD MM')
+                if(a === tgl1){
+                    terbaru[key] = this.agendagroup[key]
+                }
+            })
+            return terbaru
         },
     }
 }

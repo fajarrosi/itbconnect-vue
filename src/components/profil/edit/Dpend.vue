@@ -95,7 +95,7 @@
                                 </q-icon>
                             </template>
                             <template v-slot:hint>
-                            *) Pilih tanggal dengan mengklik icon disebelah kanan
+                            *)Minimal tahun 1928, pilih tanggal dengan mengklik icon disebelah kanan
                             </template>
                             </q-input>
                         <div class="col-4 text-edit">Tahun Keluar<span class="text-negative">*</span> </div>
@@ -128,7 +128,7 @@
                                 </q-icon>
                             </template>
                             <template v-slot:hint>
-                            *) Pilih tanggal dengan mengklik icon disebelah kanan
+                            *) Maksimal tahun {{sekarang}}, pilih tanggal dengan mengklik icon disebelah kanan
                             </template>
                             </q-input>
                         <q-btn class="col-12" color="primary" icon="close" label="Hapus Pendidikan" flat dense @click="remove(k)" no-caps  v-if="k >0" style="font-style:italic;"/>
@@ -208,7 +208,8 @@ export default {
             pendidikan:[],
             load:false,
             disabled:false,
-            send:[]
+            send:[],
+            sekarang:''
         }
     },
     created(){
@@ -246,6 +247,7 @@ export default {
                 })
             }
         })
+        this.sekarang = date.formatDate(new Date(),'YYYY')
     },
     methods:{
         add(){
@@ -266,11 +268,11 @@ export default {
             }
         },
         maksimal(val){
-            let sekarang = date.formatDate(new Date(),'YYYY')
-            if(val <= sekarang){
+            
+            if(val <= this.sekarang){
                 return true
             }else{
-                return 'Maksimal tahun keluar ' + sekarang
+                return 'Maksimal tahun keluar ' + this.sekarang
             }
         },
         remove(val){
