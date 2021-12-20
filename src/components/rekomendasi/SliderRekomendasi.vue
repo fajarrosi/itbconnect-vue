@@ -48,7 +48,7 @@ export default {
     data(){
         return{
             slider:1,
-            rekomendasi:'',
+            rekomendasi:[],
             valid:false
         }
     },
@@ -72,7 +72,7 @@ export default {
                 if(this.rekomendasi.length <= 3){
                     return 1
                 }else{
-                    return parseInt(this.rekomendasi.length/3)
+                    return Math.ceil(this.rekomendasi.length/3)
                 }
             }
             return 0

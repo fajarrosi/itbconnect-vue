@@ -10,7 +10,7 @@ import axios from 'axios'
 // https://be.itbconnect.org/api
 // http://127.0.0.1:8000/api
 // 37.44.244.134 
-const api = axios.create({ baseURL: 'http://127.0.0.1:8000/api' })
+const api = axios.create({ baseURL: 'https://be.itbconnect.org/api' })
 
 
 export default boot(({ app,redirect,store }) => {
@@ -27,7 +27,7 @@ export default boot(({ app,redirect,store }) => {
   },error =>{
     if(error.response.status === 401){
       store.dispatch('auth/logout')
-      store.dispatch('myprofil/logout')
+      // store.dispatch('myprofil/logout')
       delete api.defaults.headers.common['Authorization']
       redirect({path:'/login'})  
     }

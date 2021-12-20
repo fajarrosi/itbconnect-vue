@@ -62,7 +62,9 @@
             <div class="row q-px-md bg-white" v-show="result" ref="hasil">
                 <div class="text-17 text-bold col-12 q-mb-md" style="color:#505050;">Hasil Pencarian</div>
                 <div v-if="dataresult.length > 0" class="col-12">
-                    <rekomendasihorizontal v-for="(res,index) in dataresult" :key="index" :rekomendasi="res"/>
+                    <div v-for="(res,index) in dataresult" :key="index">
+                        <rekomendasihorizontal  :rekomendasi="res" v-if="Object.keys(res).length > 0"/>
+                    </div>
                 </div>
                 <div v-else>
                     <div class="text-15 q-mb-sm">
@@ -126,6 +128,7 @@ export default {
         onSearch(){
             this.load = true
             this.result = false
+            this.dataresult = ''
             this.$store.dispatch('koneksi/searchConnect',{
                 name : this.search.nama,
                 jurusan : this.search.prodi,

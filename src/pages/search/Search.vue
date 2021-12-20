@@ -41,32 +41,7 @@
                                     <q-list bordered padding>
                                         <div v-if="user">
                                             <div v-for="(u,index) in user" :key="index">
-                                                <q-item clickable v-ripple @click="$router.push(`/detail-user/${u.id}`)">
-                                                    <q-item-section top avatar>
-                                                    <q-avatar>
-                                                        <img :src="userimage(u) ? userimage(u) : require('assets/akun23.png')">
-                                                    </q-avatar>
-                                                    </q-item-section>
-
-                                                    <q-item-section>
-                                                    <q-item-label>{{u.complete_name}} - jurusan {{u.univercity[0].program_study}}</q-item-label>
-                                                    <q-item-label class="text-primary text-13" lines="2">{{u.experience[0].position}} {{u.experience[0].company_name}}</q-item-label>
-                                                    </q-item-section>
-
-                                                    <q-item-section side top>
-                                                        <q-btn color="primary" label="Lihat Profil" @click="$router.push(`/detail-user/${u.id}`)" rounded no-caps  v-if="u.is_friend" />
-                                                        <q-btn :color="u.wait ? 'grey-8' : 'primary'"  rounded no-caps @click.stop="onSubmit(u)" v-else :disable="u.btndisable" :loading="u.load">
-                                                        <div class="row">
-                                                            <q-icon name="done" v-if="u.wait" class="col-2" size="15px"/>
-                                                            <div class="text-white col-10" >{{u.wait ? 'Menunggu' : 'Connect'}}</div>
-                                                        </div>
-                                                        <template v-slot:loading>
-                                                            <q-spinner-facebook />
-                                                        </template>
-                                                        </q-btn>
-                                                    </q-item-section>
-                                                </q-item>
-
+                                                <item-alumni :alumni="u" v-if="Object.keys(u).length > 0"/>
                                                 <q-separator spaced inset="item" v-if="index !== user.length-1" />
                                             </div>
                                         </div>
@@ -112,31 +87,7 @@
                                     <q-list bordered padding>
                                         <div v-if="alluser">
                                             <div v-for="(u,index) in alluser" :key="index">
-                                                <q-item clickable v-ripple @click="$router.push(`/detail-user/${u.id}`)">
-                                                    <q-item-section top avatar>
-                                                    <q-avatar>
-                                                        <img :src="userimage(u) ? userimage(u) : require('assets/akun23.png')">
-                                                    </q-avatar>
-                                                    </q-item-section>
-
-                                                    <q-item-section>
-                                                    <q-item-label>{{u.complete_name}} - jurusan {{u.univercity[0].program_study}}</q-item-label>
-                                                    <q-item-label class="text-primary text-13" lines="2">{{u.experience[0].position}} {{u.experience[0].company_name}}</q-item-label>
-                                                    </q-item-section>
-
-                                                    <q-item-section side top>
-                                                        <q-btn color="primary" label="Lihat Profil" @click="$router.push(`/detail-user/${u.id}`)" rounded no-caps  v-if="u.is_friend" />
-                                                        <q-btn :color="u.wait ? 'grey-8' : 'primary'"  rounded no-caps @click.stop="onSubmit(u)" v-else :disable="u.btndisable" :loading="u.load">
-                                                        <div class="row">
-                                                            <q-icon name="done" v-if="u.wait" class="col-2" size="15px"/>
-                                                            <div class="text-white col-10" >{{u.wait ? 'Menunggu' : 'Connect'}}</div>
-                                                        </div>
-                                                        <template v-slot:loading>
-                                                            <q-spinner-facebook />
-                                                        </template>
-                                                        </q-btn>
-                                                    </q-item-section>
-                                                </q-item>
+                                                <item-alumni :alumni="u" v-if="Object.keys(u).length > 0"/>
 
                                                 <q-separator spaced inset="item" v-if="index !== alluser.length-1" />
                                             </div>
@@ -186,7 +137,8 @@ export default {
     },
     components:{
         'search-load' : require('./SearchLoad.vue').default,
-        'item-news' :require ('components/berita/ItemNews.vue').default
+        'item-news' :require ('components/berita/ItemNews.vue').default,
+        'item-alumni':require('./ItemAlumni.vue').default
     },
     data(){
         return{
@@ -249,23 +201,7 @@ export default {
             })
         },
         
-        userimage(val){
-            return  val.profile.photo_profile ? this.profil + val.profile.photo_profile : ''
-        },
-        onSubmit(val){
-            val.load = true
-            val.btndisable = true
-            this.$store.dispatch('rekomendasi/addConnect',{
-                friend_id : val.id
-            })
-            .then(()=>{
-                val.load = false
-                val.wait = true
-            })
-            .catch(error=>{
-                console.log("error dari addConnect",error)
-            })
-        }
+        
     },
 }
 </script>

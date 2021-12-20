@@ -2,7 +2,7 @@
     <q-page class="bg-white">
       
       <div v-if="valid">
-        <q-img :src="newsimage ? newsimage : require('assets/berita-detail.png')" alt="berita-detail-gambar" width="430px" height="239px" />
+        <q-img :src="newsimage ? newsimage : require('assets/berita-detail.png')" alt="berita-detail-gambar" style="max-width:430px;" height="239px" />
         <div class="row q-px-md bg-white">
             <q-breadcrumbs class="text-black q-my-sm">
                 <template v-slot:separator>
