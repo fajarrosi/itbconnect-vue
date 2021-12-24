@@ -33,7 +33,7 @@ const routes = [
       {path:'/otp',name:'otp', component: () => import('pages/auth/Otp.vue')},
       {path:'/forgot', component: () => import('pages/auth/Forgot.vue')},
       {path:'/forgot2', component: () => import('pages/auth/Forgot2.vue')},
-      {path:'/register',name:'register', component: () => import('pages/auth/Register.vue')},
+      {path:'/register/:email',name:'register', component: () => import('pages/auth/Register.vue')},
       {path:'/regissuccess',name:'registerberhasil', component: () => import('pages/auth/RegisSucc.vue')},
       {path:'/registered',name:'registered', component: () => import('pages/auth/Register2.vue')},
     ]

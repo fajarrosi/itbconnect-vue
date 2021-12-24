@@ -22,7 +22,7 @@
         input-class="qname"
         />
 
-        <q-input
+        <!-- <q-input
         outlined
         dense
         v-model="bemail"
@@ -44,7 +44,7 @@
         </template>
         </q-input>
         <span style="font-size:11px;padding-left:10px;" class="col-12 text-positive" v-if="success">Email dapat digunakan</span>
-        <span style="font-size:11px;padding-left:10px;" class="col-12 text-negative" v-if="error">Email tidak dapat digunakan karena email sudah terdaftar</span>
+        <span style="font-size:11px;padding-left:10px;" class="col-12 text-negative" v-if="error">Email tidak dapat digunakan karena email sudah terdaftar</span> -->
         <q-input
         outlined
         dense
@@ -296,12 +296,12 @@ export default {
                 this.$refs.dform.validate()
                 .then(valid=>{
                     if(valid){
-                        if(this.success){
-                            this.$emit('update:email',this.bemail)
-                            this.$emit('update:step',2)
-                        }else{
-                            this.failNotif()
-                        }
+                        this.$emit('update:step',2)
+                        // if(this.success){
+                        //     this.$emit('update:email',this.bemail)
+                        // }else{
+                        //     this.failNotif()
+                        // }
                     }
                 })
             

@@ -36,10 +36,10 @@ export default {
             $q.loading.hide()
                 $store.dispatch('auth/cekEmail',val)
                 .then(() => {
-                    $router.push('/register')
+                    $router.push({name:'register', params: {email: val}})
                 })
                 .catch(() => {
-                    $router.push('/register')
+                    $router.push({name:'register', params: {email: val}})
                 })
                 // $store.dispatch('auth/userReg',val)
                 // .then(()=>{
@@ -51,7 +51,7 @@ export default {
                 //     // console.log("tidak ada email",e)
                 // })
             timer = void 0
-          }, 2000)
+          }, 1000)
         }, 3000)
       }
     }

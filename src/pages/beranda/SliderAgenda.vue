@@ -32,11 +32,11 @@
                 </q-carousel-slide>
         </q-carousel>
         </div>
-        <div v-else>
+        <!-- <div v-else>
             <div class="row q-ma-md bg-white text-black no-shadow items-center justify-center " style="border-radius:10px;height:80px;">
                 <span class="q-ma-md text-17 col-5">Tidak Ada Agenda</span>
             </div>
-        </div>
+        </div> -->
     </div>
     <div v-else>
         <div class="row q-ma-md bg-white text-black no-shadow items-center justify-center " style="border-radius:10px;height:80px;" >

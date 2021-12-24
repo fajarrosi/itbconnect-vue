@@ -91,12 +91,12 @@ export default {
             .then(() => {
                 this.load = false
                 this.btndisabled = false
-                this.$router.push('/register')
+                this.$router.push({name:'register', params: {email: this.email}})
             })
             .catch(() => {
                 this.load = false
                 this.btndisabled = false
-                this.$router.push('/register')
+                this.$router.push({name:'register', params: {email: this.email}})
             })
         }
     }

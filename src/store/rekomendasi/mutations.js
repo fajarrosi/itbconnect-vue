@@ -9,10 +9,12 @@ export function setBio(state,data){
         months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November','Desember'] 
     })
     let doms = ''
-    if (data.address.country_id === 78){
-        doms = data.address.province.name
-    }else{
-        doms = data.address.country.country_name
+    if(data.address){
+        if (data.address.country_id === 78){
+            doms = data.address.province.name
+        }else{
+            doms = data.address.country.country_name
+        }
     }
     state.databio = {
         name: data.complete_name,
@@ -35,19 +37,33 @@ export function setBio(state,data){
 }
 
 export function setProfil(state,data){
+    let religion = ''
+    if(data.religion){
+        religion = data.religion.name
+    }
+    let negara = ''
+    let domisili = ''
+    let prov = ''
+    let city = ''
+    if(data.address){
+        negara = data.address.country_id
+        domisili = data.address.address
+        prov = data.address.province_id
+        city = data.address.cities_id
+    }
     state.dataprofil = {
         nick : data.nickname,
         gender : data.gender,
         blood: data.blood,
         status: data.marriage,
-        religion: data.religion.name,
+        religion: religion,
         citizenship : data.citizenship,
         email:data.email,
         telephone: data.telephone,
-        negara: data.address.country_id,
-        domisili:data.address.address,
-        prov:data.address.province_id,
-        city:data.address.cities_id,
+        negara: negara,
+        domisili:domisili,
+        prov:prov,
+        city:city,
         nim: data.nim,
         pob:data.pob,
         dob: data.dob,

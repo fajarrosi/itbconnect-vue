@@ -6,7 +6,11 @@ export function cekEmail(context,email){
             email : email
         })
         .then((response)=>{
-            context.commit('setAlumni',response.data.data)
+            if(response.status === 200){
+                context.commit('setAlumni',response.data.data)
+            }else{
+                context.commit('setAlumni','')
+            }
             resolve("berhasil")
         })
         .catch((error)=>{

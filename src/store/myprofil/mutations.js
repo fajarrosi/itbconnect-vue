@@ -5,6 +5,7 @@ export function setBio(state,data){
         months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober','November','Desember'] 
     })
     let doms = ''
+    
     if (data.address.country_id === 78){
         doms = data.address.province.name
     }else{

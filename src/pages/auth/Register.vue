@@ -192,11 +192,14 @@ export default {
       
     },
   },
+  
   mounted(){
+    if(this.$route.params.email) {
+        this.user.email = this.$route.params.email
+    }
     if (this.alumni) {
       this.alumnus = true
       this.user.name = this.alumni.complete_name
-      this.user.email = this.alumni.email
       this.user.nowa = this.alumni.telephone
       this.user.tahunmasuk = this.alumni.univercity[this.alumni.univercity.length -1].entry_year
       this.user.tahunkeluar = this.alumni.univercity[this.alumni.univercity.length -1].graduated_year

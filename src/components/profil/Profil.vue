@@ -37,14 +37,14 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" >
                 <div class="col-4" v-else>Alamat Luar Negeri</div>
                 <div class="col-8 text-justify">: {{dataprofil.domisili}}</div>
             </div>
-            <!-- <div class="row ">
+            <div class="row ">
                 <div class="col-4">Email</div>
                 <div class="col-6">: {{dataprofil.email}}</div>
             </div>
             <div class="row ">
                 <div class="col-4">No. Telepon</div>
                 <div class="col-6">: {{dataprofil.telephone}}</div>
-            </div> -->
+            </div>
     </div>
 </template>
 

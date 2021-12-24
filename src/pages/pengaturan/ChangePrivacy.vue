@@ -10,7 +10,7 @@
                     </q-item-section>
 
                     <q-item-section avatar>
-                        <q-toggle color="primary" icon="lock" v-model="privacy" val="Status" />
+                        <q-toggle color="primary" icon="lock" v-model="status" val="Status" />
                     </q-item-section>
                 </q-item>
                 <q-item tag="label" v-ripple>
@@ -19,7 +19,7 @@
                     </q-item-section>
 
                     <q-item-section avatar>
-                        <q-toggle color="primary" icon="lock" v-model="privacy" val="Gol.Darah" />
+                        <q-toggle color="primary" icon="lock" v-model="blood" val="Gol.Darah" />
                     </q-item-section>
                 </q-item>
                 <q-item tag="label" v-ripple>
@@ -28,7 +28,7 @@
                     </q-item-section>
 
                     <q-item-section avatar>
-                        <q-toggle color="primary" icon="lock" v-model="privacy" val="Agama" />
+                        <q-toggle color="primary" icon="lock" v-model="religion" val="Agama" />
                     </q-item-section>
                 </q-item>
                 <q-item tag="label" v-ripple>
@@ -37,7 +37,7 @@
                     </q-item-section>
 
                     <q-item-section avatar>
-                        <q-toggle color="primary" icon="lock" v-model="privacy" val="Alamat" />
+                        <q-toggle color="primary" icon="lock" v-model="address" val="Alamat" />
                     </q-item-section>
                 </q-item>
                 <q-item tag="label" v-ripple>
@@ -46,7 +46,7 @@
                     </q-item-section>
 
                     <q-item-section avatar>
-                        <q-toggle color="primary" icon="lock" v-model="privacy" val="Email" />
+                        <q-toggle color="primary" icon="lock" v-model="email" val="Email" />
                     </q-item-section>
                 </q-item>
                 <q-item tag="label" v-ripple>
@@ -55,25 +55,98 @@
                     </q-item-section>
 
                     <q-item-section avatar>
-                        <q-toggle color="primary" icon="lock" v-model="privacy" val="No.Telepon" />
+                        <q-toggle color="primary" icon="lock" v-model="phone" val="No.Telepon" />
                     </q-item-section>
                 </q-item>
             </q-list>
         </q-card-section>
         <q-card-actions align="right">
-            <q-btn flat label="Batal" color="primary" @click="$emit('update:dprivacy',false)" no-caps/>
-            <q-btn flat label="Simpan" color="primary" no-caps/>
+            <q-btn flat label="Batal" color="primary" @click="$emit('update:dprivacy',false)" no-caps :disabled="btndisabled"/>
+            <q-btn flat label="Simpan" color="primary" no-caps :disabled="btndisabled" :loading="load" @click="onSave">
+                <template v-slot:loading>
+                    <q-spinner-facebook />
+                </template>
+            </q-btn>
         </q-card-actions>
     </q-card>
 </q-dialog>
 </template>
 
 <script>
+import { api } from 'boot/axios'
+import { useQuasar} from 'quasar'
 export default {
-    props:['dprivacy'],
+    setup(){
+        const $q = useQuasar()
+        return {
+            successNotif () {
+                $q.notify({
+                message: 'Privasi berhasil diganti',
+                type: 'positive',
+                position: 'top',
+                progress: true
+                })
+            },
+            failNotif () {
+                $q.notify({
+                message: 'Privasi gagal diganti. Silahkan coba lagi',
+                type: 'negative',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
+    props:['dprivacy','dataPrivacy'],
     data(){
         return{
-            privacy:[]
+            status:false,
+            blood:false,
+            religion:false,
+            email:false,
+            phone:false,
+            address:false,
+            load:false,
+            btndisabled:false
+        }
+    },
+    mounted(){
+        if(Object.keys(this.dataPrivacy).length > 0 ){
+            this.status = this.dataPrivacy.status
+            this.blood = this.dataPrivacy.blood
+            this.religion = this.dataPrivacy.religion
+            this.email = this.dataPrivacy.email
+            this.phone = this.dataPrivacy.phone
+            this.address = this.dataPrivacy.address
+        }
+    },
+    methods:{
+        onSave(){
+            this.load = true
+            this.btndisabled = true
+            let config = {
+                headers: {
+                    Authorization : `Bearer ${this.$store.state.auth.token}`
+                },
+            }
+            let sendData = {
+                user_id: this.$store.state.auth.user.id,
+                status : this.status,
+                blood : this.blood,
+                religion:this.religion,
+                email:this.email,
+                phone : this.phone,
+                address: this.address
+            }
+            api.post('user/update-myprivacy',sendData,config)
+            .then(()=>{
+                this.$emit('update:dprivacy',false)
+                this.successNotif()
+            })
+            .catch(error=>{
+                console.log("error",error)
+                this.failNotif()
+            })
         }
     }
 }

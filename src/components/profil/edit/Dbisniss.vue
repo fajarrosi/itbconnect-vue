@@ -118,11 +118,11 @@
                             bg-color="white"
                             hide-bottom-space
                             />
-                            <div class="col-4 text-edit">Produk</div>
-                            <div class="col-8 q-pl-md text-edit">Keterangan</div>
+                            <div class="col-sm-4 col-6 text-edit">Produk</div>
+                            <div class="col-sm-8 col-6 q-pl-md text-edit">Keterangan</div>
                             <div v-for="(p,l) in bisnis.produk" :key="l" class="col-12 row justify-center">
                             <input type="file" @change="onFileSelected2($event,l)" class="col-12" :ref="'productupload' + l" style="display:none;"/>
-                                <q-img :src="p.prevproduct ? p.prevproduct : require('assets/blogo.png')" class="col-4 q-mt-md" width="128px" height="152px">
+                                <q-img :src="p.prevproduct ? p.prevproduct : require('assets/blogo.png')" class="col-sm-4 col-5 q-mt-md"  height="152px">
                                     <div class="absolute-full text-subtitle2 flex flex-center">
                                         <q-btn label="Unggah Produk Bisnis Anda" no-caps flat dense @click="$refs['productupload'+l].click()" class="absolute-full flex flex-center items-center"/>
                                     </div>
@@ -133,7 +133,7 @@
                                 outlined
                                 v-model="p.description"
                                 placeholder="Keterangan tentang produk bisnis Anda"
-                                class="q-mb-sm col-8 q-pl-md q-mt-md"
+                                class="q-mb-sm col-sm-8 col-6 q-pl-md q-mt-md"
                                 bg-color="white"
                                 hide-bottom-space
                                 />

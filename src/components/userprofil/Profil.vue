@@ -40,34 +40,40 @@
                 <div class="col-4">Jenis Kelamin</div>
                 <div class="col-3" v-if="dataprofil.gender === 'male'">: Laki-laki</div>
                 <div class="col-3" v-else>: Perempuan</div>
-                <div class="col-3">Gol. Darah</div>
-                <div class="col-2">: {{dataprofil.blood.toUpperCase()}}</div>
+                <div v-if="dataprofil.blood" class="col-5 row">
+                    <div class="col-6">Gol. Darah</div>
+                    <div class="col-6">: {{dataprofil.blood.toUpperCase()}}</div>
+                </div>
             </div>
-            <div class="row ">
-                <div class="col-4">Status</div>
-                <div class="col-3" v-if="dataprofil.status === 'yes'">: Menikah</div>
-                <div class="col-3" v-else>: Lajang</div>
-                <div class="col-3">Agama</div>
-                <div class="col-2">: {{dataprofil.religion}}</div>
+            <div class="row">
+                <div class="col-7 row" v-if="dataprofil.status">
+                    <div class="col-7">Status</div>
+                    <div class="col-5" v-if="dataprofil.status === 'yes'">: Menikah</div>
+                    <div class="col-5" v-else>: Lajang</div>
+                </div>
+                <div class="row" v-if="dataprofil.religion" :class="dataprofil.status ? 'col-5' : 'col-7'">
+                    <div :class="dataprofil.status ? 'col-6' : 'col-7'">Agama</div>
+                    <div :class="dataprofil.status ? 'col-6' : 'col-5'">: {{dataprofil.religion}}</div>
+                </div>
             </div>
             <div class="row ">
                 <div class="col-4" style="overflow-wrap: break-word;
   word-wrap: break-word;">Kewarganegaraan</div>
                 <div class="col-6">: {{dataprofil.citizenship}}</div>
             </div>
-            <div class="row ">
+            <div class="row " v-if="dataprofil.domisili">
                 <div class="col-4" v-if="dataprofil.negara === 78">Alamat Dalam Negeri</div>
                 <div class="col-4" v-else>Alamat Luar Negeri</div>
                 <div class="col-8 text-justify">: {{dataprofil.domisili}}</div>
             </div>
-            <!-- <div class="row ">
+            <div class="row " v-if="dataprofil.email">
                 <div class="col-4">Email</div>
                 <div class="col-6">: {{dataprofil.email}}</div>
             </div>
-            <div class="row ">
+            <div class="row " v-if="dataprofil.telephone">
                 <div class="col-4">No. Telepon</div>
                 <div class="col-6">: {{dataprofil.telephone}}</div>
-            </div> -->
+            </div>
             
         </div>
         <div class="blur" v-else>
