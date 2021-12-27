@@ -51,7 +51,21 @@
 </template>
 
 <script>
+import { useQuasar} from 'quasar'
 export default {
+    setup(){
+        const $q = useQuasar()
+        return {
+            failNotif () {
+                $q.notify({
+                message: 'Email sudah terdaftar. Silahkan coba lagi',
+                type: 'negative',
+                position: 'top',
+                progress: true
+                })
+            },
+        }
+    },
     data(){
         return{
             email:'',
@@ -96,7 +110,8 @@ export default {
             .catch(() => {
                 this.load = false
                 this.btndisabled = false
-                this.$router.push({name:'register', params: {email: this.email}})
+                // this.$router.push({name:'register', params: {email: this.email}})
+                this.failNotif()
             })
         }
     }

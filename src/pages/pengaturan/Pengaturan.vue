@@ -8,10 +8,15 @@
         <div class="text-primary text-h6 q-pl-md q-mt-sm">Privasi</div>
         <q-separator inset/>
         <q-btn color="black" label="Setelan Info Pribadi" flat no-caps @click="onPrivacy"/> <br>
+
+        <!-- <div class="text-primary text-h6 q-pl-md q-mt-sm">Notifikasi Email</div>
+        <q-separator inset/>
+        <q-btn color="black" label="Setelan notifikasi email" flat no-caps @click="dnotif = true"/> <br> -->
         
         <change-pass v-model:dpassword="dpassword" v-if="dpassword"/>
         <change-username v-model:dusername="dusername" v-if="dusername" />
         <change-privacy v-model:dprivacy="dprivacy" v-if="dprivacy" :dataPrivacy="dataPrivacy"/>
+        <change-notifemail v-model:dnotif="dnotif" v-if="dnotif" />
     </q-page>
 </template>
 
@@ -21,13 +26,15 @@ export default {
     components:{
         'change-pass' : require('./ChangePass.vue').default,
         'change-username' : require('./ChangeUsername.vue').default,
-        'change-privacy' : require('./ChangePrivacy.vue').default
+        'change-privacy' : require('./ChangePrivacy.vue').default,
+        'change-notifemail' : require('./ChangeNotifemail.vue').default
     },
     data(){
         return{
             dpassword:false,
             dusername:false,
             dprivacy:false,
+            dnotif:false,
             dataPrivacy:''
         }
     },
