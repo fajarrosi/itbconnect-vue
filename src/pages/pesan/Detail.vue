@@ -14,15 +14,15 @@
     </div>
     <q-footer>
         <div class="row justify-center bg-grey-2">
-            <div class="mobile bg-white q-pa-md">
+            <div class="mobile bg-secondary q-pa-md">
                     <q-form class="full-width" @submit="sendMsg">
                         <q-input
                         v-model="newMsg"
                         dense
-                        bg-color="white"
                         outlined
                         class="full-width"
                         ref="newmsg"
+                        bg-color="white"
                         >
                         <template v-slot:append>
                         <q-btn
@@ -65,6 +65,30 @@ export default {
           text: "very good ",
           from: "me",
         },
+        {
+          text: "Hy Jim How Are You?",
+          from: "me",
+        },
+        {
+          text: "Fine and you ?",
+          from: "them",
+        },
+        {
+          text: "very good ",
+          from: "me",
+        },
+        {
+          text: "Hy Jim How Are You?",
+          from: "me",
+        },
+        {
+          text: "Fine and you ?",
+          from: "them",
+        },
+        {
+          text: "last ",
+          from: "me",
+        },
       ],
     };
   },
@@ -97,17 +121,20 @@ export default {
     },
   },
   watch: {
-    messages: function (val) {
-      if (Object.keys(val).length) {
+    messages(val) {
+      if (val.length > 0) {
         this.scrollToBottom();
         setTimeout(() => {
           this.showmsg = true;
         }, 200);
+        console.log("di dalam if val msg", val);
       }
       console.log("watch msg", val);
     },
   },
-  
+  mounted(){
+    this.scrollToBottom()
+  }
 };
 </script>
 <style lang="scss">

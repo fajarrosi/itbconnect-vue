@@ -41,7 +41,7 @@
                     <q-card-section>
                         <div v-if="koneksi !== undefined">
                             <div v-if="koneksiFilter.length > 0">
-                                    <CardFriend v-for="n in koneksiFilter" :key="n" :koneksi="n"/>
+                                    <CardFriend v-for="n in koneksiFilter" :key="n" :koneksi="n" :addmsg="false"/>
                             </div>
                             <div v-else>
                                 <div class="text-15 q-mb-sm">Anda Belum Memiliki Koneksi, 

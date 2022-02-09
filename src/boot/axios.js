@@ -10,8 +10,15 @@ import axios from 'axios'
 // https://be.itbconnect.org/api
 // http://127.0.0.1:8000/api
 // 37.44.244.134 
-const api = axios.create({ baseURL: 'http://127.0.0.1:8000/api' })
-
+const api = axios.create({ baseURL: 'https://be.itbconnect.org/api' })
+const header = token => {
+  let config = {
+            headers: {
+                Authorization : `Bearer ${token}`
+            },
+        }
+    return config
+}
 
 export default boot(({ app,redirect,store }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
@@ -39,4 +46,4 @@ export default boot(({ app,redirect,store }) => {
 
 })
 
-export { api }
+export { api,header }

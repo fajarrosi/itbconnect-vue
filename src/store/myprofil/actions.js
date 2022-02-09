@@ -1,12 +1,8 @@
-import { api } from 'boot/axios'
+import { api,header } from 'boot/axios'
+
 export function getProfil(context){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.get('user/profile',config)
+        api.get('user/profile',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setBio',response.data.data)
             context.commit('setProfil',response.data.data)
@@ -50,13 +46,9 @@ export function updBio(context,bio){
 }
 
 export function updProfil(context,bio){
-    let config = {
-        headers: {
-            Authorization : `Bearer ${context.rootState.auth.token}`
-        }
-    }
+   
     return new Promise((resolve,reject)=>{
-        api.post('user/add-profile',bio,config)
+        api.post('user/add-profile',bio,header(context.rootState.auth.token))
         .then(()=>{
             context.dispatch('getProfil')
             .then(()=>{
@@ -70,13 +62,9 @@ export function updProfil(context,bio){
 }
 
 export function updOrg(context,bio){
-    let config = {
-        headers: {
-            Authorization : `Bearer ${context.rootState.auth.token}`
-        }
-    }
+  
     return new Promise((resolve,reject)=>{
-        api.put('user/add-interest',bio,config)
+        api.put('user/add-interest',bio,header(context.rootState.auth.token))
         .then(()=>{
             context.dispatch('getProfil')
             .then(()=>{
@@ -90,13 +78,9 @@ export function updOrg(context,bio){
 }
 
 export function updExp(context,bio){
-    let config = {
-        headers: {
-            Authorization : `Bearer ${context.rootState.auth.token}`
-        }
-    }
+   
     return new Promise((resolve,reject)=>{
-        api.post('user/add-experience',bio,config)
+        api.post('user/add-experience',bio,header(context.rootState.auth.token))
         .then(()=>{
             context.dispatch('getProfil')
             .then(()=>{
@@ -110,13 +94,9 @@ export function updExp(context,bio){
 }
 
 export function updEdu(context,bio){
-    let config = {
-        headers: {
-            Authorization : `Bearer ${context.rootState.auth.token}`
-        }
-    }
+   
     return new Promise((resolve,reject)=>{
-        api.post('user/add-education',bio,config)
+        api.post('user/add-education',bio,header(context.rootState.auth.token))
         .then(()=>{
             context.dispatch('getProfil')
             .then(()=>{
@@ -131,7 +111,7 @@ export function updEdu(context,bio){
 
 export function getOrg(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/organization')
+        api.get('complex/organization',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setOrganization',response.data.data)
             resolve('ok')
@@ -144,7 +124,7 @@ export function getOrg(context){
 
 export function getProfesi(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/profession')
+        api.get('complex/profession',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setProfesi',response.data.data)
             resolve('ok')
@@ -157,7 +137,7 @@ export function getProfesi(context){
 
 export function getPengda(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/pengda')
+        api.get('complex/pengda',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setPengda',response.data.data)
             resolve('ok')
@@ -170,7 +150,7 @@ export function getPengda(context){
 
 export function getIaprodi(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/iaprodi')
+        api.get('complex/iaprodi',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setIaprodi',response.data.data)
             resolve('ok')
@@ -183,7 +163,7 @@ export function getIaprodi(context){
 
 export function getJenjang(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/education')
+        api.get('complex/education',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setJenjang',response.data.data)
             resolve('ok')
@@ -196,7 +176,7 @@ export function getJenjang(context){
 
 export function getProdi(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/prodi')
+        api.get('complex/prodi',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setProdi',response.data.data)
             resolve('ok')
@@ -207,9 +187,22 @@ export function getProdi(context){
     })
 }
 
+export function getUniv(context){
+    return new Promise((resolve,reject)=>{
+        api.get('user/university',header(context.rootState.auth.token))
+        .then(response=>{
+            context.commit('setUniv',response.data.data)
+            resolve('ok')
+        })
+        .catch(err=>{
+            reject(err)
+        })
+    })
+}
+
 export function getNegara(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/country')
+        api.get('complex/country',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setNegara',response.data.data)
             resolve('ok')
@@ -222,7 +215,7 @@ export function getNegara(context){
 
 export function getProv(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/province')
+        api.get('complex/province',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setProv',response.data.data)
             resolve('ok')
@@ -235,7 +228,7 @@ export function getProv(context){
 
 export function getAgama(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/religion')
+        api.get('complex/religion',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setAgama',response.data.data)
             resolve('ok')
@@ -248,7 +241,7 @@ export function getAgama(context){
 
 export function getBisnisField(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/business-field')
+        api.get('complex/business-field',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setBisnisfield',response.data.data)
             resolve('ok')
@@ -302,13 +295,9 @@ export function updBisnis(context,bio){
 }
 
 export function delBisnis(context,id){
-    let config = {
-        headers: {
-            Authorization : `Bearer ${context.rootState.auth.token}`
-        }
-    }
+   
     return new Promise((resolve,reject)=>{
-        api.delete(`user/delete-business/${id}`,config)
+        api.delete(`user/delete-business/${id}`,header(context.rootState.auth.token))
         .then(()=>{
             context.dispatch('getProfil')
             .then(()=>{
@@ -322,13 +311,9 @@ export function delBisnis(context,id){
 }
 
 export function delProduk(context,id){
-    let config = {
-        headers: {
-            Authorization : `Bearer ${context.rootState.auth.token}`
-        }
-    }
+  
     return new Promise((resolve,reject)=>{
-        api.delete(`user/delete-produk/${id}`,config)
+        api.delete(`user/delete-produk/${id}`,header(context.rootState.auth.token))
         .then(()=>{
             context.dispatch('getProfil')
             .then(()=>{

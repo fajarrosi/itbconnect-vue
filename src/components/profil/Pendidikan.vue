@@ -13,7 +13,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
                     <li v-for="(pendidikan,index) in datapendidikan" :key="index">
                         <div class="row">
                             <div class="col-3">{{pendidikan.entry_year}} - {{pendidikan.graduated_year}}</div>
-                            <div class="col-9">: <span v-if="pendidikan.is_itb">Institut Teknik Bandung</span> <span v-else>{{pendidikan.campus_name}}</span> , Jurusan {{pendidikan.program_study}}</div>
+                            <div class="col-9">: <span v-if="pendidikan.is_itb">Institut Teknologi Bandung</span> <span v-else>{{pendidikan.campus_name}}</span> , Jurusan {{pendidikan.program_study}}</div>
                         </div>
                     </li>
             </ul>
@@ -33,7 +33,7 @@ export default {
             return this.$store.state.myprofil.datapendidikan
         },
         valid(){
-            if(this.jenjang && this.prodi){
+            if(this.jenjang && this.prodi && this.univ){
                 return true
             }else{
                 return false
@@ -43,17 +43,20 @@ export default {
     data(){
         return{
             jenjang:false,
-            prodi:false
+            prodi:false,
+            univ:false
         }
     },
     methods:{
-        ...mapActions("myprofil", ['getJenjang','getProdi']),
+        ...mapActions("myprofil", ['getJenjang','getProdi','getUniv']),
         async getData(){
             let a = this.getJenjang()
             let b = this.getProdi()
-            Promise.all([a,b]).then(() =>{
+            let c = this.getUniv()
+            Promise.all([a,b,c]).then(() =>{
                 this.jenjang = true
                 this.prodi = true
+                this.univ = true
                 this.$emit('update:dpend',true)
             })
         },

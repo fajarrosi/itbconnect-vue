@@ -69,7 +69,7 @@
                             <q-btn label="Angkatan" dense no-caps class="col q-mr-sm pil-btn" @click="key = 'angkatan'" :class="{active : key == 'angkatan'}" style="border-radius: 8px;" />
                         </div>
                     <div v-if="koneksiFilter.length > 0">
-                        <CardFriend v-for="n in koneksiFilter" :key="n" :koneksi="n"/>
+                        <CardFriend v-for="n in koneksiFilter" :key="n" :koneksi="n" :addmsg="false"/>
                     </div>
                     <div v-else>
                         <div class="text-15 q-mb-sm">Anda Belum Memiliki Koneksi, 
@@ -226,11 +226,6 @@ export default {
         this.$store.dispatch('myprofil/getProfil')
         this.$store.dispatch('myprofil/deleteall')
     },
-    // unmounted(){
-    //     this.$store.dispatch('koneksi/deleteMyConnection')
-    // }
-
-
 }
 </script>
 

@@ -1,114 +1,12 @@
 <template>
   <q-layout view="hHh lpr LFR">
-
-    <q-header bordered class="bg-primary text-white q-pa-sm" height-hint="98">
-      <div class="row justify-center">
-        <div class="mobile">
-          <div class="row justify-between" v-if="$route.name.includes('beranda')">
-            <q-btn flat round dense icon="menu" class="q-mr-sm" @click="drawer = !drawer"/>
-            <svg xmlns="http://www.w3.org/2000/svg" width="65" height="38" viewBox="0 0 56 38">
-              <text id="CTD" transform="translate(0 30)" fill="#fff" font-size="29" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="0" y="0">CTD</tspan></text>
-            </svg>
-            <q-btn flat round dense icon="search" class="q-mr-xs" @click="$router.push({name:'cari'})"/>
-          </div>
-          <div class="row" v-else-if="$route.meta.headerback">
-            <q-btn flat icon="arrow_back" class="text-white" no-caps dense @click="$router.back()"/>
-            <p class="text-h6 q-mb-none">
-              {{titlePage}}
-            </p>
-          </div>
-          <div class="row" v-else-if="$route.meta.detail">
-            <q-btn flat icon="arrow_back" class="text-white" no-caps dense @click="$router.back()"/>
-            <p class="text-h6 q-mb-none">
-              Kembali
-            </p>
-          </div>
-          <div class="row" v-else>
-            <q-btn flat round dense icon="menu" class="q-mr-sm" @click="drawer = !drawer"/>
-            <p class="text-h6 q-mb-none">
-              {{titlePage}}
-            </p>
-          </div>
-        </div>
-      </div>
-    </q-header>
+    <title-page v-model:drawer="drawer"/>
         <q-drawer
           v-model="drawer"
           :width="250"
           behavior="mobile"
         >
-          <q-scroll-area style="height: calc(100% - 170px); margin-top: 170px; border-right: 1px solid #ddd">
-            <q-list padding>
-              <q-item clickable v-ripple @click="onVerified('notifikasi')">
-                <q-item-section>
-                  <div class="row items-center">
-                    <img src="~assets/notifikasi.png" alt="notifikasi">
-                    <div class="text-black q-ml-sm">Notifikasi</div>
-                  </div>
-                </q-item-section>
-              </q-item>
-              <q-item clickable v-ripple @click="onVerified('kalender')">
-                <q-item-section>
-                  <div class="row items-center">
-                    <img src="~assets/calendar.png" alt="calendar">
-                    <div class="text-black q-ml-sm">Kalender</div>
-                  </div>
-                </q-item-section>
-              </q-item>
-              <!-- <q-item clickable v-ripple @click="$router.push({name:'pesan'})">
-                <q-item-section>
-                  <div class="row items-center">
-                    <img src="~assets/pesan.png" alt="pesan">
-                    <div class="text-black q-ml-sm">Pesan</div>
-                  </div>
-                </q-item-section>
-              </q-item> -->
-              <q-item clickable v-ripple @click="onVerified('Pengaturan & Privasi')">
-                <q-item-section>
-                  <div class="row items-center">
-                    <img src="~assets/privasi.png" alt="privasi">
-                    <div class="text-black q-ml-sm">Pengaturan & Privasi</div>
-                  </div>
-                </q-item-section>
-              </q-item>
-              <q-item v-ripple tag="a" href="https://wa.me/6287888000015" target="_blank">
-                <q-item-section>
-                  <div class="row items-center">
-                    <img src="~assets/support.png" alt="support">
-                    <div class="text-black q-ml-sm">Bantuan & Feedback</div>
-                  </div>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-scroll-area>
-          <div class="bg-primary absolute-top" style="height:170px;">
-            <div class="row justify-center">
-
-              <q-avatar size="70px" class="q-mb-sm q-mt-md">
-                <q-img :src="photoprofil ? photoprofil : require('assets/account_circle.svg')" alt="photoprofilakun" width="70px" height="70px"/>
-              </q-avatar>
-              <div class="text-weight-bold col-12 text-white text-center">{{user.complete_name}}</div>
-              <div class="col-12 text-white text-center">@{{user.username}}</div>
-              <div class="col-5 text-white text-center row items-center justify-center">
-                    <img src="~assets/link.png" alt="place" style="display:inline-block;filter: brightness(0) invert(1);">
-                    <p class="q-my-none q-ml-sm">{{user.total_connect}}</p>
-              </div>
-
-            </div>
-          </div>
-          <div class="absolute-bottom">
-            <q-separator spaced />
-            <q-list padding>
-              <q-item clickable v-ripple @click="Logout">
-                 <q-item-section>
-                  <div class="row items-center">
-                      <img src="~assets/logout.png" alt="Logout">
-                    <div class="text-black q-ml-sm">Logout</div>
-                  </div>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </div>
+          <drawer />
         </q-drawer>
 
     <q-page-container >
@@ -119,32 +17,7 @@
       </div>
     </q-page-container>
 
-    <q-footer v-if="!$route.meta.nofooter">
-      <div class="row justify-center bg-grey-2">
-        <div class="mobile bg-white row text-center text-black" style="box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.25);">
-            <div class="col q-py-sm footer-menu "  @click="onVerified('beranda')">
-                <img src="~assets/beranda-on.png" alt="beranda-on" v-if="$route.name.includes('beranda')">
-                <img src="~assets/beranda-off.png" alt="beranda-off" v-else>
-                <div class="text-caption" :class="$route.name.includes('beranda') ? 'text-primary' : 'text-black'">Beranda</div>
-            </div>
-            <div class="col q-py-sm footer-menu "  @click="onVerified('koneksi')">
-                <img src="~assets/koneksi-on.png" alt="koneksi-on" v-if="$route.fullPath.includes('/koneksi')">
-              <img src="~assets/koneksi-off.png" alt="koneksi-off" v-else>
-                <div class="text-caption" :class="$route.fullPath.includes('/koneksi') ? 'text-primary' : 'text-black'">Koneksi</div>
-            </div>
-            <div class="col q-py-sm footer-menu "  @click="onVerified('berita')">
-              <img src="~assets/berita-on.png" alt="berita-on" v-if="$route.fullPath.includes('/berita')">
-              <img src="~assets/berita-off.png" alt="berita-off" v-else>
-              <div class="text-caption" :class="$route.fullPath.includes('/berita') ? 'text-primary' : 'text-black'">Berita</div>
-            </div>
-            <div class="col q-py-sm footer-menu "  @click="$router.replace({name:'profil'})">
-              <img src="~assets/profil-on.png" alt="profil-on" v-if="$route.fullPath.includes('/profil')">
-              <img src="~assets/profil-off.png" alt="profil-off" v-else>
-              <div class="text-caption" :class="$route.fullPath.includes('/profil') ? 'text-primary' : 'text-black'">Profil</div>
-            </div>
-        </div>
-      </div>
-    </q-footer>
+    <footer-user v-model:unverified="unverified"/>
     <d-unverified v-if="unverified" v-model:unverified="unverified" />
   </q-layout>
 </template>
@@ -153,7 +26,10 @@
 import { ref } from 'vue'
 export default {
   components:{
-    'd-unverified' : require('components/profil/Dunverified.vue').default
+    'd-unverified' : require('components/profil/Dunverified.vue').default,
+    'title-page' : require('components/core/TitlePage.vue').default,
+    'footer-user' : require('components/core/FooterUser.vue').default,
+    'drawer' :require('components/core/Drawer.vue').default
   },
   data(){
     return{
@@ -168,13 +44,6 @@ export default {
     }
   },
   computed:{
-      titlePage(){
-        let val = this.$route.name
-        if (!val) {
-          return ''
-        }
-        return val.replace(/^./, val[0].toUpperCase())
-      },
       user(){
         return this.$store.state.auth.user
       },
@@ -188,6 +57,7 @@ export default {
         }
         return ''
       },
+
   },
   methods:{
     Logout(){
@@ -195,11 +65,11 @@ export default {
       this.$router.push({name: 'login'})
     },
     onVerified(routerName){
-      if(this.$store.getters['auth/isVerifieduser']){
-        this.$router.push({name:routerName})
-      }else{
-        this.unverified = true
-      }
+        if(this.$store.getters['auth/isVerifieduser']){
+            this.$router.push({name:routerName})
+        }else{
+            this.unverified = true
+        }
     }
   },
 }

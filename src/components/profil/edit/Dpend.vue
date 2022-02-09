@@ -14,17 +14,17 @@
                             val => val !== null && val !== '' || 'Jenjang Pendidikan tidak boleh kosong',
                         ]"/>
                         <div class="col-4 text-edit">Universitas<span class="text-negative">*</span></div>
-                        <q-select  outlined dense v-model="pend.univ" emit-value map-options :options="optuniv" label="Select Universitas" bg-color="white" class="q-mb-sm col-8" 
+                        <q-select  outlined dense v-model="pend.univ" :options="optuniv" label="Select Universitas" bg-color="white" class="q-mb-sm col-8" 
                         lazy-rules
                         :rules="[
                             val => val !== null && val !== '' || 'Universitas tidak boleh kosong',
                         ]"
                         hide-bottom-space
                         />
-                        <div class="col-11 q-ml-auto row" v-if="pend.univ === 2">
+                        <div class="col-11 q-ml-auto row" v-if="pend.univ === 'Lainnya'">
                             <div class="col-4 text-edit">Universitas Lainnya<span class="text-negative">*</span></div>
                             <q-input
-                            v-if="pend.univ === 2"
+                            
                             dense
                             outlined
                             v-model="pend.univlain"
@@ -39,7 +39,7 @@
                             />
                             <div class="col-4 text-edit">Prodi<span class="text-negative">*</span> </div>
                             <q-input
-                            v-if="pend.univ === 2"
+                            
                             dense
                             outlined
                             v-model="pend.prodilain"
@@ -53,10 +53,9 @@
                             ]"
                             />
                         </div>
-                        <div class="col-12 row" v-if="pend.univ === 1 ">
+                        <div class="col-12 row" v-if="pend.univ !== 'Lainnya' && pend.univ !== ''">
                             <div class="col-4 text-edit">Prodi<span class="text-negative">*</span> </div>
                             <q-select
-                            v-if="pend.univ === 1 "
                             outlined dense v-model="pend.prodi" emit-value map-options :options="optprodi" label="Select Prodi" bg-color="white" class="q-mb-sm col-8" 
                             lazy-rules
                             :rules="[
@@ -189,21 +188,23 @@ export default {
         'datapendidikan',
         'jenjang',
         'prodi',
-        'intro'
+        'intro',
+        'universitas'
     ],
     data(){
         return{
             optjenjang:[],
-            optuniv:[
-                {
-                    label:'ITB',
-                    value:1
-                },
-                {
-                    label:'Lainnya',
-                    value:2
-                }
-            ],
+            optuniv:['ITB'],
+            // optuniv:[
+            //     {
+            //         label:'ITB',
+            //         value:1
+            //     },
+            //     {
+            //         label:'Lainnya',
+            //         value:2
+            //     }
+            // ],
             optprodi:[],
             pendidikan:[],
             load:false,
@@ -222,23 +223,28 @@ export default {
         this.prodi.forEach(element => {
             this.optprodi.push(element.name)
         })
+        this.universitas.forEach(element=>{
+            this.optuniv.push(element.name)
+        })
+        this.optuniv.push('Lainnya')
     },
+
     mounted(){
         this.datapendidikan.forEach(el=>{
-            if(el.is_itb){
+            if(this.optuniv.find(opt => opt === el.campus_name)){
                 this.pendidikan.push({
                     jenjang:el.education_id,
-                    univ:1,
+                    univ:el.campus_name,
                     prodilain:'',
                     univlain:'',
                     prodi:el.program_study,
                     tahunmasuk:el.entry_year,
                     tahunkeluar:el.graduated_year,
                 })
-            }else{
+            }else {
                 this.pendidikan.push({
                     jenjang:el.education_id,
-                    univ:2,
+                    univ:'Lainnya',
                     prodilain:el.program_study,
                     univlain:el.campus_name,
                     prodi:'',
@@ -246,6 +252,7 @@ export default {
                     tahunkeluar:el.graduated_year,
                 })
             }
+
         })
         this.sekarang = date.formatDate(new Date(),'YYYY')
     },
@@ -286,7 +293,7 @@ export default {
                     this.load = true
                     this.disabled = true
                     this.pendidikan.forEach(el=>{
-                        if(el.univ === 1){
+                        if(el.univ === 'ITB'){
                             this.send.push({
                                 campus_name: 'ITB',
                                 education_id: el.jenjang,
@@ -295,11 +302,20 @@ export default {
                                 graduated_year: el.tahunkeluar,
                                 is_itb: true
                             })
-                        }else{
+                        }else if(el.univ === 'Lainnya'){
                             this.send.push({
                                 campus_name: el.univlain,
                                 education_id: el.jenjang,
                                 program_study: el.prodilain,
+                                entry_year: el.tahunmasuk,
+                                graduated_year: el.tahunkeluar,
+                                is_itb: false
+                            })
+                        }else {
+                            this.send.push({
+                                campus_name: el.univ,
+                                education_id: el.jenjang,
+                                program_study: el.prodi,
                                 entry_year: el.tahunmasuk,
                                 graduated_year: el.tahunkeluar,
                                 is_itb: false

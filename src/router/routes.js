@@ -40,6 +40,7 @@ const routes = [
   },
 
   {path:'/cari', name:'cari', component:()=>import('pages/search/Search.vue')},
+  {path:'/pesan',name:'pesan',component:()=>import('pages/pesan/Pesan.vue')},
   {
     path:'/',
     component: () => import('layouts/MobileLayout.vue'),
@@ -120,18 +121,21 @@ const routes = [
           headerback:true
         }
       },
-      {path:'pesan',name:'pesan',component:()=>import('pages/pesan/Pesan.vue'),
+      
+      {path:'mykontak',name:'tambah Pesan',component:()=>import('pages/pesan/MyKontak.vue'),
         meta:{
           nofooter:true,
           userverified:true,
-          headerback:true
+          headerback:true,
+          pesan:true
         }
       },
       {path:'detail',name:'detail-pesan',component:()=>import('pages/pesan/Detail.vue'),
         meta:{
           nofooter:true,
           userverified:true,
-          headerback:true
+          headerback:true,
+          detailpesan:true
         }
       },
       {path:'pengaturan',name:'Pengaturan & Privasi',component:()=>import('pages/pengaturan/Pengaturan.vue'),

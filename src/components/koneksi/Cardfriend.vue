@@ -11,7 +11,7 @@
                 <div>{{koneksi.complete_name}} - {{koneksi.univercity[0].program_study}}'{{tahun()}}</div>
                 <div class="text-primary text-13">{{koneksi.experience[0].position}} {{koneksi.experience[0].company_name}}</div>
             </div>
-            <div class="col-2 text-right">
+            <div class="col-2 text-right" v-if="!addmsg">
                 <q-btn class="bg-white btncek" icon="more_horiz" size="md" @click.stop="onMore"/>
             </div>
         </div>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-    props:['koneksi'],
+    props:['koneksi','addmsg'],
     components:{
         'd-more': require('components/koneksi/Dmore.vue').default,
     },
@@ -34,7 +34,11 @@ export default {
             return this.koneksi.univercity[0].entry_year.substring(2,4)
         },
         movePage(){
+            if(this.addmsg){
+
+            }else{
                 this.$router.push(`/detail-user/${this.koneksi.id}`)
+            }
         }
     },
     data(){

@@ -5,10 +5,10 @@
                 <q-card-section>
                     <div class="text-17 text-bold">{{detail.complete_name}}</div>
                     <div class="text-15">{{detail.univercity[0].program_study}} '{{tahun()}}</div>
-                    <!-- <q-btn no-caps class="text-left q-pl-none" flat>
+                    <q-btn no-caps class="text-left q-pl-none" flat>
                         <img src="~assets/email.png" alt="pesan">
                         <div class="text-13 q-ml-md">Kirim Pesan</div>
-                    </q-btn> -->
+                    </q-btn>
                     <br>
                     <q-btn no-caps class="text-left q-pl-none" flat @click="onDelete">
                         <img src="~assets/remove-user.png" alt="hapus">

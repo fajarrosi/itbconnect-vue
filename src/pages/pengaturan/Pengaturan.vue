@@ -57,7 +57,8 @@ export default {
                 console.log("error",error)
             })
         }
-    }
+    },
+    
 }
 </script>
 

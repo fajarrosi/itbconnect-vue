@@ -33,17 +33,14 @@
             label="Tahun Masuk"
             lazy-rules
             :rules="[
-            (val) => (val && val.length > 0) || 'Tahun masuk tidak boleh kosong', val => val.length >= 4 || 'Tahun masuk harus 4 digit', val=> minimal(val)
+            (val) => (val && val.length > 0) || 'Tahun masuk tidak boleh kosong', val => val.length >= 4 || 'Tahun masuk harus 4 digit', val=> minimal(val), val => maksimal(val)
             ]"
             bg-color="white"
             class="col-5"
             hide-bottom-space
             bottom-slots
-            >
-            <template v-slot:hint>
-                *) Minimal tahun 1928
-            </template>
-            </q-input>
+            />
+            
             <q-input
             outlined
             dense
@@ -53,17 +50,15 @@
             label="Tahun Keluar"
             lazy-rules
             :rules="[
-            (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',val => val.length >= 4 || 'Tahun keluar harus 4 digit',val=>maksimal(val)
+            (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',val => val.length >= 4 || 'Tahun keluar harus 4 digit',val=> minimal(val), val=>maksimal(val)
             ]"
             bg-color="white"
             class="col-6"
             hide-bottom-space
             bottom-slots
-            >
-            <template v-slot:hint>
-                *) Maksimal tahun {{sekarang}}
-            </template>
-            </q-input>
+            />
+            
+            <span class="col-12 q-mt-sm" style="padding-left:10px;">*) Rentang tahun 1920 - {{sekarang}}</span>
             <div class="col-12 row q-mt-md" style="margin-bottom:-20px;">
                 <q-btn outline label="Sebelumnya" @click="$emit('update:step',1)" class="col q-mr-md btn-radius" style=" color:#707070;"
                         size="12px" 
@@ -137,17 +132,17 @@ export default {
             })
         },
         minimal(val){
-            if(val >= 1928){
+            if(val >= 1920){
                 return true
             }else{
-                return 'Minimal tahun masuk 1928'
+                return 'Minimal tahun 1920'
             }
         },
         maksimal(val){
             if(val <= this.sekarang){
                 return true
             }else{
-                return 'Maksimal tahun keluar ' + this.sekarang
+                return 'Maksimal tahun ' + this.sekarang
             }
         },
     }

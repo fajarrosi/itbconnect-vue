@@ -4,8 +4,8 @@
         <q-card-section class="q-pb-none">
         <div class="text-h5 text-bold text-primary">Masuk</div>
         <div class="text-subtitle2 q-mt-md text-justify" :class="Object.keys(errors).length > 0 ? 'q-mb-none' : 'q-mb-md'" style="font-size: 15px;line-height: 20px;">
-            Isilah form username dan password di bawah ini untuk mengakses aplikasi
-            ITBConnect Ikatan Alumni ITB
+            Isilah form email dan password di bawah ini untuk mengakses aplikasi
+            Connecting The Dots Ikatan Alumni ITB
         </div>
         <div class="text-red text-15" v-if="Object.keys(errors).length>0"> Email/Password yang Anda Masukkan Salah, silahkan cek kembali Email/Password Anda</div>
             <q-input

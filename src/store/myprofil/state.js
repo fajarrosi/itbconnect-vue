@@ -11,6 +11,7 @@ export default function () {
     iaprodi:'',
     jenjang:'',
     prodi:'',
+    universitas:'',
     negara:'',
     prov:'',
     agama:'',

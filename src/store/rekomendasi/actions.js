@@ -1,12 +1,8 @@
-import { api } from 'boot/axios'
+import { api,header } from 'boot/axios'
 export function getAllUser(context){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.get('user/user-all',config)
+       
+        api.get('user/user-all',header(context.rootState.auth.token))
         .then(response=>{
             resolve(response.data.data)
         })
@@ -18,12 +14,8 @@ export function getAllUser(context){
 
 export function getAllUserByLocation(context){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.get('user/location-user',config)
+        
+        api.get('user/location-user',header(context.rootState.auth.token))
         .then(response=>{
             resolve(response.data.data)
         })
@@ -35,12 +27,8 @@ export function getAllUserByLocation(context){
 
 export function addConnect(context,idfriend){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.post('connect/add',idfriend,config)
+        
+        api.post('connect/add',idfriend,header(context.rootState.auth.token))
         .then(response=>{
             resolve(response.data)
         })
@@ -52,12 +40,8 @@ export function addConnect(context,idfriend){
 
 export function userDetail(context,idfriend){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.post('user/view-user',idfriend,config)
+      
+        api.post('user/view-user',idfriend,header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setBio',response.data.data[0])
             context.commit('setFriend',response.data.data[0])
@@ -76,12 +60,8 @@ export function userDetail(context,idfriend){
 
 export function getRandomUserById(context,id){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.get(`user/random-user/${id}`,config)
+     
+        api.get(`user/random-user/${id}`,header(context.rootState.auth.token))
         .then(response=>{
             resolve(response.data.data)
         })

@@ -1,12 +1,8 @@
-import { api } from 'boot/axios'
+import { api,header } from 'boot/axios'
 export function getConnectRequest(context){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.get('connect/pending',config)
+       
+        api.get('connect/pending',header(context.rootState.auth.token))
         .then(response=>{
             resolve(response.data.data)
         })
@@ -18,12 +14,8 @@ export function getConnectRequest(context){
 
 export function AcceptConnection(context,idfriend){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.post('connect/confirm',idfriend, config)
+       
+        api.post('connect/confirm',idfriend, header(context.rootState.auth.token))
         .then(response=>{
             context.commit('myprofil/updateFriend', response.data.data.myfriend.total_connect, {root: true})
             context.dispatch('MyConnection')
@@ -39,12 +31,8 @@ export function AcceptConnection(context,idfriend){
 
 export function RejectConnection(context,idfriend){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.post('connect/reject',idfriend, config)
+        
+        api.post('connect/reject',idfriend, header(context.rootState.auth.token))
         .then(()=>{
             resolve("OK")
         })
@@ -56,12 +44,8 @@ export function RejectConnection(context,idfriend){
 
 export function MyConnection(context){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.get('connect/myconnect', config)
+        
+        api.get('connect/myconnect', header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setMyConnection',response.data.data)
             resolve("OK")
@@ -78,12 +62,8 @@ export function deleteMyConnection(context){
 
 export function DeleteConnection(context,idfriend){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.post('connect/delete',idfriend, config)
+        
+        api.post('connect/delete',idfriend, header(context.rootState.auth.token))
         .then(response=>{
             context.commit('myprofil/updateFriend', response.data.data.total_connect, {root: true})
             context.dispatch('MyConnection')
@@ -99,12 +79,8 @@ export function DeleteConnection(context,idfriend){
 
 export function InviteFriend(context,idfriend){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.post('user/invite',idfriend, config)
+        
+        api.post('user/invite',idfriend, header(context.rootState.auth.token))
         .then(()=>{
             resolve("OK")
         })
@@ -115,12 +91,8 @@ export function InviteFriend(context,idfriend){
 }
 export function searchConnect(context,payload){
     return new Promise((resolve,reject)=>{
-        let config = {
-            headers: {
-                Authorization : `Bearer ${context.rootState.auth.token}`
-            },
-        }
-        api.post('user/search-spesific',payload, config)
+       
+        api.post('user/search-spesific',payload, header(context.rootState.auth.token))
         .then(response=>{
             resolve(response.data.data)
         })

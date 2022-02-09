@@ -97,6 +97,10 @@ export function setProdi(state,data){
     state.prodi = data
 }
 
+export function setUniv(state,data){
+    state.universitas = data
+}
+
 export function setNegara(state,data){
     state.negara = data
 }
