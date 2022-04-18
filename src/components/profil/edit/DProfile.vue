@@ -20,11 +20,14 @@
                                 class="q-mb-sm col-8"
                                 bg-color="white"
                                 hide-bottom-space
-                                @keyup="this.$data.nama = $event.target.value.replace(/\w\S*/g,
+                                @keyup="onNama($event)"
+                                />
+                                <!-- 
+                                    this.$data.nama = $event.target.value.replace(/\w\S*/g,
                                 function(txt) {
                                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                                })"
-                                />
+                                })
+                                 -->
                                 <div class="col-4 text-edit">Tempat Lahir<span class="text-negative">*</span></div>
                                 <q-input
                                 dense
@@ -133,6 +136,7 @@
                                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                                 })"
                                     />
+                                    
                                 <div class="col-3 text-edit">Alamat<span class="text-negative">*</span></div>
                                 <div class="col-9 row">
                                     <q-radio v-model="dalam" val="1" label="Dalam Negeri" class="col"/>
@@ -243,6 +247,7 @@
                                 dense
                                 outlined
                                 v-model="nowa"
+                                @keyup="onWa($event)"
                                 placeholder="No. Telepon"
                                 class="q-mb-sm col-9"
                                 bg-color="white"
@@ -632,6 +637,18 @@ export default {
                         })
                     }
                 })
+        },
+        onNama(event){
+            this.nama = event.target.value.replace(/\w\S*/g,function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            })
+        },
+        onWa(event){
+            if (/[0-9+]/.test(event.key)) {
+                this.nowa = event.target.value
+            }else{
+                this.nowa = event.target.value.replace(event.key,'')
+            }
         }
      
     }

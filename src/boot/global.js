@@ -8,11 +8,11 @@ export default boot(({ app }) => {
     // app.config.globalProperties.newsimg = 'http://127.0.0.1:8000/image_news/'
     // app.config.globalProperties.caraouselimg = 'http://127.0.0.1:8000/list_caraousel/'
     
-    app.config.globalProperties.header = 'https://be.itbconnect.org/header/'
-    app.config.globalProperties.profil = 'https://be.itbconnect.org/profile/'
-    app.config.globalProperties.bisnislogo = 'https://be.itbconnect.org/business_logo/'
-    app.config.globalProperties.produkimg = 'https://be.itbconnect.org/product_image/'
-    app.config.globalProperties.newsimg = 'https://be.itbconnect.org/image_news/'
-    app.config.globalProperties.caraouselimg = 'https://be.itbconnect.org/list_caraousel/'
+    app.config.globalProperties.header = process.env.headerUrl
+    app.config.globalProperties.profil = process.env.profileUrl
+    app.config.globalProperties.bisnislogo = process.env.bisnislogoUrl
+    app.config.globalProperties.produkimg = process.env.produkimgUrl
+    app.config.globalProperties.newsimg = process.env.newsimgUrl
+    app.config.globalProperties.caraouselimg = process.env.caraouselimgUrl
     
 })

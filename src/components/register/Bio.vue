@@ -21,35 +21,11 @@
         hide-bottom-space
         input-class="qname"
         />
-
-        <!-- <q-input
-        outlined
-        dense
-        v-model="bemail"
-        label="Alamat Email Aktif"
-        lazy-rules
-        :loading="load"
-        :rules="[
-        (val) => (val && val.length > 0) || 'Email tidak boleh kosong', val => validEmail(val)
-        ]"
-        class="q-mb-sm q-mt-none"
-        bg-color="white"
-        hide-bottom-space
-        type="email"
-        input-class="email"
-        >
-        <template v-slot:append>
-            <q-avatar color="positive" text-color="white" icon="done"  v-if="success"/>
-            <q-icon name="error"  v-if="error" class="text-negative"/>
-        </template>
-        </q-input>
-        <span style="font-size:11px;padding-left:10px;" class="col-12 text-positive" v-if="success">Email dapat digunakan</span>
-        <span style="font-size:11px;padding-left:10px;" class="col-12 text-negative" v-if="error">Email tidak dapat digunakan karena email sudah terdaftar</span> -->
         <q-input
         outlined
         dense
-        :modelValue="nowa"
-        @update:modelValue="event => $emit('update:nowa', event)"
+        v-model="altnowa"
+        @keyup="onWa($event)"
         maxlength="18"
         label="No. Whatsapp Aktif"
         lazy-rules
@@ -174,7 +150,8 @@ export default {
             load:false,
             error:false,
             success:false,
-            bemail:''
+            bemail:'',
+            altnowa:''
         }
     },
     created(){
@@ -187,6 +164,9 @@ export default {
         this.OptTgl()
         this.OptThn()
         this.letterCapitalize()
+        if (this.nowa) {
+            this.altnowa = this.nowa
+        }
     },
     computed:{
         valid(){
@@ -229,8 +209,18 @@ export default {
                 }
             })
         },
+        altnowa(val){
+            this.$emit('update:nowa',val)
+        }
     },
     methods:{
+        onWa(event){
+            if (/[0-9+]/.test(event.key)) {
+                this.altnowa = event.target.value
+            }else{
+                this.altnowa = event.target.value.replace(event.key,'')
+            }
+        },
         getAnswer(){
             if(this.bemail !== null && this.bemail !== ''){
                 if(this.valid){

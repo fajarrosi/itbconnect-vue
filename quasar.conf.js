@@ -53,7 +53,26 @@ module.exports = configure(function (ctx) {
         BASE_URL: ctx.dev //http://localhost:8000/api/v1/
           ? 'http://127.0.0.1:8000/api' 
           : 'https://be.itbconnect.org/api',
+        headerUrl : ctx.dev
+          ? 'http://127.0.0.1:8000/header/' 
+          : 'https://be.itbconnect.org/header/',
+        profileUrl : ctx.dev
+          ? 'http://127.0.0.1:8000/profile/' 
+          : 'https://be.itbconnect.org/profile/',
+        bisnislogoUrl : ctx.dev
+          ? 'http://127.0.0.1:8000/business_logo/' 
+          : 'https://be.itbconnect.org/business_logo/',
+        produkimgUrl : ctx.dev
+          ? 'http://127.0.0.1:8000/product_image/' 
+          : 'https://be.itbconnect.org/product_image/',
+        newsimgUrl : ctx.dev
+          ? 'http://127.0.0.1:8000/image_news/' 
+          : 'https://be.itbconnect.org/image_news/',
+        caraouselimgUrl : ctx.dev
+          ? 'http://127.0.0.1:8000/list_caraousel/' 
+          : 'https://be.itbconnect.org/list_caraousel/',
       },
+
       // transpile: false,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
