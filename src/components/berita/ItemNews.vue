@@ -6,7 +6,7 @@
             </q-item-section>
 
             <q-item-section>
-                <q-item-label lines="2">{{news.title}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Error tempora accusantium ipsa aut alias officia explicabo excepturi hic autem dignissimos?</q-item-label>
+                <q-item-label lines="2">{{news.title}} </q-item-label>
                 <q-item-label caption class="ellipsis-2-lines description" ref="desc" v-html="news.description" style="display:none;">
                 </q-item-label>
                 <q-item-label caption lines="2">{{description}}</q-item-label>

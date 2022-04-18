@@ -60,40 +60,10 @@ export default {
         dataorganisasi(){
             return this.$store.state.myprofil.dataorganisasi
         },
-        valid(){
-            if(this.organisasi && this.iaprodi && this.pengda){
-                return true
-            }else{
-                return false
-            }
-        }
-    },
-    data(){
-        return{
-            organisasi: false,
-            pengda: false,
-            iaprodi:false
-        }
     },
     methods:{
-        ...mapActions("myprofil", ['getOrg','getPengda','getIaprodi']),
-        async getData(){
-            let a = this.getOrg()
-            let b = this.getPengda()
-            let c = this.getIaprodi()
-            Promise.all([a,b,c]).then(() =>{
-                this.organisasi = true
-                this.pengda = true
-                this.iaprodi = true
-                this.$emit('update:dminat',true)
-            })
-        },
         ubah(){
-            if(this.valid){
-                this.$emit('update:dminat',true)
-            }else{
-                this.getData()
-            }
+            this.$emit('update:dminat',true)
         }
     }
 }

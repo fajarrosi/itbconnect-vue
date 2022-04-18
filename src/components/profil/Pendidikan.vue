@@ -23,7 +23,6 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 </template>
 
 <script>
-import {  mapActions } from "vuex"
 export default {
     props:[
         'dpend',
@@ -32,40 +31,11 @@ export default {
         datapendidikan(){
             return this.$store.state.myprofil.datapendidikan
         },
-        valid(){
-            if(this.jenjang && this.prodi && this.univ){
-                return true
-            }else{
-                return false
-            }
-        }
     },
-    data(){
-        return{
-            jenjang:false,
-            prodi:false,
-            univ:false
-        }
-    },
+   
     methods:{
-        ...mapActions("myprofil", ['getJenjang','getProdi','getUniv']),
-        async getData(){
-            let a = this.getJenjang()
-            let b = this.getProdi()
-            let c = this.getUniv()
-            Promise.all([a,b,c]).then(() =>{
-                this.jenjang = true
-                this.prodi = true
-                this.univ = true
-                this.$emit('update:dpend',true)
-            })
-        },
         ubah(){
-            if(this.valid){
-                this.$emit('update:dpend',true)
-            }else{
-                this.getData()
-            }
+            this.$emit('update:dpend',true)
         }
     }
 }

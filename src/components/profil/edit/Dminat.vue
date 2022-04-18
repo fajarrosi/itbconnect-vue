@@ -4,7 +4,11 @@
             <q-card class="hide-scrollbar">
                 <div class="card-grid">
                         <q-scroll-area class="fit">
-                <q-card-section>
+                            <q-card-section class="row justify-center items-center" style="margin-top:300px;" v-if="!loadApi">
+                                <q-spinner-grid class="col-4 text-primary"/>
+                                <span class="col-12 text-primary text-center q-mt-md">Memuat Data</span>
+                            </q-card-section>
+                <q-card-section v-else>
                         <div class="q-mb-md text-edit" style="font-size:17px;">MINAT & ORGANISASI*</div>
                         <q-select  outlined dense v-for="(inp,k) in minat" :key="k" v-model="inp.selectedorg" emit-value map-options :options="optorganisasi" label="Minat & Organisasi" bg-color="white" class="q-mb-sm">
                             <template v-slot:after>
@@ -39,6 +43,7 @@
 
 <script>
 import { useQuasar } from 'quasar'
+import {  mapActions } from "vuex"
 export default {
     setup(){
         const $q = useQuasar()
@@ -97,6 +102,7 @@ export default {
         })
     },
     mounted(){
+        this.getData()
         if(this.dataorganisasi.length > 0 ){
             this.dataorganisasi.forEach(el=>{
                 this.minat.push({
@@ -127,9 +133,19 @@ export default {
             selectediaprodi:'',
             load:false,
             btndisabled:false,
+            loadApi:false
         }
     },
     methods:{
+        ...mapActions("myprofil", ['getOrg','getPengda','getIaprodi']),
+        async getData(){
+            let a = this.getOrg()
+            let b = this.getPengda()
+            let c = this.getIaprodi()
+            Promise.all([a,b,c]).then(() =>{
+                this.loadApi = true
+            })
+        },
         add(){
             this.minat.push({
                 selectedorg:''

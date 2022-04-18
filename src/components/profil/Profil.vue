@@ -49,7 +49,6 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah" >
 </template>
 
 <script>
-import {  mapActions } from "vuex"
 export default {
     props:[
         'dprofil',
@@ -58,45 +57,12 @@ export default {
         dataprofil(){
             return this.$store.state.myprofil.dataprofil
         },
-        valid(){
-            // if(this.negara && this.prov && this.agama){
-            //     this.$emit('update:dprofil',true)
-            //     return true
-            // }else{
-            //     return false
-            // }
-            return (this.negara && this.prov && this.agama) ? true : false
-        }
-    },
-    data(){
-        return{
-            negara:false,
-            prov:false,
-            agama:false
-        }
     },
     methods:{
-        ...mapActions("myprofil", ['getNegara','getProv','getAgama']),
-        async getData(){
-            let a = this.getNegara()
-            let b = this.getProv()
-            let c = this.getAgama()
-            Promise.all([a,b,c]).then(() =>{
-                this.negara = true
-                this.prov = true
-                this.agama = true
-                this.$emit('update:dprofil',true)
-            })
-
-        },
         ubah(){
-            if(this.valid){
-                this.$emit('update:dprofil',true)
-            }else{
-                this.getData()
-            }
+            this.$emit('update:dprofil',true)
         },
-    }
+    },
 }
 </script>
 <style >

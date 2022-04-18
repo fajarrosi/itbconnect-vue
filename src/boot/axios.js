@@ -10,7 +10,7 @@ import axios from 'axios'
 // https://be.itbconnect.org/api
 // http://127.0.0.1:8000/api
 // 37.44.244.134 
-const api = axios.create({ baseURL: 'https://be.itbconnect.org/api' })
+const api = axios.create({ baseURL: process.env.BASE_URL })
 const header = token => {
   let config = {
             headers: {

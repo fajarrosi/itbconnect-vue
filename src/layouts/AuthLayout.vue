@@ -16,7 +16,7 @@
                         </div>
                         
                         <div class="row justify-center items-center ">
-                            <p class="q-mb-none q-mr-md copyright">Connecting The Dots @2021 by</p>
+                            <p class="q-mb-none q-mr-md copyright">Connecting The Dots @2022 by</p>
                             <q-img
                             src="~assets/ia-itb.png"
                             spinner-color="white"

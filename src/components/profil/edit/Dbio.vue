@@ -5,6 +5,12 @@
                 <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md" style="height:100%;">
                 <div class="card-grid">
                         <q-scroll-area class="fit">
+                             <q-card-section class="row justify-center items-center" style="margin-top:300px;" v-if="!loadApi" >
+                                <q-spinner-grid class="col-4 text-primary"/>
+                                <span class="col-12 text-primary text-center q-mt-md">Memuat Data</span>
+                            </q-card-section>
+                            <div class="after-load" v-else>
+
                 <input type="file" @change="onHeaderSelected" style="display:none;" ref="hpupload"/>
                 <q-img :src="prevhp ? prevhp : require('assets/bg-akun.png')"  height="153px">
                     <div class="absolute-full text-subtitle2 flex flex-center" @click="$refs.hpupload.click()">
@@ -152,6 +158,9 @@
                     </template>
                     </q-input>
                 </q-card-section>
+                            
+                            </div>
+
                 </q-scroll-area>
                 <q-card-actions align="center" class="q-mb-md">
                     <q-btn  no-caps label="Kembali" outline
@@ -216,7 +225,8 @@ export default {
             prevpp:'',
             srcpp:'',
             prevhp:'',
-            srchp:''
+            srchp:'',
+            loadApi:false
         }
     },
     computed:{
@@ -245,6 +255,9 @@ export default {
         }
     },
     mounted(){
+        setTimeout(() => {
+            this.loadApi = true
+        }, 500);
         this.domisili = this.databio.domisili
         if(this.databio.bio !== null){
             this.bio = this.databio.bio

@@ -5,7 +5,11 @@
                     <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md" style="height:100%;">
                     <div class="card-grid">
                         <q-scroll-area class="fit">
-                            <q-card-section>
+                             <q-card-section class="row justify-center items-center" style="margin-top:300px;" v-if="!loadApi">
+                                <q-spinner-grid class="col-4 text-primary"/>
+                                <span class="col-12 text-primary text-center q-mt-md">Memuat Data</span>
+                            </q-card-section>
+                            <q-card-section v-else>
                                 <div class="q-mb-md text-edit" style="font-size:17px;">PENGALAMAN</div>
                             <div class="row q-mb-lg" v-for="(peng,k) in pengalaman" :key="k">
                                 
@@ -170,9 +174,13 @@ export default {
             pengalaman:[],
             load:false,
             disabled:false,
+            loadApi:false
         }
     },
     mounted(){
+        setTimeout(() => {
+            this.loadApi = true
+        }, 500);
         this.datapengalaman.forEach(el => {
             this.pengalaman.push({
                 company_name: el.company_name,

@@ -50,8 +50,7 @@
         dense
         :modelValue="nowa"
         @update:modelValue="event => $emit('update:nowa', event)"
-        mask="####-####-####"
-        unmasked-value
+        maxlength="18"
         label="No. Whatsapp Aktif"
         lazy-rules
         :rules="[

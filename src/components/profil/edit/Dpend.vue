@@ -5,7 +5,11 @@
                 <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md" style="height:100%;">
                    <div class="card-grid">
                         <q-scroll-area class="fit">
-                    <q-card-section>
+                            <q-card-section class="row justify-center items-center" style="margin-top:300px;" v-if="!loadApi">
+                                <q-spinner-grid class="col-4 text-primary"/>
+                                <span class="col-12 text-primary text-center q-mt-md">Memuat Data</span>
+                            </q-card-section>
+                    <q-card-section v-else>
                         <div class="q-mb-md text-edit" style="font-size:17px;">PENDIDIKAN</div>
                     <div class="row q-mb-lg" v-for="(pend,k) in pendidikan" :key="k">
                             <div class="col-4 text-edit">Jenjang<span class="text-negative">*</span></div>
@@ -159,6 +163,7 @@
 
 <script>
 import { useQuasar,date } from 'quasar'
+import {  mapActions } from "vuex"
 export default {
     setup(){
         const $q = useQuasar()
@@ -195,22 +200,13 @@ export default {
         return{
             optjenjang:[],
             optuniv:['ITB'],
-            // optuniv:[
-            //     {
-            //         label:'ITB',
-            //         value:1
-            //     },
-            //     {
-            //         label:'Lainnya',
-            //         value:2
-            //     }
-            // ],
             optprodi:[],
             pendidikan:[],
             load:false,
             disabled:false,
             send:[],
-            sekarang:''
+            sekarang:'',
+            loadApi:false
         }
     },
     created(){
@@ -230,6 +226,7 @@ export default {
     },
 
     mounted(){
+        this.getData()
         this.datapendidikan.forEach(el=>{
             if(this.optuniv.find(opt => opt === el.campus_name)){
                 this.pendidikan.push({
@@ -257,6 +254,15 @@ export default {
         this.sekarang = date.formatDate(new Date(),'YYYY')
     },
     methods:{
+        ...mapActions("myprofil", ['getJenjang','getProdi','getUniv']),
+        async getData(){
+            let a = this.getJenjang()
+            let b = this.getProdi()
+            let c = this.getUniv()
+            Promise.all([a,b,c]).then(() =>{
+                this.loadApi = true
+            })
+        },
         add(){
             this.pendidikan.push({
                 jenjang:'',

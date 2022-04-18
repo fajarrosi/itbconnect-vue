@@ -109,6 +109,7 @@ export default {
         tampil(){
             let formatNow = date.formatDate(this.sekarang,'MMMM YYYY',{
                 months: ['Januari', 'Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+                
             })
             return formatNow
         },

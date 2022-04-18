@@ -5,7 +5,11 @@
                 <q-form @submit.prevent.stop="onSave" ref="dform" class="q-gutter-md" style="height:100%;">
                     <div class="card-grid">
                         <q-scroll-area class="fit">
-                            <q-card-section class="row ">
+                            <q-card-section class="row justify-center items-center" style="margin-top:300px;" v-if="!loadApi">
+                                <q-spinner-grid class="col-4 text-primary"/>
+                                <span class="col-12 text-primary text-center q-mt-md">Memuat Data</span>
+                            </q-card-section>
+                            <q-card-section class="row" v-else>
                                 <div class="col-12 text-edit" style="font-size:17px;">PROFIL</div>
                                 <div class="col-4 text-edit">Nama Panggilan</div>
                                 <q-input
@@ -242,9 +246,9 @@
                                 placeholder="No. Telepon"
                                 class="q-mb-sm col-9"
                                 bg-color="white"
+                                type="text"
                                 hide-bottom-space
-                                maxlength="12"
-                                mask="############"
+                                maxlength="18"
                                 lazy-rules
                                 :rules="[
                                 (val) => (val && val.length > 0) || 'No telepon tidak boleh kosong',
@@ -277,6 +281,7 @@
 <script>
 import { api } from 'boot/axios'
 import { debounce,useQuasar } from 'quasar'
+import {  mapActions } from "vuex"
 export default {
     setup(){
         const $q = useQuasar()
@@ -317,7 +322,6 @@ export default {
         'pagama',
         'intro'
     ],
-    // emits:['update:dpengalaman','update:dprofil'],
     data(){
         return{
             optstatus:[
@@ -380,7 +384,8 @@ export default {
         eload:false,
         esuccess:false,
         error:false,
-        first:false
+        first:false,
+        loadApi:false
         }
     },
     created(){
@@ -415,6 +420,7 @@ export default {
         }
     },
     mounted(){
+        this.getData()
         this.nama = this.dataprofil.nick
         this.email = this.dataprofil.email
         this.nowa = this.dataprofil.telephone
@@ -510,6 +516,16 @@ export default {
         },
     },
     methods:{
+        ...mapActions("myprofil", ['getNegara','getProv','getAgama']),
+        async getData(){
+            let a = this.getNegara()
+            let b = this.getProv()
+            let c = this.getAgama()
+            Promise.all([a,b,c]).then(() =>{
+                this.loadApi = true
+                // this.$emit('update:dprofil',true)
+            })
+        },
         getAnswer(){
             if(this.email !== this.dataprofil.email && this.email !== null && this.email !== ''){
                 if(this.valid){

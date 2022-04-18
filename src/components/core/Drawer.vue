@@ -34,7 +34,7 @@
                   </div>
                 </q-item-section>
               </q-item>
-              <q-item v-ripple tag="a" href="https://wa.me/6287888000015" target="_blank">
+              <q-item v-ripple tag="a" href="https://wa.me/6281112125522" target="_blank">
                 <q-item-section>
                   <div class="row items-center">
                     <img src="~assets/support.png" alt="support">

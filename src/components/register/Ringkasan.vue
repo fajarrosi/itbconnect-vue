@@ -16,7 +16,7 @@
             </tr>
             <tr style="color:#363636; font-size:13px;">
                 <td class="title-table q-pr-sm">No. WhatsApp Aktif</td>
-                <td>: {{getNowa()}}</td>
+                <td>: {{nowa}}</td>
             </tr>
             <tr style="color:#363636; font-size:13px;">
                 <td class="title-table q-pr-sm">Tanggal Lahir</td>
