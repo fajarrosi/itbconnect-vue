@@ -202,7 +202,7 @@ export function getUniv(context){
 
 export function getNegara(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/country/',header(context.rootState.auth.token))
+        api.get('complex/country',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setNegara',response.data.data)
             resolve('ok')
@@ -215,7 +215,7 @@ export function getNegara(context){
 
 export function getProv(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/province/',header(context.rootState.auth.token))
+        api.get('complex/province',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setProv',response.data.data)
             resolve('ok')
@@ -228,7 +228,7 @@ export function getProv(context){
 
 export function getAgama(context){
     return new Promise((resolve,reject)=>{
-        api.get('complex/religion/',header(context.rootState.auth.token))
+        api.get('complex/religion',header(context.rootState.auth.token))
         .then(response=>{
             context.commit('setAgama',response.data.data)
             resolve('ok')

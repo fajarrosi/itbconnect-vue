@@ -443,11 +443,9 @@ export default {
         if(this.dataprofil.negara === 78){
             this.dalam = '1'
             this.alamat = this.dataprofil.domisili
-            // this.getProv()
         }else{
             this.dalam = '2'
                 this.alamatluar = this.dataprofil.domisili
-            // this.getNegara()
         }
     },
     computed:{
@@ -528,7 +526,6 @@ export default {
             let c = this.getAgama()
             Promise.all([a,b,c]).then(() =>{
                 this.loadApi = true
-                // this.$emit('update:dprofil',true)
             })
         },
         getAnswer(){
