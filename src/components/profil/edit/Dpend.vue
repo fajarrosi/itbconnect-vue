@@ -163,11 +163,13 @@
 
 <script>
 import { useQuasar,date } from 'quasar'
-import {  mapActions } from "vuex"
+import { useConnect } from 'src/composeables/useConnect'
 export default {
     setup(){
         const $q = useQuasar()
+        const { getData } = useConnect()
         return {
+            getData,
             successNotif () {
                 $q.notify({
                 message: 'Pendidikan berhasil diperbarui',
@@ -191,10 +193,7 @@ export default {
         'userbaru',
         'dminat',
         'datapendidikan',
-        'jenjang',
-        'prodi',
         'intro',
-        'universitas'
     ],
     data(){
         return{
@@ -209,60 +208,56 @@ export default {
             loadApi:false
         }
     },
-    created(){
-        this.jenjang.forEach(element => {
-        let opt ={}
-        opt.label = element.name
-        opt.value = element.id
-        this.optjenjang.push(opt)
-        })
-        this.prodi.forEach(element => {
-            this.optprodi.push(element.name)
-        })
-        this.universitas.forEach(element=>{
-            this.optuniv.push(element.name)
-        })
-        this.optuniv.push('Lainnya')
-    },
 
     mounted(){
-        this.getData()
-        this.datapendidikan.forEach(el=>{
-            if(this.optuniv.find(opt => opt === el.campus_name)){
-                this.pendidikan.push({
-                    jenjang:el.education_id,
-                    univ:el.campus_name,
-                    prodilain:'',
-                    univlain:'',
-                    prodi:el.program_study,
-                    tahunmasuk:el.entry_year,
-                    tahunkeluar:el.graduated_year,
+        this.optjenjang = []
+        this.optprodi = []
+        this.optuniv = []
+        this.getData('complex/education')
+        .then(result=>{
+            this.optjenjang = result.data.data.map(({id,name})=>({label: name,value:id}))
+            this.getData('complex/prodi')
+            .then(result=>{
+                result.data.data.forEach(element => {
+                    this.optprodi.push(element.name)
                 })
-            }else {
-                this.pendidikan.push({
-                    jenjang:el.education_id,
-                    univ:'Lainnya',
-                    prodilain:el.program_study,
-                    univlain:el.campus_name,
-                    prodi:'',
-                    tahunmasuk:el.entry_year,
-                    tahunkeluar:el.graduated_year,
-                })
-            }
+                this.getData('user/university')
+                .then(result=>{
+                    result.data.data.forEach(element=>{
+                        this.optuniv.push(element.name)
+                    })
+                    this.optuniv.push('Lainnya')
+                    this.datapendidikan.forEach(el=>{
+                        if(this.optuniv.some(opt => opt.includes(el.campus_name))){
+                            this.pendidikan.push({
+                                jenjang:el.education_id,
+                                univ:el.campus_name,
+                                prodilain:'',
+                                univlain:'',
+                                prodi:el.program_study,
+                                tahunmasuk:el.entry_year,
+                                tahunkeluar:el.graduated_year,
+                            })
+                        }else {
+                            this.pendidikan.push({
+                                jenjang:el.education_id,
+                                univ:'Lainnya',
+                                prodilain:el.program_study,
+                                univlain:el.campus_name,
+                                prodi:'',
+                                tahunmasuk:el.entry_year,
+                                tahunkeluar:el.graduated_year,
+                            })
+                        }
 
+                    })
+                    this.loadApi= true
+                })
+            })
         })
         this.sekarang = date.formatDate(new Date(),'YYYY')
     },
     methods:{
-        ...mapActions("myprofil", ['getJenjang','getProdi','getUniv']),
-        async getData(){
-            let a = this.getJenjang()
-            let b = this.getProdi()
-            let c = this.getUniv()
-            Promise.all([a,b,c]).then(() =>{
-                this.loadApi = true
-            })
-        },
         add(){
             this.pendidikan.push({
                 jenjang:'',

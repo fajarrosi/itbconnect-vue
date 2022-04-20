@@ -286,11 +286,45 @@
 <script>
 import { api } from 'boot/axios'
 import { debounce,useQuasar } from 'quasar'
-import {  mapActions } from "vuex"
+import { useConnect } from 'src/composeables/useConnect'
 export default {
-    setup(){
+    props:[
+        'dprofil',
+        'dpengalaman',
+        'userbaru',
+        'dataprofil',
+        'intro'
+    ],
+    setup(props){
         const $q = useQuasar()
+        const { getData } = useConnect()
+        // const loadApi = ref(false)
+
+        // const optagama = ref([])
+        // const agama = ref('')
+        // const optprov = ref([])
+        // const prov = ref('')
+        // const optnegara = ref([])
+        // const negara = ref('')
+        // getData('complex/religion')
+        // .then(result=>{
+        //     optagama.value = result.data.data.map(({id,name})=>({label: name,value:id}))
+        //     agama.value = props.dataprofil.religion ? optagama.value.find((agama)=>agama.label.includes(props.dataprofil.religion)) : ''
+        //     getData('complex/province')
+        //     .then(result=>{
+        //         optprov.value = result.data.data.map(({id,name})=>({label: name,value:id}))
+        //         prov.value = props.dataprofil.prov ? optprov.value.find((opt)=> opt.value === props.dataprofil.prov) : ''
+        //         getData('complex/country')
+        //         .then(result=>{
+        //             optnegara.value = result.data.data.map(({id,country_name})=>({label: country_name,value:id}))
+        //             negara.value = props.dataprofil.negara !== 78 ? optnegara.value.find((opt)=> opt.value === props.dataprofil.negara) : ''
+        //             loadApi.value = true
+        //         })
+        //     })
+        // })
+
         return {
+            getData,
             failNotif () {
                 $q.notify({
                 message: 'tunggu waktu validasi email sampai selesai',
@@ -317,16 +351,6 @@ export default {
             },
         }
     },
-    props:[
-        'dprofil',
-        'dpengalaman',
-        'userbaru',
-        'dataprofil',
-        'pnegara',
-        'pprov',
-        'pagama',
-        'intro'
-    ],
     data(){
         return{
             optstatus:[
@@ -335,7 +359,6 @@ export default {
                { label:'Lajang',
                 value:'2'}
             ],
-            optagama:[],
             optgoldar:[
                { label:'O',
                 value:'o'},
@@ -345,7 +368,6 @@ export default {
                 value:'ab'},
                { label:'B',
                 value:'b'},
-                
             ],
             optjkelamin:[
                 { label:'Laki-laki',
@@ -363,24 +385,19 @@ export default {
                 value:'2'
             }
         ],
-        optprov:[],
         optkota:[],
-        optnegara:[],
         nama:'',
         tempat:'',
         tgl:'',
         jkelamin:'',
         goldar:'',
         status:'',
-        agama:'',
         kewarganegaraan:'',
         nim:'',
         email:'',
         nowa:'',
         dalam:'',
-        prov:'',
         kota:'',
-        negara:'',
         alamat:'',
         alamatluar:'',
         kotashow:false,
@@ -390,42 +407,19 @@ export default {
         esuccess:false,
         error:false,
         first:false,
-        loadApi:false
+        loadApi:false,
+        optagama:[],
+        optprov:[],
+        optnegara:[],
+        agama:'',
+        negara:'',
+        prov:'',
         }
     },
     created(){
         this.debouncedGetAnswer = debounce(this.getAnswer, 1000)
-        this.pagama.forEach(el=>{
-            let opt = {}
-            opt.label = el.name
-            opt.value = el.id
-            this.optagama.push(opt)
-        })
-        
-        this.pprov.forEach(element => {
-            let opt ={}
-            opt.label = element.name
-            opt.value = element.id
-            this.optprov.push(opt)
-        })
-        this.pnegara.forEach(element => {
-            let opt ={}
-            opt.label = element.country_name
-            opt.value = element.id
-            this.optnegara.push(opt)
-        })
-        if(this.dataprofil.religion){
-            this.agama = this.optagama.find((ag)=>ag.label.includes(this.dataprofil.religion))
-        }
-        if(this.dataprofil.prov){
-            this.prov = this.optprov.find((opt)=> opt.value === this.dataprofil.prov)
-        }
-        if(this.dataprofil.negara !== 78){
-            this.negara = this.optnegara.find((opt)=> opt.value === this.dataprofil.negara)
-        }
     },
     mounted(){
-        this.getData()
         this.nama = this.dataprofil.nick
         this.email = this.dataprofil.email
         this.nowa = this.dataprofil.telephone
@@ -447,6 +441,22 @@ export default {
             this.dalam = '2'
                 this.alamatluar = this.dataprofil.domisili
         }
+        this.getData('complex/religion')
+        .then(result=>{
+            this.optagama = result.data.data.map(({id,name})=>({label: name,value:id}))
+            this.agama = this.dataprofil.religion ? this.optagama.find((agama)=>agama.label.includes(this.dataprofil.religion)) : ''
+            this.getData('complex/province')
+            .then(result=>{
+                this.optprov = result.data.data.map(({id,name})=>({label: name,value:id}))
+                this.prov = this.dataprofil.prov ? this.optprov.find((opt)=> opt.value === this.dataprofil.prov) : ''
+                this.getData('complex/country')
+                .then(result=>{
+                    this.optnegara = result.data.data.map(({id,country_name})=>({label: country_name,value:id}))
+                    this.negara = this.dataprofil.negara !== 78 ? this.optnegara.find((opt)=> opt.value === this.dataprofil.negara) : ''
+                    this.loadApi= true
+                })
+            })
+        })
     },
     computed:{
         valid(){
@@ -519,15 +529,6 @@ export default {
         },
     },
     methods:{
-        ...mapActions("myprofil", ['getNegara','getProv','getAgama']),
-        async getData(){
-            let a = this.getNegara()
-            let b = this.getProv()
-            let c = this.getAgama()
-            Promise.all([a,b,c]).then(() =>{
-                this.loadApi = true
-            })
-        },
         getAnswer(){
             if(this.email !== this.dataprofil.email && this.email !== null && this.email !== ''){
                 if(this.valid){

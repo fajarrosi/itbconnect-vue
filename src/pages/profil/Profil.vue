@@ -51,10 +51,10 @@
         </div>
             <Dintro v-model:intro="intro" v-model:dbio="dbio" v-if="intro"/>
             <Dbio v-model:dbio="dbio" v-model:intro="intro" v-model:dprofil="dprofil" v-model:userbaru="userbaru"  v-if="dbio"/>
-            <Dprofil v-model:intro="intro" v-model:dprofil="dprofil" v-model:userbaru="userbaru" v-model:dpengalaman="dpengalaman" :dataprofil="dataprofil" v-if="dprofil" :pnegara="negara" :pprov="prov" :pagama="agama"/>
+            <Dprofil v-model:intro="intro" v-model:dprofil="dprofil" v-model:userbaru="userbaru" v-model:dpengalaman="dpengalaman" :dataprofil="dataprofil" v-if="dprofil"/>
             <Dpengalaman v-model:intro="intro" v-model:dpengalaman="dpengalaman" v-model:dpend="dpend" v-model:userbaru="userbaru" :datapengalaman="datapengalaman" v-if="dpengalaman"/>
-            <Dpend v-model:intro="intro" v-model:dpend="dpend" v-model:dminat="dminat" v-model:userbaru="userbaru" :datapendidikan="datapendidikan" v-if="dpend" :jenjang="jenjang" :prodi="prodi" :universitas="universitas"/>
-            <Dminat v-model:intro="intro" v-model:dminat="dminat" v-model:dbisnis="dbisnis" v-model:userbaru="userbaru" :dataorganisasi="dataorganisasi" v-if="dminat" :organization="organization" :pengda="pengda" :iaprodi="iaprodi" :datapengda="datapengda"/>
+            <Dpend v-model:intro="intro" v-model:dpend="dpend" v-model:dminat="dminat" v-model:userbaru="userbaru" :datapendidikan="datapendidikan" v-if="dpend" />
+            <Dminat v-model:intro="intro" v-model:dminat="dminat" v-model:dbisnis="dbisnis" v-model:userbaru="userbaru" :dataorganisasi="dataorganisasi" v-if="dminat" :datapengda="datapengda"/>
     </q-page>
 </template>
 
@@ -102,7 +102,7 @@ export default {
         ...mapActions("myprofil", ["getProfil"]),
     },
     computed:{
-        ...mapState('myprofil',['databio','dataprofil','datapengalaman','datapendidikan','dataorganisasi','databisnis','organization','pengda','iaprodi','jenjang','prodi','negara','prov','agama','datapengda','bisnisfield','universitas']),
+        ...mapState('myprofil',['databio','dataprofil','datapengalaman','datapendidikan','dataorganisasi','databisnis','datapengda']),
         userVerified(){
             return this.$store.state.auth.user.is_verified
         },

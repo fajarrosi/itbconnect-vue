@@ -43,11 +43,13 @@
 
 <script>
 import { useQuasar } from 'quasar'
-import {  mapActions } from "vuex"
+import { useConnect } from 'src/composeables/useConnect'
 export default {
     setup(){
         const $q = useQuasar()
+        const { getData } = useConnect()
         return {
+            getData,
             successNotif () {
                 $q.notify({
                 message: 'Organisasi berhasil diperbarui',
@@ -71,9 +73,6 @@ export default {
         'dbisnis',
         'userbaru',
         'dataorganisasi',
-        'organization',
-        'pengda',
-        'iaprodi',
         'datapengda',
         'intro'
     ],
@@ -82,27 +81,21 @@ export default {
         'update:dbisnis'
     ],
     created(){
-        this.organization.forEach(el=>{
-            let opt ={}
-            opt.label = el.name
-            opt.value = el.id
-            this.optorganisasi.push(opt)
-        })
-        this.pengda.forEach(el=>{
-            let opt ={}
-            opt.label = el.name
-            opt.value = el.id
-            this.optpengda.push(opt)
-        })
-        this.iaprodi.forEach(el=>{
-            let opt ={}
-            opt.label = el.name
-            opt.value = el.id
-            this.optprodi.push(opt)
+        this.getData('complex/organization')
+        .then(result=>{
+            this.optorganisasi = result.data.data.map(({id,name})=>({label: name,value:id}))
+            this.getData('complex/pengda')
+            .then(result=>{
+                this.optpengda = result.data.data.map(({id,name})=>({label: name,value:id}))
+                this.getData('complex/iaprodi')
+                .then(result=>{
+                    this.optprodi = result.data.data.map(({id,name})=>({label: name,value:id}))
+                    this.loadApi= true
+                })
+            })
         })
     },
     mounted(){
-        this.getData()
         if(this.dataorganisasi.length > 0 ){
             this.dataorganisasi.forEach(el=>{
                 this.minat.push({
@@ -137,15 +130,6 @@ export default {
         }
     },
     methods:{
-        ...mapActions("myprofil", ['getOrg','getPengda','getIaprodi']),
-        async getData(){
-            let a = this.getOrg()
-            let b = this.getPengda()
-            let c = this.getIaprodi()
-            Promise.all([a,b,c]).then(() =>{
-                this.loadApi = true
-            })
-        },
         add(){
             this.minat.push({
                 selectedorg:''
