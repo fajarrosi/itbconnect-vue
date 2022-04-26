@@ -50,7 +50,7 @@
             label="Tahun Keluar"
             lazy-rules
             :rules="[
-            (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',val => val.length >= 4 || 'Tahun keluar harus 4 digit',val=> minimal(val), val=>maksimal(val)
+            (val) => (val && val.length > 0) || 'Tahun keluar tidak boleh kosong',val => val.length >= 4  || 'Tahun keluar harus 4 digit',val=> minimal(val),val => minimalAkhir(val), val=>maksimal(val)
             ]"
             bg-color="white"
             class="col-6"
@@ -145,6 +145,13 @@ export default {
                 return 'Maksimal tahun ' + this.sekarang
             }
         },
+        minimalAkhir(val){
+            if(val > this.thnmasuk){
+                return true
+            }else{
+                return 'Tahun Akhir tidak boleh rendah dari tahun masuk'
+            }
+        }
     }
 }
 </script>

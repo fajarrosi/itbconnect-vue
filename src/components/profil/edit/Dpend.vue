@@ -81,7 +81,7 @@
                             bottom-slots
                             lazy-rules
                             :rules="[
-                            (val) => (val && val.length > 0) || 'Tahun Masuk tidak boleh kosong', val=> minimal(val)
+                            (val) => (val && val.length > 0) || 'Tahun Masuk tidak boleh kosong', val => val.length >= 4 || 'Tahun masuk harus 4 digit', val=> minimal(val), val => maksimal(val)
                             ]"
                             >
                             <template v-slot:after>
@@ -114,7 +114,7 @@
                             bottom-slots
                             lazy-rules
                             :rules="[
-                            (val) => (val && val.length > 0) || 'Tahun Keluar tidak boleh kosong', val => maksimal(val)
+                            (val) => (val && val.length > 0) || 'Tahun Keluar tidak boleh kosong',val => val.length >= 4  || 'Tahun keluar harus 4 digit',val=> minimal(val),val => minimalAkhir(val), val=>maksimal(val)
                             ]"
                             >
                             <template v-slot:after>
@@ -269,10 +269,10 @@ export default {
             })
         },
         minimal(val){
-            if(val >= 1928){
+            if(val >= 1920){
                 return true
             }else{
-                return 'Minimal tahun masuk 1928'
+                return 'Minimal tahun 1920'
             }
         },
         maksimal(val){
@@ -280,7 +280,14 @@ export default {
             if(val <= this.sekarang){
                 return true
             }else{
-                return 'Maksimal tahun keluar ' + this.sekarang
+                return 'Maksimal tahun ' + this.sekarang
+            }
+        },
+        minimalAkhir(val){
+            if(val > this.thnmasuk){
+                return true
+            }else{
+                return 'Tahun Akhir tidak boleh rendah dari tahun masuk'
             }
         },
         remove(val){
