@@ -139,14 +139,14 @@ export default {
             }
         },
         maksimal(val){
-            if(val <= this.sekarang){
+            if(parseInt(val) <= parseInt(this.sekarang)){
                 return true
             }else{
                 return 'Maksimal tahun ' + this.sekarang
             }
         },
         minimalAkhir(val){
-            if(val > this.thnmasuk){
+            if(parseInt(val) > parseInt(this.thnmasuk)){
                 return true
             }else{
                 return 'Tahun Akhir tidak boleh rendah dari tahun masuk'

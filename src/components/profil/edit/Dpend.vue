@@ -11,7 +11,8 @@
                             </q-card-section>
                     <q-card-section v-else>
                         <div class="q-mb-md text-edit" style="font-size:17px;">PENDIDIKAN</div>
-                    <div class="row q-mb-lg" v-for="(pend,k) in pendidikan" :key="k">
+                    <div class="row q-mb-sm" v-for="(pend,k) in pendidikan" :key="k">
+                        <q-separator style="background:#CCDBDC;height:5px;margin-top:0;margin-bottom:16px;" class="col-12" v-if="k > 0" />
                             <div class="col-4 text-edit">Jenjang<span class="text-negative">*</span></div>
                             <q-select  outlined dense v-model="pend.jenjang" emit-value map-options :options="optjenjang" label="Select     Jenjang Pendidikan" bg-color="white" class="q-mb-sm col-8" lazy-rules hide-bottom-space
                         :rules="[
@@ -68,72 +69,7 @@
                             hide-bottom-space
                         />
                         </div>
-                        <div class="col-4 text-edit">Tahun Masuk<span class="text-negative">*</span> </div>
-                        <q-input
-                            outlined
-                            dense
-                            v-model="pend.tahunmasuk" mask="####" 
-                            class="q-mb-sm col-8"
-                            bg-color="white"
-                            hide-bottom-space
-                            hide-hint
-                            placeholder="Tahun Masuk"
-                            bottom-slots
-                            lazy-rules
-                            :rules="[
-                            (val) => (val && val.length > 0) || 'Tahun Masuk tidak boleh kosong', val => val.length >= 4 || 'Tahun masuk harus 4 digit', val=> minimal(val), val => maksimal(val)
-                            ]"
-                            >
-                            <template v-slot:after>
-                                <q-icon name="event" class="cursor-pointer">
-                                <q-popup-proxy ref="tahunmasuk" transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="pend.tahunmasuk" minimal default-view="Years" emit-immediately mask="YYYY"
-                                    @update:model-value="checkValue"
-                                    >
-                                    <!-- <div class="row items-center justify-end">
-                                        <q-btn v-close-popup label="OK" color="primary" flat />
-                                    </div> -->
-                                    </q-date>
-                                </q-popup-proxy>
-                                </q-icon>
-                            </template>
-                            <template v-slot:hint>
-                            *)Minimal tahun 1928, pilih tanggal dengan mengklik icon disebelah kanan
-                            </template>
-                            </q-input>
-                        <div class="col-4 text-edit">Tahun Keluar<span class="text-negative">*</span> </div>
-                        <q-input
-                            outlined
-                            dense
-                            v-model="pend.tahunkeluar" mask="####" 
-                            class="q-mb-sm col-8"
-                            bg-color="white"
-                            hide-bottom-space
-                            hide-hint
-                            placeholder="Tahun Masuk"
-                            bottom-slots
-                            lazy-rules
-                            :rules="[
-                            (val) => (val && val.length > 0) || 'Tahun Keluar tidak boleh kosong',val => val.length >= 4  || 'Tahun keluar harus 4 digit',val=> minimal(val),val => minimalAkhir(val), val=>maksimal(val)
-                            ]"
-                            >
-                            <template v-slot:after>
-                                <q-icon name="event" class="cursor-pointer">
-                                <q-popup-proxy ref="tahunkeluar" transition-show="scale" transition-hide="scale">
-                                    <q-date v-model="pend.tahunkeluar" minimal default-view="Years" emit-immediately mask="YYYY"
-                                    @update:model-value="checkValue2"
-                                    >
-                                    <!-- <div class="row items-center justify-end">
-                                        <q-btn v-close-popup label="OK" color="primary" flat />
-                                    </div> -->
-                                    </q-date>
-                                </q-popup-proxy>
-                                </q-icon>
-                            </template>
-                            <template v-slot:hint>
-                            *) Maksimal tahun {{sekarang}}, pilih tanggal dengan mengklik icon disebelah kanan
-                            </template>
-                            </q-input>
+                        <date-pend v-model:tahunmasuk="pend.tahunmasuk" v-model:tahunkeluar="pend.tahunkeluar" />
                         <q-btn class="col-12" color="primary" icon="close" label="Hapus Pendidikan" flat dense @click="remove(k)" no-caps  v-if="k >0" style="font-style:italic;"/>
                     </div>
                     
@@ -164,6 +100,7 @@
 <script>
 import { useQuasar,date } from 'quasar'
 import { useConnect } from 'src/composeables/useConnect'
+import { defineAsyncComponent } from 'vue'
 export default {
     setup(){
         const $q = useQuasar()
@@ -204,7 +141,6 @@ export default {
             load:false,
             disabled:false,
             send:[],
-            sekarang:'',
             loadApi:false
         }
     },
@@ -212,7 +148,7 @@ export default {
     mounted(){
         this.optjenjang = []
         this.optprodi = []
-        this.optuniv = []
+        this.optuniv = ['ITB']
         this.getData('complex/education')
         .then(result=>{
             this.optjenjang = result.data.data.map(({id,name})=>({label: name,value:id}))
@@ -255,7 +191,6 @@ export default {
                 })
             })
         })
-        this.sekarang = date.formatDate(new Date(),'YYYY')
     },
     methods:{
         add(){
@@ -267,28 +202,6 @@ export default {
                 tahunmasuk:'',
                 tahunkeluar:'',
             })
-        },
-        minimal(val){
-            if(val >= 1920){
-                return true
-            }else{
-                return 'Minimal tahun 1920'
-            }
-        },
-        maksimal(val){
-            
-            if(val <= this.sekarang){
-                return true
-            }else{
-                return 'Maksimal tahun ' + this.sekarang
-            }
-        },
-        minimalAkhir(val){
-            if(val > this.thnmasuk){
-                return true
-            }else{
-                return 'Tahun Akhir tidak boleh rendah dari tahun masuk'
-            }
         },
         remove(val){
             this.pendidikan.splice(val,1)
@@ -355,16 +268,9 @@ export default {
             })
 
         },
-        checkValue (val, reason, details) {
-            if (reason === 'year') {
-                this.$refs.tahunmasuk.hide()
-            }
-        },
-        checkValue2 (val, reason, details) {
-            if (reason === 'year') {
-                this.$refs.tahunkeluar.hide()
-            }
-        }
+    },
+    components:{
+        'date-pend': defineAsyncComponent(() => import('./DatePend')),
     }
 }
 </script>
