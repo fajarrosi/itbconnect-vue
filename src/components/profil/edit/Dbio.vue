@@ -231,18 +231,10 @@ export default {
     },
     computed:{
         photoprofil(){
-            if(this.$store.state.myprofil.databio.photoprofil){
-                return this.profil + this.$store.state.myprofil.databio.photoprofil
-            }else{
-                return ''
-            }
+            return this.$store.state.myprofil?.databio?.photoprofil ? this.profil + this.$store.state.myprofil.databio.photoprofil : ''
         },
         headerphoto(){
-            if(this.$store.state.myprofil.databio.headerprofil){
-                return this.header + this.$store.state.myprofil.databio.headerprofil
-            }else{
-                return ''
-            }
+            return this.$store.state.myprofil?.databio?.headerprofil ? this.header + this.$store.state.myprofil.databio.headerprofil : ''
         },
         databio(){
             return this.$store.state.myprofil.databio

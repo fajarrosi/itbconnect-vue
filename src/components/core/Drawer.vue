@@ -82,14 +82,7 @@ export default {
             return this.$store.state.auth.user
         },
         photoprofil(){
-            if(this.user){
-                if(this.user.profile.photo_profile){
-                    return this.profil + this.user.profile.photo_profile
-                }else{
-                    return ''
-                }
-            }
-            return ''
+          return this.user?.profile?.photo_profile ? this.profil + this.user?.profile?.photo_profile : ''
         },
     },
     methods:{

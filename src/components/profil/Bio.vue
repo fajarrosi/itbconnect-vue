@@ -54,11 +54,7 @@ font-size: 12px;padding-top:0;" no-caps @click="ubah">
 export default {
     computed:{
         photoprofil(){
-            if(this.$store.state.myprofil.databio.photoprofil){
-                return this.profil + this.$store.state.myprofil.databio.photoprofil
-            }else{
-                return ''
-            }
+            return this.$store.state.myprofil?.databio?.photoprofil ? this.profil + this.$store.state.myprofil.databio.photoprofil : ''
         },
         databio(){
             return this.$store.state.myprofil.databio
